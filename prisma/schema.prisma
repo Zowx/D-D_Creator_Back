@@ -14,12 +14,14 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Perso {
+model Character {
   id            BigInt @id @default(autoincrement())
   race          String
   class         String
-  background    String
-  alignment     String
+  background    Background @relation(fields: [backgroundId], references: [id])
+  backgroundId  BigInt @unique
+  alignment     Alignment @relation(fields: [alignmentId], references: [id])
+  alignmentId   BigInt @unique
   xp            Int
   level         Int
   name          String
@@ -72,7 +74,7 @@ model Class {
   name          String
   caster_type   String
   subclass      String
-  saving_throws Boolean
+  savingThrows Ability[] @relation("SavingThrows")
   hit_dice      String
 }
 
@@ -81,31 +83,44 @@ model Ability {
   name        String
   description String
   short_desc  String
+
+  skill Skill? @relation(fields: [skillid], references: [id])
+  skillid BigInt?
+  class Class[] @relation("SavingThrows")
 }
 
 model Skill {
   id          BigInt @id @default(autoincrement())
   name        String
   description String
-  ability     String
+  ability     Ability[]
+
+  Background_Skill Background_Skill[]
 }
 
 model Background {
   id          BigInt @id @default(autoincrement())
   name        String
   description String
+  character   Character?
+  skill       Background_Skill[]
+
 }
 
-model BackgroundSkill {
+model Background_Skill {
   id             BigInt @id @default(autoincrement())
-  skill_potential String
-  background      String
+  skill_potential Skill @relation(fields: [skillId], references: [id])
+  skillId        BigInt
+  background      Background @relation(fields: [backgroundId], references: [id])
+  backgroundId    BigInt @unique
 }
 
 model Alignment {
   id          BigInt @id @default(autoincrement())
   name        String
   description String
+  
+  character   Character?
 }
 
 model PlayerSkill {
@@ -116,7 +131,7 @@ model PlayerSkill {
 }
 
 model SavingThrows {
-  id    BigInt @id @default(autoincrement())
+  id   Int @default(autoincrement()) @unique
   skill String
   character String
 }
