@@ -1,7 +1,9 @@
+import { Race } from "src/shared/model/race.model";
+
 export class CharacterDto {
     id: string; 
     name: string; 
-    race: string; 
+    race: Race; 
     class: string; 
     level: number;
     alignment: string;
@@ -12,4 +14,14 @@ export class CharacterDto {
     intelligence: number;
     wisdom: number;
     charisma: number;
+}
+
+export class CharacterCandidateDto {
+    name: string;
+    race: Race;
+    class: string;
+    level: number;
+    alignment: string;
+    background: string;
+    
 }
