@@ -1,0 +1,142 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+} 
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Perso {
+  id            BigInt @id @default(autoincrement())
+  race          String
+  class         String
+  background    String
+  alignment     String
+  xp            Int
+  level         Int
+  name          String
+  player        String
+  AC            Int
+  speed         Int
+  hp            Int
+  max_hp        Int
+  temp_hp       Int
+  personality   String
+  ideals        String
+  bonds         String
+  flaws         String
+  age           Int
+  height        String
+  weight        String
+  eyes          String
+  skin          String
+  hair          String
+  appearance    String
+  allies        String
+  backstory     String
+  treasure      String
+  traits        String
+}
+
+model Race {
+  id          BigInt @id @default(autoincrement())
+  name        String
+  description String
+
+  Race Race[] @relation("Subrace")
+  
+  subrace_of  Race?  @relation("Subrace", fields: [subraceOfId], references: [id])
+  subraceOfId BigInt?
+
+  Trait Trait[]
+}
+
+model Trait {
+  id          BigInt @id @default(autoincrement())
+  name        String
+  description String
+
+  Race Race[]
+}
+
+model Class {
+  id            BigInt @id @default(autoincrement())
+  name          String
+  caster_type   String
+  subclass      String
+  saving_throws Boolean
+  hit_dice      String
+}
+
+model Ability {
+  id          BigInt @id @default(autoincrement())
+  name        String
+  description String
+  short_desc  String
+}
+
+model Skill {
+  id          BigInt @id @default(autoincrement())
+  name        String
+  description String
+  ability     String
+}
+
+model Background {
+  id          BigInt @id @default(autoincrement())
+  name        String
+  description String
+}
+
+model BackgroundSkill {
+  id             BigInt @id @default(autoincrement())
+  skill_potential String
+  background      String
+}
+
+model Alignment {
+  id          BigInt @id @default(autoincrement())
+  name        String
+  description String
+}
+
+model PlayerSkill {
+  id    BigInt @id @default(autoincrement())
+  value String
+  skill String
+  character String
+}
+
+model SavingThrows {
+  id    BigInt @id @default(autoincrement())
+  skill String
+  character String
+}
+
+model CharacterAbility {
+  id      BigInt @id @default(autoincrement())
+  ability String
+  character String
+}
+
+model Language {
+  id          BigInt @id @default(autoincrement())
+  name        String
+  description String
+  exotic      Boolean
+}
+
+model CharacterLanguage {
+  id        BigInt @id @default(autoincrement())
+  character String
+  language  String
+}
+
