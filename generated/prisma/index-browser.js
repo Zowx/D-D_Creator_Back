@@ -120,6 +120,12 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
   Serializable: 'Serializable'
 });
 
+exports.Prisma.UserScalarFieldEnum = {
+  id: 'id',
+  username: 'username',
+  password: 'password'
+};
+
 exports.Prisma.CharacterScalarFieldEnum = {
   id: 'id',
   raceId: 'raceId',
@@ -149,7 +155,8 @@ exports.Prisma.CharacterScalarFieldEnum = {
   allies: 'allies',
   backstory: 'backstory',
   treasure: 'treasure',
-  traits: 'traits'
+  traits: 'traits',
+  Userid: 'Userid'
 };
 
 exports.Prisma.RaceScalarFieldEnum = {
@@ -259,6 +266,7 @@ exports.Prisma.NullsOrder = {
 
 
 exports.Prisma.ModelName = {
+  User: 'User',
   Character: 'Character',
   Race: 'Race',
   Trait: 'Trait',

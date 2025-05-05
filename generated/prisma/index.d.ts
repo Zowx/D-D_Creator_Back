@@ -14,6 +14,11 @@ export type PrismaPromise<T> = $Public.PrismaPromise<T>
 
 
 /**
+ * Model User
+ * 
+ */
+export type User = $Result.DefaultSelection<Prisma.$UserPayload>
+/**
  * Model Character
  * 
  */
@@ -96,8 +101,8 @@ export type CharacterLanguage = $Result.DefaultSelection<Prisma.$CharacterLangua
  * @example
  * ```
  * const prisma = new PrismaClient()
- * // Fetch zero or more Characters
- * const characters = await prisma.character.findMany()
+ * // Fetch zero or more Users
+ * const users = await prisma.user.findMany()
  * ```
  *
  *
@@ -117,8 +122,8 @@ export class PrismaClient<
    * @example
    * ```
    * const prisma = new PrismaClient()
-   * // Fetch zero or more Characters
-   * const characters = await prisma.character.findMany()
+   * // Fetch zero or more Users
+   * const users = await prisma.user.findMany()
    * ```
    *
    *
@@ -215,6 +220,16 @@ export class PrismaClient<
   }>>
 
       /**
+   * `prisma.user`: Exposes CRUD operations for the **User** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Users
+    * const users = await prisma.user.findMany()
+    * ```
+    */
+  get user(): Prisma.UserDelegate<ExtArgs, ClientOptions>;
+
+  /**
    * `prisma.character`: Exposes CRUD operations for the **Character** model.
     * Example usage:
     * ```ts
@@ -803,6 +818,7 @@ export namespace Prisma {
 
 
   export const ModelName: {
+    User: 'User',
     Character: 'Character',
     Race: 'Race',
     Trait: 'Trait',
@@ -836,10 +852,84 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "character" | "race" | "trait" | "raceTrait" | "class" | "ability" | "skill" | "background" | "background_Skill" | "alignment" | "playerSkill" | "savingThrows" | "characterAbility" | "language" | "characterLanguage"
+      modelProps: "user" | "character" | "race" | "trait" | "raceTrait" | "class" | "ability" | "skill" | "background" | "background_Skill" | "alignment" | "playerSkill" | "savingThrows" | "characterAbility" | "language" | "characterLanguage"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
+      User: {
+        payload: Prisma.$UserPayload<ExtArgs>
+        fields: Prisma.UserFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.UserFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.UserFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPayload>
+          }
+          findFirst: {
+            args: Prisma.UserFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.UserFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPayload>
+          }
+          findMany: {
+            args: Prisma.UserFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPayload>[]
+          }
+          create: {
+            args: Prisma.UserCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPayload>
+          }
+          createMany: {
+            args: Prisma.UserCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.UserCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPayload>[]
+          }
+          delete: {
+            args: Prisma.UserDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPayload>
+          }
+          update: {
+            args: Prisma.UserUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPayload>
+          }
+          deleteMany: {
+            args: Prisma.UserDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.UserUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.UserUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPayload>[]
+          }
+          upsert: {
+            args: Prisma.UserUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPayload>
+          }
+          aggregate: {
+            args: Prisma.UserAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateUser>
+          }
+          groupBy: {
+            args: Prisma.UserGroupByArgs<ExtArgs>
+            result: $Utils.Optional<UserGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.UserCountArgs<ExtArgs>
+            result: $Utils.Optional<UserCountAggregateOutputType> | number
+          }
+        }
+      }
       Character: {
         payload: Prisma.$CharacterPayload<ExtArgs>
         fields: Prisma.CharacterFieldRefs
@@ -2034,6 +2124,7 @@ export namespace Prisma {
     omit?: Prisma.GlobalOmitConfig
   }
   export type GlobalOmitConfig = {
+    user?: UserOmit
     character?: CharacterOmit
     race?: RaceOmit
     trait?: TraitOmit
@@ -2136,6 +2227,37 @@ export namespace Prisma {
   /**
    * Count Types
    */
+
+
+  /**
+   * Count Type UserCountOutputType
+   */
+
+  export type UserCountOutputType = {
+    characters: number
+  }
+
+  export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    characters?: boolean | UserCountOutputTypeCountCharactersArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserCountOutputType
+     */
+    select?: UserCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountCharactersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CharacterWhereInput
+  }
 
 
   /**
@@ -2543,6 +2665,1084 @@ export namespace Prisma {
    */
 
   /**
+   * Model User
+   */
+
+  export type AggregateUser = {
+    _count: UserCountAggregateOutputType | null
+    _avg: UserAvgAggregateOutputType | null
+    _sum: UserSumAggregateOutputType | null
+    _min: UserMinAggregateOutputType | null
+    _max: UserMaxAggregateOutputType | null
+  }
+
+  export type UserAvgAggregateOutputType = {
+    id: number | null
+  }
+
+  export type UserSumAggregateOutputType = {
+    id: bigint | null
+  }
+
+  export type UserMinAggregateOutputType = {
+    id: bigint | null
+    username: string | null
+    password: string | null
+  }
+
+  export type UserMaxAggregateOutputType = {
+    id: bigint | null
+    username: string | null
+    password: string | null
+  }
+
+  export type UserCountAggregateOutputType = {
+    id: number
+    username: number
+    password: number
+    _all: number
+  }
+
+
+  export type UserAvgAggregateInputType = {
+    id?: true
+  }
+
+  export type UserSumAggregateInputType = {
+    id?: true
+  }
+
+  export type UserMinAggregateInputType = {
+    id?: true
+    username?: true
+    password?: true
+  }
+
+  export type UserMaxAggregateInputType = {
+    id?: true
+    username?: true
+    password?: true
+  }
+
+  export type UserCountAggregateInputType = {
+    id?: true
+    username?: true
+    password?: true
+    _all?: true
+  }
+
+  export type UserAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which User to aggregate.
+     */
+    where?: UserWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Users to fetch.
+     */
+    orderBy?: UserOrderByWithRelationInput | UserOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: UserWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Users from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Users.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Users
+    **/
+    _count?: true | UserCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: UserAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: UserSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: UserMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: UserMaxAggregateInputType
+  }
+
+  export type GetUserAggregateType<T extends UserAggregateArgs> = {
+        [P in keyof T & keyof AggregateUser]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateUser[P]>
+      : GetScalarType<T[P], AggregateUser[P]>
+  }
+
+
+
+
+  export type UserGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: UserWhereInput
+    orderBy?: UserOrderByWithAggregationInput | UserOrderByWithAggregationInput[]
+    by: UserScalarFieldEnum[] | UserScalarFieldEnum
+    having?: UserScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: UserCountAggregateInputType | true
+    _avg?: UserAvgAggregateInputType
+    _sum?: UserSumAggregateInputType
+    _min?: UserMinAggregateInputType
+    _max?: UserMaxAggregateInputType
+  }
+
+  export type UserGroupByOutputType = {
+    id: bigint
+    username: string
+    password: string
+    _count: UserCountAggregateOutputType | null
+    _avg: UserAvgAggregateOutputType | null
+    _sum: UserSumAggregateOutputType | null
+    _min: UserMinAggregateOutputType | null
+    _max: UserMaxAggregateOutputType | null
+  }
+
+  type GetUserGroupByPayload<T extends UserGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<UserGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof UserGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], UserGroupByOutputType[P]>
+            : GetScalarType<T[P], UserGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type UserSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    username?: boolean
+    password?: boolean
+    characters?: boolean | User$charactersArgs<ExtArgs>
+    _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["user"]>
+
+  export type UserSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    username?: boolean
+    password?: boolean
+  }, ExtArgs["result"]["user"]>
+
+  export type UserSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    username?: boolean
+    password?: boolean
+  }, ExtArgs["result"]["user"]>
+
+  export type UserSelectScalar = {
+    id?: boolean
+    username?: boolean
+    password?: boolean
+  }
+
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "username" | "password", ExtArgs["result"]["user"]>
+  export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    characters?: boolean | User$charactersArgs<ExtArgs>
+    _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type UserIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+
+  export type $UserPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "User"
+    objects: {
+      characters: Prisma.$CharacterPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: bigint
+      username: string
+      password: string
+    }, ExtArgs["result"]["user"]>
+    composites: {}
+  }
+
+  type UserGetPayload<S extends boolean | null | undefined | UserDefaultArgs> = $Result.GetResult<Prisma.$UserPayload, S>
+
+  type UserCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<UserFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: UserCountAggregateInputType | true
+    }
+
+  export interface UserDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['User'], meta: { name: 'User' } }
+    /**
+     * Find zero or one User that matches the filter.
+     * @param {UserFindUniqueArgs} args - Arguments to find a User
+     * @example
+     * // Get one User
+     * const user = await prisma.user.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends UserFindUniqueArgs>(args: SelectSubset<T, UserFindUniqueArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one User that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {UserFindUniqueOrThrowArgs} args - Arguments to find a User
+     * @example
+     * // Get one User
+     * const user = await prisma.user.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends UserFindUniqueOrThrowArgs>(args: SelectSubset<T, UserFindUniqueOrThrowArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first User that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserFindFirstArgs} args - Arguments to find a User
+     * @example
+     * // Get one User
+     * const user = await prisma.user.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends UserFindFirstArgs>(args?: SelectSubset<T, UserFindFirstArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first User that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserFindFirstOrThrowArgs} args - Arguments to find a User
+     * @example
+     * // Get one User
+     * const user = await prisma.user.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends UserFindFirstOrThrowArgs>(args?: SelectSubset<T, UserFindFirstOrThrowArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Users that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Users
+     * const users = await prisma.user.findMany()
+     * 
+     * // Get first 10 Users
+     * const users = await prisma.user.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const userWithIdOnly = await prisma.user.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends UserFindManyArgs>(args?: SelectSubset<T, UserFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a User.
+     * @param {UserCreateArgs} args - Arguments to create a User.
+     * @example
+     * // Create one User
+     * const User = await prisma.user.create({
+     *   data: {
+     *     // ... data to create a User
+     *   }
+     * })
+     * 
+     */
+    create<T extends UserCreateArgs>(args: SelectSubset<T, UserCreateArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Users.
+     * @param {UserCreateManyArgs} args - Arguments to create many Users.
+     * @example
+     * // Create many Users
+     * const user = await prisma.user.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends UserCreateManyArgs>(args?: SelectSubset<T, UserCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Users and returns the data saved in the database.
+     * @param {UserCreateManyAndReturnArgs} args - Arguments to create many Users.
+     * @example
+     * // Create many Users
+     * const user = await prisma.user.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Users and only return the `id`
+     * const userWithIdOnly = await prisma.user.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends UserCreateManyAndReturnArgs>(args?: SelectSubset<T, UserCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a User.
+     * @param {UserDeleteArgs} args - Arguments to delete one User.
+     * @example
+     * // Delete one User
+     * const User = await prisma.user.delete({
+     *   where: {
+     *     // ... filter to delete one User
+     *   }
+     * })
+     * 
+     */
+    delete<T extends UserDeleteArgs>(args: SelectSubset<T, UserDeleteArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one User.
+     * @param {UserUpdateArgs} args - Arguments to update one User.
+     * @example
+     * // Update one User
+     * const user = await prisma.user.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends UserUpdateArgs>(args: SelectSubset<T, UserUpdateArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Users.
+     * @param {UserDeleteManyArgs} args - Arguments to filter Users to delete.
+     * @example
+     * // Delete a few Users
+     * const { count } = await prisma.user.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends UserDeleteManyArgs>(args?: SelectSubset<T, UserDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Users.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Users
+     * const user = await prisma.user.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends UserUpdateManyArgs>(args: SelectSubset<T, UserUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Users and returns the data updated in the database.
+     * @param {UserUpdateManyAndReturnArgs} args - Arguments to update many Users.
+     * @example
+     * // Update many Users
+     * const user = await prisma.user.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Users and only return the `id`
+     * const userWithIdOnly = await prisma.user.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends UserUpdateManyAndReturnArgs>(args: SelectSubset<T, UserUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one User.
+     * @param {UserUpsertArgs} args - Arguments to update or create a User.
+     * @example
+     * // Update or create a User
+     * const user = await prisma.user.upsert({
+     *   create: {
+     *     // ... data to create a User
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the User we want to update
+     *   }
+     * })
+     */
+    upsert<T extends UserUpsertArgs>(args: SelectSubset<T, UserUpsertArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Users.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserCountArgs} args - Arguments to filter Users to count.
+     * @example
+     * // Count the number of Users
+     * const count = await prisma.user.count({
+     *   where: {
+     *     // ... the filter for the Users we want to count
+     *   }
+     * })
+    **/
+    count<T extends UserCountArgs>(
+      args?: Subset<T, UserCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], UserCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a User.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends UserAggregateArgs>(args: Subset<T, UserAggregateArgs>): Prisma.PrismaPromise<GetUserAggregateType<T>>
+
+    /**
+     * Group by User.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends UserGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: UserGroupByArgs['orderBy'] }
+        : { orderBy?: UserGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, UserGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetUserGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the User model
+   */
+  readonly fields: UserFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for User.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__UserClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    characters<T extends User$charactersArgs<ExtArgs> = {}>(args?: Subset<T, User$charactersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CharacterPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the User model
+   */
+  interface UserFieldRefs {
+    readonly id: FieldRef<"User", 'BigInt'>
+    readonly username: FieldRef<"User", 'String'>
+    readonly password: FieldRef<"User", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * User findUnique
+   */
+  export type UserFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    /**
+     * Filter, which User to fetch.
+     */
+    where: UserWhereUniqueInput
+  }
+
+  /**
+   * User findUniqueOrThrow
+   */
+  export type UserFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    /**
+     * Filter, which User to fetch.
+     */
+    where: UserWhereUniqueInput
+  }
+
+  /**
+   * User findFirst
+   */
+  export type UserFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    /**
+     * Filter, which User to fetch.
+     */
+    where?: UserWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Users to fetch.
+     */
+    orderBy?: UserOrderByWithRelationInput | UserOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Users.
+     */
+    cursor?: UserWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Users from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Users.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Users.
+     */
+    distinct?: UserScalarFieldEnum | UserScalarFieldEnum[]
+  }
+
+  /**
+   * User findFirstOrThrow
+   */
+  export type UserFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    /**
+     * Filter, which User to fetch.
+     */
+    where?: UserWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Users to fetch.
+     */
+    orderBy?: UserOrderByWithRelationInput | UserOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Users.
+     */
+    cursor?: UserWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Users from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Users.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Users.
+     */
+    distinct?: UserScalarFieldEnum | UserScalarFieldEnum[]
+  }
+
+  /**
+   * User findMany
+   */
+  export type UserFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    /**
+     * Filter, which Users to fetch.
+     */
+    where?: UserWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Users to fetch.
+     */
+    orderBy?: UserOrderByWithRelationInput | UserOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Users.
+     */
+    cursor?: UserWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Users from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Users.
+     */
+    skip?: number
+    distinct?: UserScalarFieldEnum | UserScalarFieldEnum[]
+  }
+
+  /**
+   * User create
+   */
+  export type UserCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    /**
+     * The data needed to create a User.
+     */
+    data: XOR<UserCreateInput, UserUncheckedCreateInput>
+  }
+
+  /**
+   * User createMany
+   */
+  export type UserCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Users.
+     */
+    data: UserCreateManyInput | UserCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * User createManyAndReturn
+   */
+  export type UserCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * The data used to create many Users.
+     */
+    data: UserCreateManyInput | UserCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * User update
+   */
+  export type UserUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    /**
+     * The data needed to update a User.
+     */
+    data: XOR<UserUpdateInput, UserUncheckedUpdateInput>
+    /**
+     * Choose, which User to update.
+     */
+    where: UserWhereUniqueInput
+  }
+
+  /**
+   * User updateMany
+   */
+  export type UserUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Users.
+     */
+    data: XOR<UserUpdateManyMutationInput, UserUncheckedUpdateManyInput>
+    /**
+     * Filter which Users to update
+     */
+    where?: UserWhereInput
+    /**
+     * Limit how many Users to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * User updateManyAndReturn
+   */
+  export type UserUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * The data used to update Users.
+     */
+    data: XOR<UserUpdateManyMutationInput, UserUncheckedUpdateManyInput>
+    /**
+     * Filter which Users to update
+     */
+    where?: UserWhereInput
+    /**
+     * Limit how many Users to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * User upsert
+   */
+  export type UserUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    /**
+     * The filter to search for the User to update in case it exists.
+     */
+    where: UserWhereUniqueInput
+    /**
+     * In case the User found by the `where` argument doesn't exist, create a new User with this data.
+     */
+    create: XOR<UserCreateInput, UserUncheckedCreateInput>
+    /**
+     * In case the User was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<UserUpdateInput, UserUncheckedUpdateInput>
+  }
+
+  /**
+   * User delete
+   */
+  export type UserDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    /**
+     * Filter which User to delete.
+     */
+    where: UserWhereUniqueInput
+  }
+
+  /**
+   * User deleteMany
+   */
+  export type UserDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Users to delete
+     */
+    where?: UserWhereInput
+    /**
+     * Limit how many Users to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * User.characters
+   */
+  export type User$charactersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Character
+     */
+    select?: CharacterSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Character
+     */
+    omit?: CharacterOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CharacterInclude<ExtArgs> | null
+    where?: CharacterWhereInput
+    orderBy?: CharacterOrderByWithRelationInput | CharacterOrderByWithRelationInput[]
+    cursor?: CharacterWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: CharacterScalarFieldEnum | CharacterScalarFieldEnum[]
+  }
+
+  /**
+   * User without action
+   */
+  export type UserDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Model Character
    */
 
@@ -2568,6 +3768,7 @@ export namespace Prisma {
     max_hp: number | null
     temp_hp: number | null
     age: number | null
+    Userid: number | null
   }
 
   export type CharacterSumAggregateOutputType = {
@@ -2584,6 +3785,7 @@ export namespace Prisma {
     max_hp: number | null
     temp_hp: number | null
     age: number | null
+    Userid: bigint | null
   }
 
   export type CharacterMinAggregateOutputType = {
@@ -2616,6 +3818,7 @@ export namespace Prisma {
     backstory: string | null
     treasure: string | null
     traits: string | null
+    Userid: bigint | null
   }
 
   export type CharacterMaxAggregateOutputType = {
@@ -2648,6 +3851,7 @@ export namespace Prisma {
     backstory: string | null
     treasure: string | null
     traits: string | null
+    Userid: bigint | null
   }
 
   export type CharacterCountAggregateOutputType = {
@@ -2680,6 +3884,7 @@ export namespace Prisma {
     backstory: number
     treasure: number
     traits: number
+    Userid: number
     _all: number
   }
 
@@ -2698,6 +3903,7 @@ export namespace Prisma {
     max_hp?: true
     temp_hp?: true
     age?: true
+    Userid?: true
   }
 
   export type CharacterSumAggregateInputType = {
@@ -2714,6 +3920,7 @@ export namespace Prisma {
     max_hp?: true
     temp_hp?: true
     age?: true
+    Userid?: true
   }
 
   export type CharacterMinAggregateInputType = {
@@ -2746,6 +3953,7 @@ export namespace Prisma {
     backstory?: true
     treasure?: true
     traits?: true
+    Userid?: true
   }
 
   export type CharacterMaxAggregateInputType = {
@@ -2778,6 +3986,7 @@ export namespace Prisma {
     backstory?: true
     treasure?: true
     traits?: true
+    Userid?: true
   }
 
   export type CharacterCountAggregateInputType = {
@@ -2810,6 +4019,7 @@ export namespace Prisma {
     backstory?: true
     treasure?: true
     traits?: true
+    Userid?: true
     _all?: true
   }
 
@@ -2929,6 +4139,7 @@ export namespace Prisma {
     backstory: string
     treasure: string
     traits: string
+    Userid: bigint | null
     _count: CharacterCountAggregateOutputType | null
     _avg: CharacterAvgAggregateOutputType | null
     _sum: CharacterSumAggregateOutputType | null
@@ -2980,6 +4191,7 @@ export namespace Prisma {
     backstory?: boolean
     treasure?: boolean
     traits?: boolean
+    Userid?: boolean
     race?: boolean | RaceDefaultArgs<ExtArgs>
     class?: boolean | ClassDefaultArgs<ExtArgs>
     background?: boolean | BackgroundDefaultArgs<ExtArgs>
@@ -2987,6 +4199,7 @@ export namespace Prisma {
     playerSkills?: boolean | Character$playerSkillsArgs<ExtArgs>
     abilities?: boolean | Character$abilitiesArgs<ExtArgs>
     languages?: boolean | Character$languagesArgs<ExtArgs>
+    User?: boolean | Character$UserArgs<ExtArgs>
     _count?: boolean | CharacterCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["character"]>
 
@@ -3020,10 +4233,12 @@ export namespace Prisma {
     backstory?: boolean
     treasure?: boolean
     traits?: boolean
+    Userid?: boolean
     race?: boolean | RaceDefaultArgs<ExtArgs>
     class?: boolean | ClassDefaultArgs<ExtArgs>
     background?: boolean | BackgroundDefaultArgs<ExtArgs>
     alignment?: boolean | AlignmentDefaultArgs<ExtArgs>
+    User?: boolean | Character$UserArgs<ExtArgs>
   }, ExtArgs["result"]["character"]>
 
   export type CharacterSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -3056,10 +4271,12 @@ export namespace Prisma {
     backstory?: boolean
     treasure?: boolean
     traits?: boolean
+    Userid?: boolean
     race?: boolean | RaceDefaultArgs<ExtArgs>
     class?: boolean | ClassDefaultArgs<ExtArgs>
     background?: boolean | BackgroundDefaultArgs<ExtArgs>
     alignment?: boolean | AlignmentDefaultArgs<ExtArgs>
+    User?: boolean | Character$UserArgs<ExtArgs>
   }, ExtArgs["result"]["character"]>
 
   export type CharacterSelectScalar = {
@@ -3092,9 +4309,10 @@ export namespace Prisma {
     backstory?: boolean
     treasure?: boolean
     traits?: boolean
+    Userid?: boolean
   }
 
-  export type CharacterOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "raceId" | "classId" | "backgroundId" | "alignmentId" | "xp" | "level" | "name" | "player" | "AC" | "speed" | "hp" | "max_hp" | "temp_hp" | "personality" | "ideals" | "bonds" | "flaws" | "age" | "height" | "weight" | "eyes" | "skin" | "hair" | "appearance" | "allies" | "backstory" | "treasure" | "traits", ExtArgs["result"]["character"]>
+  export type CharacterOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "raceId" | "classId" | "backgroundId" | "alignmentId" | "xp" | "level" | "name" | "player" | "AC" | "speed" | "hp" | "max_hp" | "temp_hp" | "personality" | "ideals" | "bonds" | "flaws" | "age" | "height" | "weight" | "eyes" | "skin" | "hair" | "appearance" | "allies" | "backstory" | "treasure" | "traits" | "Userid", ExtArgs["result"]["character"]>
   export type CharacterInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     race?: boolean | RaceDefaultArgs<ExtArgs>
     class?: boolean | ClassDefaultArgs<ExtArgs>
@@ -3103,6 +4321,7 @@ export namespace Prisma {
     playerSkills?: boolean | Character$playerSkillsArgs<ExtArgs>
     abilities?: boolean | Character$abilitiesArgs<ExtArgs>
     languages?: boolean | Character$languagesArgs<ExtArgs>
+    User?: boolean | Character$UserArgs<ExtArgs>
     _count?: boolean | CharacterCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type CharacterIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -3110,12 +4329,14 @@ export namespace Prisma {
     class?: boolean | ClassDefaultArgs<ExtArgs>
     background?: boolean | BackgroundDefaultArgs<ExtArgs>
     alignment?: boolean | AlignmentDefaultArgs<ExtArgs>
+    User?: boolean | Character$UserArgs<ExtArgs>
   }
   export type CharacterIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     race?: boolean | RaceDefaultArgs<ExtArgs>
     class?: boolean | ClassDefaultArgs<ExtArgs>
     background?: boolean | BackgroundDefaultArgs<ExtArgs>
     alignment?: boolean | AlignmentDefaultArgs<ExtArgs>
+    User?: boolean | Character$UserArgs<ExtArgs>
   }
 
   export type $CharacterPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -3128,6 +4349,7 @@ export namespace Prisma {
       playerSkills: Prisma.$PlayerSkillPayload<ExtArgs>[]
       abilities: Prisma.$CharacterAbilityPayload<ExtArgs>[]
       languages: Prisma.$CharacterLanguagePayload<ExtArgs>[]
+      User: Prisma.$UserPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: bigint
@@ -3159,6 +4381,7 @@ export namespace Prisma {
       backstory: string
       treasure: string
       traits: string
+      Userid: bigint | null
     }, ExtArgs["result"]["character"]>
     composites: {}
   }
@@ -3560,6 +4783,7 @@ export namespace Prisma {
     playerSkills<T extends Character$playerSkillsArgs<ExtArgs> = {}>(args?: Subset<T, Character$playerSkillsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PlayerSkillPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     abilities<T extends Character$abilitiesArgs<ExtArgs> = {}>(args?: Subset<T, Character$abilitiesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CharacterAbilityPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     languages<T extends Character$languagesArgs<ExtArgs> = {}>(args?: Subset<T, Character$languagesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CharacterLanguagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    User<T extends Character$UserArgs<ExtArgs> = {}>(args?: Subset<T, Character$UserArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3618,6 +4842,7 @@ export namespace Prisma {
     readonly backstory: FieldRef<"Character", 'String'>
     readonly treasure: FieldRef<"Character", 'String'>
     readonly traits: FieldRef<"Character", 'String'>
+    readonly Userid: FieldRef<"Character", 'BigInt'>
   }
     
 
@@ -4083,6 +5308,25 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: CharacterLanguageScalarFieldEnum | CharacterLanguageScalarFieldEnum[]
+  }
+
+  /**
+   * Character.User
+   */
+  export type Character$UserArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    where?: UserWhereInput
   }
 
   /**
@@ -19580,6 +20824,15 @@ export namespace Prisma {
   export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof typeof TransactionIsolationLevel]
 
 
+  export const UserScalarFieldEnum: {
+    id: 'id',
+    username: 'username',
+    password: 'password'
+  };
+
+  export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
+
+
   export const CharacterScalarFieldEnum: {
     id: 'id',
     raceId: 'raceId',
@@ -19609,7 +20862,8 @@ export namespace Prisma {
     allies: 'allies',
     backstory: 'backstory',
     treasure: 'treasure',
-    traits: 'traits'
+    traits: 'traits',
+    Userid: 'Userid'
   };
 
   export type CharacterScalarFieldEnum = (typeof CharacterScalarFieldEnum)[keyof typeof CharacterScalarFieldEnum]
@@ -19791,20 +21045,6 @@ export namespace Prisma {
 
 
   /**
-   * Reference to a field of type 'Int'
-   */
-  export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
-    
-
-
-  /**
-   * Reference to a field of type 'Int[]'
-   */
-  export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
-    
-
-
-  /**
    * Reference to a field of type 'String'
    */
   export type StringFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'String'>
@@ -19815,6 +21055,20 @@ export namespace Prisma {
    * Reference to a field of type 'String[]'
    */
   export type ListStringFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'String[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'Int'
+   */
+  export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
+    
+
+
+  /**
+   * Reference to a field of type 'Int[]'
+   */
+  export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
     
 
 
@@ -19841,6 +21095,53 @@ export namespace Prisma {
    * Deep Input Types
    */
 
+
+  export type UserWhereInput = {
+    AND?: UserWhereInput | UserWhereInput[]
+    OR?: UserWhereInput[]
+    NOT?: UserWhereInput | UserWhereInput[]
+    id?: BigIntFilter<"User"> | bigint | number
+    username?: StringFilter<"User"> | string
+    password?: StringFilter<"User"> | string
+    characters?: CharacterListRelationFilter
+  }
+
+  export type UserOrderByWithRelationInput = {
+    id?: SortOrder
+    username?: SortOrder
+    password?: SortOrder
+    characters?: CharacterOrderByRelationAggregateInput
+  }
+
+  export type UserWhereUniqueInput = Prisma.AtLeast<{
+    id?: bigint | number
+    username?: string
+    AND?: UserWhereInput | UserWhereInput[]
+    OR?: UserWhereInput[]
+    NOT?: UserWhereInput | UserWhereInput[]
+    password?: StringFilter<"User"> | string
+    characters?: CharacterListRelationFilter
+  }, "id" | "username">
+
+  export type UserOrderByWithAggregationInput = {
+    id?: SortOrder
+    username?: SortOrder
+    password?: SortOrder
+    _count?: UserCountOrderByAggregateInput
+    _avg?: UserAvgOrderByAggregateInput
+    _max?: UserMaxOrderByAggregateInput
+    _min?: UserMinOrderByAggregateInput
+    _sum?: UserSumOrderByAggregateInput
+  }
+
+  export type UserScalarWhereWithAggregatesInput = {
+    AND?: UserScalarWhereWithAggregatesInput | UserScalarWhereWithAggregatesInput[]
+    OR?: UserScalarWhereWithAggregatesInput[]
+    NOT?: UserScalarWhereWithAggregatesInput | UserScalarWhereWithAggregatesInput[]
+    id?: BigIntWithAggregatesFilter<"User"> | bigint | number
+    username?: StringWithAggregatesFilter<"User"> | string
+    password?: StringWithAggregatesFilter<"User"> | string
+  }
 
   export type CharacterWhereInput = {
     AND?: CharacterWhereInput | CharacterWhereInput[]
@@ -19875,6 +21176,7 @@ export namespace Prisma {
     backstory?: StringFilter<"Character"> | string
     treasure?: StringFilter<"Character"> | string
     traits?: StringFilter<"Character"> | string
+    Userid?: BigIntNullableFilter<"Character"> | bigint | number | null
     race?: XOR<RaceScalarRelationFilter, RaceWhereInput>
     class?: XOR<ClassScalarRelationFilter, ClassWhereInput>
     background?: XOR<BackgroundScalarRelationFilter, BackgroundWhereInput>
@@ -19882,6 +21184,7 @@ export namespace Prisma {
     playerSkills?: PlayerSkillListRelationFilter
     abilities?: CharacterAbilityListRelationFilter
     languages?: CharacterLanguageListRelationFilter
+    User?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
   }
 
   export type CharacterOrderByWithRelationInput = {
@@ -19914,6 +21217,7 @@ export namespace Prisma {
     backstory?: SortOrder
     treasure?: SortOrder
     traits?: SortOrder
+    Userid?: SortOrderInput | SortOrder
     race?: RaceOrderByWithRelationInput
     class?: ClassOrderByWithRelationInput
     background?: BackgroundOrderByWithRelationInput
@@ -19921,6 +21225,7 @@ export namespace Prisma {
     playerSkills?: PlayerSkillOrderByRelationAggregateInput
     abilities?: CharacterAbilityOrderByRelationAggregateInput
     languages?: CharacterLanguageOrderByRelationAggregateInput
+    User?: UserOrderByWithRelationInput
   }
 
   export type CharacterWhereUniqueInput = Prisma.AtLeast<{
@@ -19956,6 +21261,7 @@ export namespace Prisma {
     backstory?: StringFilter<"Character"> | string
     treasure?: StringFilter<"Character"> | string
     traits?: StringFilter<"Character"> | string
+    Userid?: BigIntNullableFilter<"Character"> | bigint | number | null
     race?: XOR<RaceScalarRelationFilter, RaceWhereInput>
     class?: XOR<ClassScalarRelationFilter, ClassWhereInput>
     background?: XOR<BackgroundScalarRelationFilter, BackgroundWhereInput>
@@ -19963,6 +21269,7 @@ export namespace Prisma {
     playerSkills?: PlayerSkillListRelationFilter
     abilities?: CharacterAbilityListRelationFilter
     languages?: CharacterLanguageListRelationFilter
+    User?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
   }, "id" | "backgroundId">
 
   export type CharacterOrderByWithAggregationInput = {
@@ -19995,6 +21302,7 @@ export namespace Prisma {
     backstory?: SortOrder
     treasure?: SortOrder
     traits?: SortOrder
+    Userid?: SortOrderInput | SortOrder
     _count?: CharacterCountOrderByAggregateInput
     _avg?: CharacterAvgOrderByAggregateInput
     _max?: CharacterMaxOrderByAggregateInput
@@ -20035,6 +21343,7 @@ export namespace Prisma {
     backstory?: StringWithAggregatesFilter<"Character"> | string
     treasure?: StringWithAggregatesFilter<"Character"> | string
     traits?: StringWithAggregatesFilter<"Character"> | string
+    Userid?: BigIntNullableWithAggregatesFilter<"Character"> | bigint | number | null
   }
 
   export type RaceWhereInput = {
@@ -20770,6 +22079,52 @@ export namespace Prisma {
     languageId?: BigIntWithAggregatesFilter<"CharacterLanguage"> | bigint | number
   }
 
+  export type UserCreateInput = {
+    id?: bigint | number
+    username: string
+    password: string
+    characters?: CharacterCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateInput = {
+    id?: bigint | number
+    username: string
+    password: string
+    characters?: CharacterUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUpdateInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    username?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    characters?: CharacterUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    username?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    characters?: CharacterUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserCreateManyInput = {
+    id?: bigint | number
+    username: string
+    password: string
+  }
+
+  export type UserUpdateManyMutationInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    username?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type UserUncheckedUpdateManyInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    username?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+  }
+
   export type CharacterCreateInput = {
     id?: bigint | number
     xp: number
@@ -20803,6 +22158,7 @@ export namespace Prisma {
     playerSkills?: PlayerSkillCreateNestedManyWithoutCharacterInput
     abilities?: CharacterAbilityCreateNestedManyWithoutCharacterInput
     languages?: CharacterLanguageCreateNestedManyWithoutCharacterInput
+    User?: UserCreateNestedOneWithoutCharactersInput
   }
 
   export type CharacterUncheckedCreateInput = {
@@ -20835,6 +22191,7 @@ export namespace Prisma {
     backstory: string
     treasure: string
     traits: string
+    Userid?: bigint | number | null
     playerSkills?: PlayerSkillUncheckedCreateNestedManyWithoutCharacterInput
     abilities?: CharacterAbilityUncheckedCreateNestedManyWithoutCharacterInput
     languages?: CharacterLanguageUncheckedCreateNestedManyWithoutCharacterInput
@@ -20873,6 +22230,7 @@ export namespace Prisma {
     playerSkills?: PlayerSkillUpdateManyWithoutCharacterNestedInput
     abilities?: CharacterAbilityUpdateManyWithoutCharacterNestedInput
     languages?: CharacterLanguageUpdateManyWithoutCharacterNestedInput
+    User?: UserUpdateOneWithoutCharactersNestedInput
   }
 
   export type CharacterUncheckedUpdateInput = {
@@ -20905,6 +22263,7 @@ export namespace Prisma {
     backstory?: StringFieldUpdateOperationsInput | string
     treasure?: StringFieldUpdateOperationsInput | string
     traits?: StringFieldUpdateOperationsInput | string
+    Userid?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     playerSkills?: PlayerSkillUncheckedUpdateManyWithoutCharacterNestedInput
     abilities?: CharacterAbilityUncheckedUpdateManyWithoutCharacterNestedInput
     languages?: CharacterLanguageUncheckedUpdateManyWithoutCharacterNestedInput
@@ -20940,6 +22299,7 @@ export namespace Prisma {
     backstory: string
     treasure: string
     traits: string
+    Userid?: bigint | number | null
   }
 
   export type CharacterUpdateManyMutationInput = {
@@ -21000,6 +22360,7 @@ export namespace Prisma {
     backstory?: StringFieldUpdateOperationsInput | string
     treasure?: StringFieldUpdateOperationsInput | string
     traits?: StringFieldUpdateOperationsInput | string
+    Userid?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
   }
 
   export type RaceCreateInput = {
@@ -21700,17 +23061,6 @@ export namespace Prisma {
     not?: NestedBigIntFilter<$PrismaModel> | bigint | number
   }
 
-  export type IntFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[] | ListIntFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntFilter<$PrismaModel> | number
-  }
-
   export type StringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -21724,6 +23074,98 @@ export namespace Prisma {
     endsWith?: string | StringFieldRefInput<$PrismaModel>
     mode?: QueryMode
     not?: NestedStringFilter<$PrismaModel> | string
+  }
+
+  export type CharacterListRelationFilter = {
+    every?: CharacterWhereInput
+    some?: CharacterWhereInput
+    none?: CharacterWhereInput
+  }
+
+  export type CharacterOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type UserCountOrderByAggregateInput = {
+    id?: SortOrder
+    username?: SortOrder
+    password?: SortOrder
+  }
+
+  export type UserAvgOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type UserMaxOrderByAggregateInput = {
+    id?: SortOrder
+    username?: SortOrder
+    password?: SortOrder
+  }
+
+  export type UserMinOrderByAggregateInput = {
+    id?: SortOrder
+    username?: SortOrder
+    password?: SortOrder
+  }
+
+  export type UserSumOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type BigIntWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    in?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel>
+    notIn?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel>
+    lt?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    lte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    gt?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    gte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    not?: NestedBigIntWithAggregatesFilter<$PrismaModel> | bigint | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedBigIntFilter<$PrismaModel>
+    _min?: NestedBigIntFilter<$PrismaModel>
+    _max?: NestedBigIntFilter<$PrismaModel>
+  }
+
+  export type StringWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel>
+    in?: string[] | ListStringFieldRefInput<$PrismaModel>
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel>
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
+    not?: NestedStringWithAggregatesFilter<$PrismaModel> | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedStringFilter<$PrismaModel>
+    _max?: NestedStringFilter<$PrismaModel>
+  }
+
+  export type IntFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntFilter<$PrismaModel> | number
+  }
+
+  export type BigIntNullableFilter<$PrismaModel = never> = {
+    equals?: bigint | number | BigIntFieldRefInput<$PrismaModel> | null
+    in?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel> | null
+    notIn?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel> | null
+    lt?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    lte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    gt?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    gte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    not?: NestedBigIntNullableFilter<$PrismaModel> | bigint | number | null
   }
 
   export type RaceScalarRelationFilter = {
@@ -21762,6 +23204,16 @@ export namespace Prisma {
     every?: CharacterLanguageWhereInput
     some?: CharacterLanguageWhereInput
     none?: CharacterLanguageWhereInput
+  }
+
+  export type UserNullableScalarRelationFilter = {
+    is?: UserWhereInput | null
+    isNot?: UserWhereInput | null
+  }
+
+  export type SortOrderInput = {
+    sort: SortOrder
+    nulls?: NullsOrder
   }
 
   export type PlayerSkillOrderByRelationAggregateInput = {
@@ -21806,6 +23258,7 @@ export namespace Prisma {
     backstory?: SortOrder
     treasure?: SortOrder
     traits?: SortOrder
+    Userid?: SortOrder
   }
 
   export type CharacterAvgOrderByAggregateInput = {
@@ -21822,6 +23275,7 @@ export namespace Prisma {
     max_hp?: SortOrder
     temp_hp?: SortOrder
     age?: SortOrder
+    Userid?: SortOrder
   }
 
   export type CharacterMaxOrderByAggregateInput = {
@@ -21854,6 +23308,7 @@ export namespace Prisma {
     backstory?: SortOrder
     treasure?: SortOrder
     traits?: SortOrder
+    Userid?: SortOrder
   }
 
   export type CharacterMinOrderByAggregateInput = {
@@ -21886,6 +23341,7 @@ export namespace Prisma {
     backstory?: SortOrder
     treasure?: SortOrder
     traits?: SortOrder
+    Userid?: SortOrder
   }
 
   export type CharacterSumOrderByAggregateInput = {
@@ -21902,22 +23358,7 @@ export namespace Prisma {
     max_hp?: SortOrder
     temp_hp?: SortOrder
     age?: SortOrder
-  }
-
-  export type BigIntWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: bigint | number | BigIntFieldRefInput<$PrismaModel>
-    in?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel>
-    notIn?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel>
-    lt?: bigint | number | BigIntFieldRefInput<$PrismaModel>
-    lte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
-    gt?: bigint | number | BigIntFieldRefInput<$PrismaModel>
-    gte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
-    not?: NestedBigIntWithAggregatesFilter<$PrismaModel> | bigint | number
-    _count?: NestedIntFilter<$PrismaModel>
-    _avg?: NestedFloatFilter<$PrismaModel>
-    _sum?: NestedBigIntFilter<$PrismaModel>
-    _min?: NestedBigIntFilter<$PrismaModel>
-    _max?: NestedBigIntFilter<$PrismaModel>
+    Userid?: SortOrder
   }
 
   export type IntWithAggregatesFilter<$PrismaModel = never> = {
@@ -21936,25 +23377,7 @@ export namespace Prisma {
     _max?: NestedIntFilter<$PrismaModel>
   }
 
-  export type StringWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel>
-    in?: string[] | ListStringFieldRefInput<$PrismaModel>
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel>
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    contains?: string | StringFieldRefInput<$PrismaModel>
-    startsWith?: string | StringFieldRefInput<$PrismaModel>
-    endsWith?: string | StringFieldRefInput<$PrismaModel>
-    mode?: QueryMode
-    not?: NestedStringWithAggregatesFilter<$PrismaModel> | string
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedStringFilter<$PrismaModel>
-    _max?: NestedStringFilter<$PrismaModel>
-  }
-
-  export type BigIntNullableFilter<$PrismaModel = never> = {
+  export type BigIntNullableWithAggregatesFilter<$PrismaModel = never> = {
     equals?: bigint | number | BigIntFieldRefInput<$PrismaModel> | null
     in?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel> | null
     notIn?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel> | null
@@ -21962,7 +23385,12 @@ export namespace Prisma {
     lte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
     gt?: bigint | number | BigIntFieldRefInput<$PrismaModel>
     gte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
-    not?: NestedBigIntNullableFilter<$PrismaModel> | bigint | number | null
+    not?: NestedBigIntNullableWithAggregatesFilter<$PrismaModel> | bigint | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedBigIntNullableFilter<$PrismaModel>
+    _min?: NestedBigIntNullableFilter<$PrismaModel>
+    _max?: NestedBigIntNullableFilter<$PrismaModel>
   }
 
   export type RaceListRelationFilter = {
@@ -21988,17 +23416,6 @@ export namespace Prisma {
     none?: RaceTraitWhereInput
   }
 
-  export type CharacterListRelationFilter = {
-    every?: CharacterWhereInput
-    some?: CharacterWhereInput
-    none?: CharacterWhereInput
-  }
-
-  export type SortOrderInput = {
-    sort: SortOrder
-    nulls?: NullsOrder
-  }
-
   export type RaceOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
@@ -22008,10 +23425,6 @@ export namespace Prisma {
   }
 
   export type RaceTraitOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
-  export type CharacterOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -22044,22 +23457,6 @@ export namespace Prisma {
   export type RaceSumOrderByAggregateInput = {
     id?: SortOrder
     subraceOfId?: SortOrder
-  }
-
-  export type BigIntNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: bigint | number | BigIntFieldRefInput<$PrismaModel> | null
-    in?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel> | null
-    notIn?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel> | null
-    lt?: bigint | number | BigIntFieldRefInput<$PrismaModel>
-    lte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
-    gt?: bigint | number | BigIntFieldRefInput<$PrismaModel>
-    gte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
-    not?: NestedBigIntNullableWithAggregatesFilter<$PrismaModel> | bigint | number | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _avg?: NestedFloatNullableFilter<$PrismaModel>
-    _sum?: NestedBigIntNullableFilter<$PrismaModel>
-    _min?: NestedBigIntNullableFilter<$PrismaModel>
-    _max?: NestedBigIntNullableFilter<$PrismaModel>
   }
 
   export type TraitCountOrderByAggregateInput = {
@@ -22523,6 +23920,60 @@ export namespace Prisma {
     languageId?: SortOrder
   }
 
+  export type CharacterCreateNestedManyWithoutUserInput = {
+    create?: XOR<CharacterCreateWithoutUserInput, CharacterUncheckedCreateWithoutUserInput> | CharacterCreateWithoutUserInput[] | CharacterUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: CharacterCreateOrConnectWithoutUserInput | CharacterCreateOrConnectWithoutUserInput[]
+    createMany?: CharacterCreateManyUserInputEnvelope
+    connect?: CharacterWhereUniqueInput | CharacterWhereUniqueInput[]
+  }
+
+  export type CharacterUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<CharacterCreateWithoutUserInput, CharacterUncheckedCreateWithoutUserInput> | CharacterCreateWithoutUserInput[] | CharacterUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: CharacterCreateOrConnectWithoutUserInput | CharacterCreateOrConnectWithoutUserInput[]
+    createMany?: CharacterCreateManyUserInputEnvelope
+    connect?: CharacterWhereUniqueInput | CharacterWhereUniqueInput[]
+  }
+
+  export type BigIntFieldUpdateOperationsInput = {
+    set?: bigint | number
+    increment?: bigint | number
+    decrement?: bigint | number
+    multiply?: bigint | number
+    divide?: bigint | number
+  }
+
+  export type StringFieldUpdateOperationsInput = {
+    set?: string
+  }
+
+  export type CharacterUpdateManyWithoutUserNestedInput = {
+    create?: XOR<CharacterCreateWithoutUserInput, CharacterUncheckedCreateWithoutUserInput> | CharacterCreateWithoutUserInput[] | CharacterUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: CharacterCreateOrConnectWithoutUserInput | CharacterCreateOrConnectWithoutUserInput[]
+    upsert?: CharacterUpsertWithWhereUniqueWithoutUserInput | CharacterUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: CharacterCreateManyUserInputEnvelope
+    set?: CharacterWhereUniqueInput | CharacterWhereUniqueInput[]
+    disconnect?: CharacterWhereUniqueInput | CharacterWhereUniqueInput[]
+    delete?: CharacterWhereUniqueInput | CharacterWhereUniqueInput[]
+    connect?: CharacterWhereUniqueInput | CharacterWhereUniqueInput[]
+    update?: CharacterUpdateWithWhereUniqueWithoutUserInput | CharacterUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: CharacterUpdateManyWithWhereWithoutUserInput | CharacterUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: CharacterScalarWhereInput | CharacterScalarWhereInput[]
+  }
+
+  export type CharacterUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<CharacterCreateWithoutUserInput, CharacterUncheckedCreateWithoutUserInput> | CharacterCreateWithoutUserInput[] | CharacterUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: CharacterCreateOrConnectWithoutUserInput | CharacterCreateOrConnectWithoutUserInput[]
+    upsert?: CharacterUpsertWithWhereUniqueWithoutUserInput | CharacterUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: CharacterCreateManyUserInputEnvelope
+    set?: CharacterWhereUniqueInput | CharacterWhereUniqueInput[]
+    disconnect?: CharacterWhereUniqueInput | CharacterWhereUniqueInput[]
+    delete?: CharacterWhereUniqueInput | CharacterWhereUniqueInput[]
+    connect?: CharacterWhereUniqueInput | CharacterWhereUniqueInput[]
+    update?: CharacterUpdateWithWhereUniqueWithoutUserInput | CharacterUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: CharacterUpdateManyWithWhereWithoutUserInput | CharacterUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: CharacterScalarWhereInput | CharacterScalarWhereInput[]
+  }
+
   export type RaceCreateNestedOneWithoutCharacterInput = {
     create?: XOR<RaceCreateWithoutCharacterInput, RaceUncheckedCreateWithoutCharacterInput>
     connectOrCreate?: RaceCreateOrConnectWithoutCharacterInput
@@ -22568,6 +24019,12 @@ export namespace Prisma {
     connect?: CharacterLanguageWhereUniqueInput | CharacterLanguageWhereUniqueInput[]
   }
 
+  export type UserCreateNestedOneWithoutCharactersInput = {
+    create?: XOR<UserCreateWithoutCharactersInput, UserUncheckedCreateWithoutCharactersInput>
+    connectOrCreate?: UserCreateOrConnectWithoutCharactersInput
+    connect?: UserWhereUniqueInput
+  }
+
   export type PlayerSkillUncheckedCreateNestedManyWithoutCharacterInput = {
     create?: XOR<PlayerSkillCreateWithoutCharacterInput, PlayerSkillUncheckedCreateWithoutCharacterInput> | PlayerSkillCreateWithoutCharacterInput[] | PlayerSkillUncheckedCreateWithoutCharacterInput[]
     connectOrCreate?: PlayerSkillCreateOrConnectWithoutCharacterInput | PlayerSkillCreateOrConnectWithoutCharacterInput[]
@@ -22589,24 +24046,12 @@ export namespace Prisma {
     connect?: CharacterLanguageWhereUniqueInput | CharacterLanguageWhereUniqueInput[]
   }
 
-  export type BigIntFieldUpdateOperationsInput = {
-    set?: bigint | number
-    increment?: bigint | number
-    decrement?: bigint | number
-    multiply?: bigint | number
-    divide?: bigint | number
-  }
-
   export type IntFieldUpdateOperationsInput = {
     set?: number
     increment?: number
     decrement?: number
     multiply?: number
     divide?: number
-  }
-
-  export type StringFieldUpdateOperationsInput = {
-    set?: string
   }
 
   export type RaceUpdateOneRequiredWithoutCharacterNestedInput = {
@@ -22681,6 +24126,24 @@ export namespace Prisma {
     update?: CharacterLanguageUpdateWithWhereUniqueWithoutCharacterInput | CharacterLanguageUpdateWithWhereUniqueWithoutCharacterInput[]
     updateMany?: CharacterLanguageUpdateManyWithWhereWithoutCharacterInput | CharacterLanguageUpdateManyWithWhereWithoutCharacterInput[]
     deleteMany?: CharacterLanguageScalarWhereInput | CharacterLanguageScalarWhereInput[]
+  }
+
+  export type UserUpdateOneWithoutCharactersNestedInput = {
+    create?: XOR<UserCreateWithoutCharactersInput, UserUncheckedCreateWithoutCharactersInput>
+    connectOrCreate?: UserCreateOrConnectWithoutCharactersInput
+    upsert?: UserUpsertWithoutCharactersInput
+    disconnect?: UserWhereInput | boolean
+    delete?: UserWhereInput | boolean
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutCharactersInput, UserUpdateWithoutCharactersInput>, UserUncheckedUpdateWithoutCharactersInput>
+  }
+
+  export type NullableBigIntFieldUpdateOperationsInput = {
+    set?: bigint | number | null
+    increment?: bigint | number
+    decrement?: bigint | number
+    multiply?: bigint | number
+    divide?: bigint | number
   }
 
   export type PlayerSkillUncheckedUpdateManyWithoutCharacterNestedInput = {
@@ -22848,14 +24311,6 @@ export namespace Prisma {
     update?: CharacterUpdateWithWhereUniqueWithoutRaceInput | CharacterUpdateWithWhereUniqueWithoutRaceInput[]
     updateMany?: CharacterUpdateManyWithWhereWithoutRaceInput | CharacterUpdateManyWithWhereWithoutRaceInput[]
     deleteMany?: CharacterScalarWhereInput | CharacterScalarWhereInput[]
-  }
-
-  export type NullableBigIntFieldUpdateOperationsInput = {
-    set?: bigint | number | null
-    increment?: bigint | number
-    decrement?: bigint | number
-    multiply?: bigint | number
-    divide?: bigint | number
   }
 
   export type RaceUncheckedUpdateManyWithoutSubrace_ofNestedInput = {
@@ -23628,17 +25083,6 @@ export namespace Prisma {
     not?: NestedBigIntFilter<$PrismaModel> | bigint | number
   }
 
-  export type NestedIntFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[] | ListIntFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntFilter<$PrismaModel> | number
-  }
-
   export type NestedStringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -23669,6 +25113,17 @@ export namespace Prisma {
     _max?: NestedBigIntFilter<$PrismaModel>
   }
 
+  export type NestedIntFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntFilter<$PrismaModel> | number
+  }
+
   export type NestedFloatFilter<$PrismaModel = never> = {
     equals?: number | FloatFieldRefInput<$PrismaModel>
     in?: number[] | ListFloatFieldRefInput<$PrismaModel>
@@ -23678,22 +25133,6 @@ export namespace Prisma {
     gt?: number | FloatFieldRefInput<$PrismaModel>
     gte?: number | FloatFieldRefInput<$PrismaModel>
     not?: NestedFloatFilter<$PrismaModel> | number
-  }
-
-  export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[] | ListIntFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
-    _count?: NestedIntFilter<$PrismaModel>
-    _avg?: NestedFloatFilter<$PrismaModel>
-    _sum?: NestedIntFilter<$PrismaModel>
-    _min?: NestedIntFilter<$PrismaModel>
-    _max?: NestedIntFilter<$PrismaModel>
   }
 
   export type NestedStringWithAggregatesFilter<$PrismaModel = never> = {
@@ -23722,6 +25161,22 @@ export namespace Prisma {
     gt?: bigint | number | BigIntFieldRefInput<$PrismaModel>
     gte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
     not?: NestedBigIntNullableFilter<$PrismaModel> | bigint | number | null
+  }
+
+  export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedIntFilter<$PrismaModel>
+    _min?: NestedIntFilter<$PrismaModel>
+    _max?: NestedIntFilter<$PrismaModel>
   }
 
   export type NestedBigIntNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -23773,6 +25228,138 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedBoolFilter<$PrismaModel>
     _max?: NestedBoolFilter<$PrismaModel>
+  }
+
+  export type CharacterCreateWithoutUserInput = {
+    id?: bigint | number
+    xp: number
+    level: number
+    name: string
+    player: string
+    AC: number
+    speed: number
+    hp: number
+    max_hp: number
+    temp_hp: number
+    personality: string
+    ideals: string
+    bonds: string
+    flaws: string
+    age: number
+    height: string
+    weight: string
+    eyes: string
+    skin: string
+    hair: string
+    appearance: string
+    allies: string
+    backstory: string
+    treasure: string
+    traits: string
+    race: RaceCreateNestedOneWithoutCharacterInput
+    class: ClassCreateNestedOneWithoutCharacterInput
+    background: BackgroundCreateNestedOneWithoutCharacterInput
+    alignment: AlignmentCreateNestedOneWithoutCharacterInput
+    playerSkills?: PlayerSkillCreateNestedManyWithoutCharacterInput
+    abilities?: CharacterAbilityCreateNestedManyWithoutCharacterInput
+    languages?: CharacterLanguageCreateNestedManyWithoutCharacterInput
+  }
+
+  export type CharacterUncheckedCreateWithoutUserInput = {
+    id?: bigint | number
+    raceId: bigint | number
+    classId: bigint | number
+    backgroundId: bigint | number
+    alignmentId: bigint | number
+    xp: number
+    level: number
+    name: string
+    player: string
+    AC: number
+    speed: number
+    hp: number
+    max_hp: number
+    temp_hp: number
+    personality: string
+    ideals: string
+    bonds: string
+    flaws: string
+    age: number
+    height: string
+    weight: string
+    eyes: string
+    skin: string
+    hair: string
+    appearance: string
+    allies: string
+    backstory: string
+    treasure: string
+    traits: string
+    playerSkills?: PlayerSkillUncheckedCreateNestedManyWithoutCharacterInput
+    abilities?: CharacterAbilityUncheckedCreateNestedManyWithoutCharacterInput
+    languages?: CharacterLanguageUncheckedCreateNestedManyWithoutCharacterInput
+  }
+
+  export type CharacterCreateOrConnectWithoutUserInput = {
+    where: CharacterWhereUniqueInput
+    create: XOR<CharacterCreateWithoutUserInput, CharacterUncheckedCreateWithoutUserInput>
+  }
+
+  export type CharacterCreateManyUserInputEnvelope = {
+    data: CharacterCreateManyUserInput | CharacterCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type CharacterUpsertWithWhereUniqueWithoutUserInput = {
+    where: CharacterWhereUniqueInput
+    update: XOR<CharacterUpdateWithoutUserInput, CharacterUncheckedUpdateWithoutUserInput>
+    create: XOR<CharacterCreateWithoutUserInput, CharacterUncheckedCreateWithoutUserInput>
+  }
+
+  export type CharacterUpdateWithWhereUniqueWithoutUserInput = {
+    where: CharacterWhereUniqueInput
+    data: XOR<CharacterUpdateWithoutUserInput, CharacterUncheckedUpdateWithoutUserInput>
+  }
+
+  export type CharacterUpdateManyWithWhereWithoutUserInput = {
+    where: CharacterScalarWhereInput
+    data: XOR<CharacterUpdateManyMutationInput, CharacterUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type CharacterScalarWhereInput = {
+    AND?: CharacterScalarWhereInput | CharacterScalarWhereInput[]
+    OR?: CharacterScalarWhereInput[]
+    NOT?: CharacterScalarWhereInput | CharacterScalarWhereInput[]
+    id?: BigIntFilter<"Character"> | bigint | number
+    raceId?: BigIntFilter<"Character"> | bigint | number
+    classId?: BigIntFilter<"Character"> | bigint | number
+    backgroundId?: BigIntFilter<"Character"> | bigint | number
+    alignmentId?: BigIntFilter<"Character"> | bigint | number
+    xp?: IntFilter<"Character"> | number
+    level?: IntFilter<"Character"> | number
+    name?: StringFilter<"Character"> | string
+    player?: StringFilter<"Character"> | string
+    AC?: IntFilter<"Character"> | number
+    speed?: IntFilter<"Character"> | number
+    hp?: IntFilter<"Character"> | number
+    max_hp?: IntFilter<"Character"> | number
+    temp_hp?: IntFilter<"Character"> | number
+    personality?: StringFilter<"Character"> | string
+    ideals?: StringFilter<"Character"> | string
+    bonds?: StringFilter<"Character"> | string
+    flaws?: StringFilter<"Character"> | string
+    age?: IntFilter<"Character"> | number
+    height?: StringFilter<"Character"> | string
+    weight?: StringFilter<"Character"> | string
+    eyes?: StringFilter<"Character"> | string
+    skin?: StringFilter<"Character"> | string
+    hair?: StringFilter<"Character"> | string
+    appearance?: StringFilter<"Character"> | string
+    allies?: StringFilter<"Character"> | string
+    backstory?: StringFilter<"Character"> | string
+    treasure?: StringFilter<"Character"> | string
+    traits?: StringFilter<"Character"> | string
+    Userid?: BigIntNullableFilter<"Character"> | bigint | number | null
   }
 
   export type RaceCreateWithoutCharacterInput = {
@@ -23919,6 +25506,23 @@ export namespace Prisma {
   export type CharacterLanguageCreateManyCharacterInputEnvelope = {
     data: CharacterLanguageCreateManyCharacterInput | CharacterLanguageCreateManyCharacterInput[]
     skipDuplicates?: boolean
+  }
+
+  export type UserCreateWithoutCharactersInput = {
+    id?: bigint | number
+    username: string
+    password: string
+  }
+
+  export type UserUncheckedCreateWithoutCharactersInput = {
+    id?: bigint | number
+    username: string
+    password: string
+  }
+
+  export type UserCreateOrConnectWithoutCharactersInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutCharactersInput, UserUncheckedCreateWithoutCharactersInput>
   }
 
   export type RaceUpsertWithoutCharacterInput = {
@@ -24104,6 +25708,29 @@ export namespace Prisma {
     languageId?: BigIntFilter<"CharacterLanguage"> | bigint | number
   }
 
+  export type UserUpsertWithoutCharactersInput = {
+    update: XOR<UserUpdateWithoutCharactersInput, UserUncheckedUpdateWithoutCharactersInput>
+    create: XOR<UserCreateWithoutCharactersInput, UserUncheckedCreateWithoutCharactersInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutCharactersInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutCharactersInput, UserUncheckedUpdateWithoutCharactersInput>
+  }
+
+  export type UserUpdateWithoutCharactersInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    username?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type UserUncheckedUpdateWithoutCharactersInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    username?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+  }
+
   export type RaceCreateWithoutSubrace_ofInput = {
     id?: bigint | number
     name: string
@@ -24229,6 +25856,7 @@ export namespace Prisma {
     playerSkills?: PlayerSkillCreateNestedManyWithoutCharacterInput
     abilities?: CharacterAbilityCreateNestedManyWithoutCharacterInput
     languages?: CharacterLanguageCreateNestedManyWithoutCharacterInput
+    User?: UserCreateNestedOneWithoutCharactersInput
   }
 
   export type CharacterUncheckedCreateWithoutRaceInput = {
@@ -24260,6 +25888,7 @@ export namespace Prisma {
     backstory: string
     treasure: string
     traits: string
+    Userid?: bigint | number | null
     playerSkills?: PlayerSkillUncheckedCreateNestedManyWithoutCharacterInput
     abilities?: CharacterAbilityUncheckedCreateNestedManyWithoutCharacterInput
     languages?: CharacterLanguageUncheckedCreateNestedManyWithoutCharacterInput
@@ -24396,41 +26025,6 @@ export namespace Prisma {
   export type CharacterUpdateManyWithWhereWithoutRaceInput = {
     where: CharacterScalarWhereInput
     data: XOR<CharacterUpdateManyMutationInput, CharacterUncheckedUpdateManyWithoutRaceInput>
-  }
-
-  export type CharacterScalarWhereInput = {
-    AND?: CharacterScalarWhereInput | CharacterScalarWhereInput[]
-    OR?: CharacterScalarWhereInput[]
-    NOT?: CharacterScalarWhereInput | CharacterScalarWhereInput[]
-    id?: BigIntFilter<"Character"> | bigint | number
-    raceId?: BigIntFilter<"Character"> | bigint | number
-    classId?: BigIntFilter<"Character"> | bigint | number
-    backgroundId?: BigIntFilter<"Character"> | bigint | number
-    alignmentId?: BigIntFilter<"Character"> | bigint | number
-    xp?: IntFilter<"Character"> | number
-    level?: IntFilter<"Character"> | number
-    name?: StringFilter<"Character"> | string
-    player?: StringFilter<"Character"> | string
-    AC?: IntFilter<"Character"> | number
-    speed?: IntFilter<"Character"> | number
-    hp?: IntFilter<"Character"> | number
-    max_hp?: IntFilter<"Character"> | number
-    temp_hp?: IntFilter<"Character"> | number
-    personality?: StringFilter<"Character"> | string
-    ideals?: StringFilter<"Character"> | string
-    bonds?: StringFilter<"Character"> | string
-    flaws?: StringFilter<"Character"> | string
-    age?: IntFilter<"Character"> | number
-    height?: StringFilter<"Character"> | string
-    weight?: StringFilter<"Character"> | string
-    eyes?: StringFilter<"Character"> | string
-    skin?: StringFilter<"Character"> | string
-    hair?: StringFilter<"Character"> | string
-    appearance?: StringFilter<"Character"> | string
-    allies?: StringFilter<"Character"> | string
-    backstory?: StringFilter<"Character"> | string
-    treasure?: StringFilter<"Character"> | string
-    traits?: StringFilter<"Character"> | string
   }
 
   export type RaceCreateWithoutTraitInput = {
@@ -24664,6 +26258,7 @@ export namespace Prisma {
     playerSkills?: PlayerSkillCreateNestedManyWithoutCharacterInput
     abilities?: CharacterAbilityCreateNestedManyWithoutCharacterInput
     languages?: CharacterLanguageCreateNestedManyWithoutCharacterInput
+    User?: UserCreateNestedOneWithoutCharactersInput
   }
 
   export type CharacterUncheckedCreateWithoutClassInput = {
@@ -24695,6 +26290,7 @@ export namespace Prisma {
     backstory: string
     treasure: string
     traits: string
+    Userid?: bigint | number | null
     playerSkills?: PlayerSkillUncheckedCreateNestedManyWithoutCharacterInput
     abilities?: CharacterAbilityUncheckedCreateNestedManyWithoutCharacterInput
     languages?: CharacterLanguageUncheckedCreateNestedManyWithoutCharacterInput
@@ -25041,6 +26637,7 @@ export namespace Prisma {
     playerSkills?: PlayerSkillCreateNestedManyWithoutCharacterInput
     abilities?: CharacterAbilityCreateNestedManyWithoutCharacterInput
     languages?: CharacterLanguageCreateNestedManyWithoutCharacterInput
+    User?: UserCreateNestedOneWithoutCharactersInput
   }
 
   export type CharacterUncheckedCreateWithoutBackgroundInput = {
@@ -25072,6 +26669,7 @@ export namespace Prisma {
     backstory: string
     treasure: string
     traits: string
+    Userid?: bigint | number | null
     playerSkills?: PlayerSkillUncheckedCreateNestedManyWithoutCharacterInput
     abilities?: CharacterAbilityUncheckedCreateNestedManyWithoutCharacterInput
     languages?: CharacterLanguageUncheckedCreateNestedManyWithoutCharacterInput
@@ -25145,6 +26743,7 @@ export namespace Prisma {
     playerSkills?: PlayerSkillUpdateManyWithoutCharacterNestedInput
     abilities?: CharacterAbilityUpdateManyWithoutCharacterNestedInput
     languages?: CharacterLanguageUpdateManyWithoutCharacterNestedInput
+    User?: UserUpdateOneWithoutCharactersNestedInput
   }
 
   export type CharacterUncheckedUpdateWithoutBackgroundInput = {
@@ -25176,6 +26775,7 @@ export namespace Prisma {
     backstory?: StringFieldUpdateOperationsInput | string
     treasure?: StringFieldUpdateOperationsInput | string
     traits?: StringFieldUpdateOperationsInput | string
+    Userid?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     playerSkills?: PlayerSkillUncheckedUpdateManyWithoutCharacterNestedInput
     abilities?: CharacterAbilityUncheckedUpdateManyWithoutCharacterNestedInput
     languages?: CharacterLanguageUncheckedUpdateManyWithoutCharacterNestedInput
@@ -25321,6 +26921,7 @@ export namespace Prisma {
     playerSkills?: PlayerSkillCreateNestedManyWithoutCharacterInput
     abilities?: CharacterAbilityCreateNestedManyWithoutCharacterInput
     languages?: CharacterLanguageCreateNestedManyWithoutCharacterInput
+    User?: UserCreateNestedOneWithoutCharactersInput
   }
 
   export type CharacterUncheckedCreateWithoutAlignmentInput = {
@@ -25352,6 +26953,7 @@ export namespace Prisma {
     backstory: string
     treasure: string
     traits: string
+    Userid?: bigint | number | null
     playerSkills?: PlayerSkillUncheckedCreateNestedManyWithoutCharacterInput
     abilities?: CharacterAbilityUncheckedCreateNestedManyWithoutCharacterInput
     languages?: CharacterLanguageUncheckedCreateNestedManyWithoutCharacterInput
@@ -25415,6 +27017,7 @@ export namespace Prisma {
     alignment: AlignmentCreateNestedOneWithoutCharacterInput
     abilities?: CharacterAbilityCreateNestedManyWithoutCharacterInput
     languages?: CharacterLanguageCreateNestedManyWithoutCharacterInput
+    User?: UserCreateNestedOneWithoutCharactersInput
   }
 
   export type CharacterUncheckedCreateWithoutPlayerSkillsInput = {
@@ -25447,6 +27050,7 @@ export namespace Prisma {
     backstory: string
     treasure: string
     traits: string
+    Userid?: bigint | number | null
     abilities?: CharacterAbilityUncheckedCreateNestedManyWithoutCharacterInput
     languages?: CharacterLanguageUncheckedCreateNestedManyWithoutCharacterInput
   }
@@ -25520,6 +27124,7 @@ export namespace Prisma {
     alignment?: AlignmentUpdateOneRequiredWithoutCharacterNestedInput
     abilities?: CharacterAbilityUpdateManyWithoutCharacterNestedInput
     languages?: CharacterLanguageUpdateManyWithoutCharacterNestedInput
+    User?: UserUpdateOneWithoutCharactersNestedInput
   }
 
   export type CharacterUncheckedUpdateWithoutPlayerSkillsInput = {
@@ -25552,6 +27157,7 @@ export namespace Prisma {
     backstory?: StringFieldUpdateOperationsInput | string
     treasure?: StringFieldUpdateOperationsInput | string
     traits?: StringFieldUpdateOperationsInput | string
+    Userid?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     abilities?: CharacterAbilityUncheckedUpdateManyWithoutCharacterNestedInput
     languages?: CharacterLanguageUncheckedUpdateManyWithoutCharacterNestedInput
   }
@@ -25613,6 +27219,7 @@ export namespace Prisma {
     alignment: AlignmentCreateNestedOneWithoutCharacterInput
     playerSkills?: PlayerSkillCreateNestedManyWithoutCharacterInput
     languages?: CharacterLanguageCreateNestedManyWithoutCharacterInput
+    User?: UserCreateNestedOneWithoutCharactersInput
   }
 
   export type CharacterUncheckedCreateWithoutAbilitiesInput = {
@@ -25645,6 +27252,7 @@ export namespace Prisma {
     backstory: string
     treasure: string
     traits: string
+    Userid?: bigint | number | null
     playerSkills?: PlayerSkillUncheckedCreateNestedManyWithoutCharacterInput
     languages?: CharacterLanguageUncheckedCreateNestedManyWithoutCharacterInput
   }
@@ -25720,6 +27328,7 @@ export namespace Prisma {
     alignment?: AlignmentUpdateOneRequiredWithoutCharacterNestedInput
     playerSkills?: PlayerSkillUpdateManyWithoutCharacterNestedInput
     languages?: CharacterLanguageUpdateManyWithoutCharacterNestedInput
+    User?: UserUpdateOneWithoutCharactersNestedInput
   }
 
   export type CharacterUncheckedUpdateWithoutAbilitiesInput = {
@@ -25752,6 +27361,7 @@ export namespace Prisma {
     backstory?: StringFieldUpdateOperationsInput | string
     treasure?: StringFieldUpdateOperationsInput | string
     traits?: StringFieldUpdateOperationsInput | string
+    Userid?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     playerSkills?: PlayerSkillUncheckedUpdateManyWithoutCharacterNestedInput
     languages?: CharacterLanguageUncheckedUpdateManyWithoutCharacterNestedInput
   }
@@ -25853,6 +27463,7 @@ export namespace Prisma {
     alignment: AlignmentCreateNestedOneWithoutCharacterInput
     playerSkills?: PlayerSkillCreateNestedManyWithoutCharacterInput
     abilities?: CharacterAbilityCreateNestedManyWithoutCharacterInput
+    User?: UserCreateNestedOneWithoutCharactersInput
   }
 
   export type CharacterUncheckedCreateWithoutLanguagesInput = {
@@ -25885,6 +27496,7 @@ export namespace Prisma {
     backstory: string
     treasure: string
     traits: string
+    Userid?: bigint | number | null
     playerSkills?: PlayerSkillUncheckedCreateNestedManyWithoutCharacterInput
     abilities?: CharacterAbilityUncheckedCreateNestedManyWithoutCharacterInput
   }
@@ -25956,6 +27568,7 @@ export namespace Prisma {
     alignment?: AlignmentUpdateOneRequiredWithoutCharacterNestedInput
     playerSkills?: PlayerSkillUpdateManyWithoutCharacterNestedInput
     abilities?: CharacterAbilityUpdateManyWithoutCharacterNestedInput
+    User?: UserUpdateOneWithoutCharactersNestedInput
   }
 
   export type CharacterUncheckedUpdateWithoutLanguagesInput = {
@@ -25988,6 +27601,7 @@ export namespace Prisma {
     backstory?: StringFieldUpdateOperationsInput | string
     treasure?: StringFieldUpdateOperationsInput | string
     traits?: StringFieldUpdateOperationsInput | string
+    Userid?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     playerSkills?: PlayerSkillUncheckedUpdateManyWithoutCharacterNestedInput
     abilities?: CharacterAbilityUncheckedUpdateManyWithoutCharacterNestedInput
   }
@@ -26015,6 +27629,140 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     exotic?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type CharacterCreateManyUserInput = {
+    id?: bigint | number
+    raceId: bigint | number
+    classId: bigint | number
+    backgroundId: bigint | number
+    alignmentId: bigint | number
+    xp: number
+    level: number
+    name: string
+    player: string
+    AC: number
+    speed: number
+    hp: number
+    max_hp: number
+    temp_hp: number
+    personality: string
+    ideals: string
+    bonds: string
+    flaws: string
+    age: number
+    height: string
+    weight: string
+    eyes: string
+    skin: string
+    hair: string
+    appearance: string
+    allies: string
+    backstory: string
+    treasure: string
+    traits: string
+  }
+
+  export type CharacterUpdateWithoutUserInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    xp?: IntFieldUpdateOperationsInput | number
+    level?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    player?: StringFieldUpdateOperationsInput | string
+    AC?: IntFieldUpdateOperationsInput | number
+    speed?: IntFieldUpdateOperationsInput | number
+    hp?: IntFieldUpdateOperationsInput | number
+    max_hp?: IntFieldUpdateOperationsInput | number
+    temp_hp?: IntFieldUpdateOperationsInput | number
+    personality?: StringFieldUpdateOperationsInput | string
+    ideals?: StringFieldUpdateOperationsInput | string
+    bonds?: StringFieldUpdateOperationsInput | string
+    flaws?: StringFieldUpdateOperationsInput | string
+    age?: IntFieldUpdateOperationsInput | number
+    height?: StringFieldUpdateOperationsInput | string
+    weight?: StringFieldUpdateOperationsInput | string
+    eyes?: StringFieldUpdateOperationsInput | string
+    skin?: StringFieldUpdateOperationsInput | string
+    hair?: StringFieldUpdateOperationsInput | string
+    appearance?: StringFieldUpdateOperationsInput | string
+    allies?: StringFieldUpdateOperationsInput | string
+    backstory?: StringFieldUpdateOperationsInput | string
+    treasure?: StringFieldUpdateOperationsInput | string
+    traits?: StringFieldUpdateOperationsInput | string
+    race?: RaceUpdateOneRequiredWithoutCharacterNestedInput
+    class?: ClassUpdateOneRequiredWithoutCharacterNestedInput
+    background?: BackgroundUpdateOneRequiredWithoutCharacterNestedInput
+    alignment?: AlignmentUpdateOneRequiredWithoutCharacterNestedInput
+    playerSkills?: PlayerSkillUpdateManyWithoutCharacterNestedInput
+    abilities?: CharacterAbilityUpdateManyWithoutCharacterNestedInput
+    languages?: CharacterLanguageUpdateManyWithoutCharacterNestedInput
+  }
+
+  export type CharacterUncheckedUpdateWithoutUserInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    raceId?: BigIntFieldUpdateOperationsInput | bigint | number
+    classId?: BigIntFieldUpdateOperationsInput | bigint | number
+    backgroundId?: BigIntFieldUpdateOperationsInput | bigint | number
+    alignmentId?: BigIntFieldUpdateOperationsInput | bigint | number
+    xp?: IntFieldUpdateOperationsInput | number
+    level?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    player?: StringFieldUpdateOperationsInput | string
+    AC?: IntFieldUpdateOperationsInput | number
+    speed?: IntFieldUpdateOperationsInput | number
+    hp?: IntFieldUpdateOperationsInput | number
+    max_hp?: IntFieldUpdateOperationsInput | number
+    temp_hp?: IntFieldUpdateOperationsInput | number
+    personality?: StringFieldUpdateOperationsInput | string
+    ideals?: StringFieldUpdateOperationsInput | string
+    bonds?: StringFieldUpdateOperationsInput | string
+    flaws?: StringFieldUpdateOperationsInput | string
+    age?: IntFieldUpdateOperationsInput | number
+    height?: StringFieldUpdateOperationsInput | string
+    weight?: StringFieldUpdateOperationsInput | string
+    eyes?: StringFieldUpdateOperationsInput | string
+    skin?: StringFieldUpdateOperationsInput | string
+    hair?: StringFieldUpdateOperationsInput | string
+    appearance?: StringFieldUpdateOperationsInput | string
+    allies?: StringFieldUpdateOperationsInput | string
+    backstory?: StringFieldUpdateOperationsInput | string
+    treasure?: StringFieldUpdateOperationsInput | string
+    traits?: StringFieldUpdateOperationsInput | string
+    playerSkills?: PlayerSkillUncheckedUpdateManyWithoutCharacterNestedInput
+    abilities?: CharacterAbilityUncheckedUpdateManyWithoutCharacterNestedInput
+    languages?: CharacterLanguageUncheckedUpdateManyWithoutCharacterNestedInput
+  }
+
+  export type CharacterUncheckedUpdateManyWithoutUserInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    raceId?: BigIntFieldUpdateOperationsInput | bigint | number
+    classId?: BigIntFieldUpdateOperationsInput | bigint | number
+    backgroundId?: BigIntFieldUpdateOperationsInput | bigint | number
+    alignmentId?: BigIntFieldUpdateOperationsInput | bigint | number
+    xp?: IntFieldUpdateOperationsInput | number
+    level?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    player?: StringFieldUpdateOperationsInput | string
+    AC?: IntFieldUpdateOperationsInput | number
+    speed?: IntFieldUpdateOperationsInput | number
+    hp?: IntFieldUpdateOperationsInput | number
+    max_hp?: IntFieldUpdateOperationsInput | number
+    temp_hp?: IntFieldUpdateOperationsInput | number
+    personality?: StringFieldUpdateOperationsInput | string
+    ideals?: StringFieldUpdateOperationsInput | string
+    bonds?: StringFieldUpdateOperationsInput | string
+    flaws?: StringFieldUpdateOperationsInput | string
+    age?: IntFieldUpdateOperationsInput | number
+    height?: StringFieldUpdateOperationsInput | string
+    weight?: StringFieldUpdateOperationsInput | string
+    eyes?: StringFieldUpdateOperationsInput | string
+    skin?: StringFieldUpdateOperationsInput | string
+    hair?: StringFieldUpdateOperationsInput | string
+    appearance?: StringFieldUpdateOperationsInput | string
+    allies?: StringFieldUpdateOperationsInput | string
+    backstory?: StringFieldUpdateOperationsInput | string
+    treasure?: StringFieldUpdateOperationsInput | string
+    traits?: StringFieldUpdateOperationsInput | string
   }
 
   export type PlayerSkillCreateManyCharacterInput = {
@@ -26119,6 +27867,7 @@ export namespace Prisma {
     backstory: string
     treasure: string
     traits: string
+    Userid?: bigint | number | null
   }
 
   export type RaceUpdateWithoutSubrace_ofInput = {
@@ -26213,6 +27962,7 @@ export namespace Prisma {
     playerSkills?: PlayerSkillUpdateManyWithoutCharacterNestedInput
     abilities?: CharacterAbilityUpdateManyWithoutCharacterNestedInput
     languages?: CharacterLanguageUpdateManyWithoutCharacterNestedInput
+    User?: UserUpdateOneWithoutCharactersNestedInput
   }
 
   export type CharacterUncheckedUpdateWithoutRaceInput = {
@@ -26244,6 +27994,7 @@ export namespace Prisma {
     backstory?: StringFieldUpdateOperationsInput | string
     treasure?: StringFieldUpdateOperationsInput | string
     traits?: StringFieldUpdateOperationsInput | string
+    Userid?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     playerSkills?: PlayerSkillUncheckedUpdateManyWithoutCharacterNestedInput
     abilities?: CharacterAbilityUncheckedUpdateManyWithoutCharacterNestedInput
     languages?: CharacterLanguageUncheckedUpdateManyWithoutCharacterNestedInput
@@ -26278,6 +28029,7 @@ export namespace Prisma {
     backstory?: StringFieldUpdateOperationsInput | string
     treasure?: StringFieldUpdateOperationsInput | string
     traits?: StringFieldUpdateOperationsInput | string
+    Userid?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
   }
 
   export type RaceTraitCreateManyTraitInput = {
@@ -26355,6 +28107,7 @@ export namespace Prisma {
     backstory: string
     treasure: string
     traits: string
+    Userid?: bigint | number | null
   }
 
   export type AbilityUpdateWithoutClassInput = {
@@ -26415,6 +28168,7 @@ export namespace Prisma {
     playerSkills?: PlayerSkillUpdateManyWithoutCharacterNestedInput
     abilities?: CharacterAbilityUpdateManyWithoutCharacterNestedInput
     languages?: CharacterLanguageUpdateManyWithoutCharacterNestedInput
+    User?: UserUpdateOneWithoutCharactersNestedInput
   }
 
   export type CharacterUncheckedUpdateWithoutClassInput = {
@@ -26446,6 +28200,7 @@ export namespace Prisma {
     backstory?: StringFieldUpdateOperationsInput | string
     treasure?: StringFieldUpdateOperationsInput | string
     traits?: StringFieldUpdateOperationsInput | string
+    Userid?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     playerSkills?: PlayerSkillUncheckedUpdateManyWithoutCharacterNestedInput
     abilities?: CharacterAbilityUncheckedUpdateManyWithoutCharacterNestedInput
     languages?: CharacterLanguageUncheckedUpdateManyWithoutCharacterNestedInput
@@ -26480,6 +28235,7 @@ export namespace Prisma {
     backstory?: StringFieldUpdateOperationsInput | string
     treasure?: StringFieldUpdateOperationsInput | string
     traits?: StringFieldUpdateOperationsInput | string
+    Userid?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
   }
 
   export type CharacterAbilityCreateManyAbilityInput = {
@@ -26647,6 +28403,7 @@ export namespace Prisma {
     backstory: string
     treasure: string
     traits: string
+    Userid?: bigint | number | null
   }
 
   export type CharacterUpdateWithoutAlignmentInput = {
@@ -26681,6 +28438,7 @@ export namespace Prisma {
     playerSkills?: PlayerSkillUpdateManyWithoutCharacterNestedInput
     abilities?: CharacterAbilityUpdateManyWithoutCharacterNestedInput
     languages?: CharacterLanguageUpdateManyWithoutCharacterNestedInput
+    User?: UserUpdateOneWithoutCharactersNestedInput
   }
 
   export type CharacterUncheckedUpdateWithoutAlignmentInput = {
@@ -26712,6 +28470,7 @@ export namespace Prisma {
     backstory?: StringFieldUpdateOperationsInput | string
     treasure?: StringFieldUpdateOperationsInput | string
     traits?: StringFieldUpdateOperationsInput | string
+    Userid?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     playerSkills?: PlayerSkillUncheckedUpdateManyWithoutCharacterNestedInput
     abilities?: CharacterAbilityUncheckedUpdateManyWithoutCharacterNestedInput
     languages?: CharacterLanguageUncheckedUpdateManyWithoutCharacterNestedInput
@@ -26746,6 +28505,7 @@ export namespace Prisma {
     backstory?: StringFieldUpdateOperationsInput | string
     treasure?: StringFieldUpdateOperationsInput | string
     traits?: StringFieldUpdateOperationsInput | string
+    Userid?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
   }
 
   export type SkillUpdateWithoutPlayerSkillInput = {
