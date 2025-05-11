@@ -23,5 +23,10 @@ export class CharacterCandidateDto {
     level: number;
     alignment: string;
     background: string;
-    
+    strength: number; 
+    dexterity: number;
+    constitution: number;
+    intelligence: number;
+    wisdom: number;
+    charisma: number;
 }

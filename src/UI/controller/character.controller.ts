@@ -1,18 +1,25 @@
-import { Body, Controller, Get, Post } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Post, Put } from "@nestjs/common";
 import { CharacterService } from "../../shared/services/character.service";
 import { CharacterDto } from "../dto/character.dto";
+import { Character } from "src/shared/model/character.model";
 
 @Controller("/character")
 export class CharacterController {
   constructor(private readonly characterService: CharacterService) {}
 
+  @Get()
+  async getAllCharacters(): Promise<Character[]> {
+    return await this.characterService.getAllCharacters();
+  }
+
   @Get(":id")
-  getCharacter(id: number): string {
-    return this.characterService.getCharacter(id);
+  async getCharacter(id: number): Promise<Character | undefined> {
+    return await this.characterService.getCharacter(id);
   }
 
   @Post()
-  createCharacter(@Body() characterData: any) {
+  async createCharacter(@Body() characterData: any) {
     return this.characterService.createCharacter(characterData);
   }
+
 }

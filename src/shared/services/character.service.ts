@@ -1,33 +1,27 @@
 import { Injectable } from "@nestjs/common";
-import { CharacterDto } from "src/UI/dto/character.dto";
+import { Character } from "src/shared/model/character.model";
+import { CharacterCandidateDto } from "src/UI/dto/character.dto";
+import { CharacterRepository } from "src/shared/repositories/character.repository";
 
 @Injectable()
 export class CharacterService {
-  createCharacter(characterData: CharacterDto) {
-    // appel bdd pour creer le personnage
-    return {
-      message: "Character created successfully",
-      character: characterData,
-    };
+  private characters: Character[] = [];
+
+  constructor(private readonly characterRepository: CharacterRepository) {}
+
+  async getAllCharacters(): Promise<Character[]> {
+    return this.characterRepository.getAllCharacters();
   }
 
-  getCharacter(id: number): string {
-    //appeler bdd pour recup les infos
-    let rep = "pour id " + id + " : " + {
-      id: "1",
-      name: "John Doe",
-      race: "Human",
-      class: "Warrior",
-      level: 1,
-      alignment: "Neutral Good",
-      background: "Soldier",
-      strength: 15,
-      dexterity: 12,
-      constitution: 14,
-      intelligence: 10,
-      wisdom: 13,
-      charisma: 8,
-    };
-    return rep;
+  async getCharacter(id: number): Promise<Character | undefined> {
+    const character = await this.characterRepository.getCharacterById(id);
+    return character ? character : undefined;
   }
+
+  createCharacter(characterData: CharacterCandidateDto): Character {
+    const newCharacter = { ...characterData, id: this.characters.length + 1 };
+    this.characters.push(newCharacter);
+    return newCharacter;
+  }
+
 }
