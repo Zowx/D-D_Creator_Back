@@ -1,7 +1,7 @@
-import { Race } from "src/shared/model/race.model";
+import { Race } from "@shared/model/race.model";
 
 export class CharacterDto {
-    id: string; 
+    id: bigint; 
     name: string; 
     race: Race; 
     class: string; 

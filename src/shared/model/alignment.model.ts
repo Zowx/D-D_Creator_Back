@@ -1,11 +1,10 @@
-export interface Traits {
+export interface Alignment {
     id: bigint;
     name: string;
     description: string;
 }
 
-export interface TraitsCandidate {
-    id?: bigint;
+export interface AlignmentCandidate {
     name: string;
     description: string;
 }

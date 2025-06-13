@@ -1,9 +1,9 @@
-import { Traits } from '../../shared/models/traits.model';
+// import { Traits } from '../../shared/models/traits.model';
 
 export class RaceDto {
-  id: string;
+  id: bigint;
   name: string;
   description: string;
   subraces: RaceDto[];
-  traits: Traits[];
+//   traits: Traits[];
 }

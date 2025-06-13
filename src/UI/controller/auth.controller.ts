@@ -8,8 +8,8 @@ import {
     Request,
     UseGuards,
 } from "@nestjs/common";
-import { AuthGuard } from "../../shared/auth/auth.guard";
-import { AuthService } from "../../shared/services/auth.service";
+import { AuthGuard } from "@shared/auth/auth.guard";
+import { AuthService } from "@shared/services/auth.service";
 
 @Controller("auth")
 export class AuthController {

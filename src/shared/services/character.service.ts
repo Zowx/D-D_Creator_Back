@@ -1,5 +1,5 @@
 import { Injectable } from "@nestjs/common";
-import { CharacterDto } from "src/UI/dto/character.dto";
+import { CharacterDto } from "@UI/dto/character.dto";
 
 @Injectable()
 export class CharacterService {
