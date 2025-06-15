@@ -1,6 +1,6 @@
-import { AlignmentCandidate, LanguageCandidate, AbilityCandidate, SkillCandidate, Ability, BackgroundCandidate, Language, Skill, RaceCandidate, Race, ClassCandidate, Class } from "@shared/model/models";
+import { AlignmentCandidate, LanguageCandidate, AbilityCandidate, SkillCandidate, Ability, BackgroundCandidate, Language, Skill, RaceCandidate, Race, ClassCandidate, Class } from "@app/shared/models/models";
 import { AlignmentDto, LanguageDto, AbilityDto, SkillDto, BackgroundDto, RaceDto, ClassDto } from "@ext.api/dto/dtos";
-import { CacheUtils } from "@shared/utils/cache.utils";
+import { CacheUtils } from "@core/utils/cache.utils";
 
 export class ImportConnector {
     private readonly BASE_URL = 'https://api.open5e.com/';

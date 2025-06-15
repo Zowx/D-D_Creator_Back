@@ -1,6 +1,6 @@
 // Importation de l'interface modèle
-import { BackgroundAbilityCandidate, BackgroundSkillCandidate } from '@shared/model/background.model';
-import { Ability, BackgroundCandidate, Skill, Language } from '@shared/model/models';
+import { BackgroundAbilityCandidate, BackgroundSkillCandidate } from '@app/shared/models/background.model';
+import { Ability, BackgroundCandidate, Skill, Language } from '@app/shared/models/models';
 
 const numberLetter = { 'none': 0, "one": 1, "two": 2, "three": 3, "four": 4, "five": 5, "six": 6 };
 

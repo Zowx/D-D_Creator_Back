@@ -1,6 +1,6 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { BigIntInterceptor } from './bigint.interceptor';
+import { BigIntInterceptor } from '@core/interceptor/bigint.interceptor';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);

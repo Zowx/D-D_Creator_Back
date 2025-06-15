@@ -1,5 +1,5 @@
 // Importation de l'interface modèle
-import { Skill } from '@shared/model/skill.model';
+import { Skill } from '@app/shared/models/skill.model';
 
 /**
  * Représente un Data Transfer Object (DTO) pour l'entité Skill.

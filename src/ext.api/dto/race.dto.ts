@@ -1,5 +1,5 @@
 // Importation de l'interface modèle
-import { RaceCandidate } from '@shared/model/models';
+import { RaceCandidate } from '@app/shared/models/models';
 import { TraitsDto } from './traits.dto';
 
 /**
