@@ -12,4 +12,4 @@ import { ExtApiModule } from "./ext.api/ext.api.module";
   controllers: [AppController, CharacterController],
   providers: [AppService, CharacterService],
 })
-export class AppModule {}
+export class AppModule { }

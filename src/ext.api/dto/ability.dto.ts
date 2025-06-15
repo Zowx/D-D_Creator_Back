@@ -12,6 +12,7 @@ export class AbilityDto {
   description: string;
   shortDescription: string;
   skillsId?: SkillDto[];
+  url: string;
 
     /**
    * Crée une nouvelle instance de AbilityDto.
@@ -55,6 +56,7 @@ export class AbilityDto {
       description: req.desc,
       shortDescription: req.short_desc,
       skillsId: req.skills ? req.skills.map((skill: any) => SkillDto.fromRequest(skill)) : [],
+      url: req.url,
     });
   }
 }

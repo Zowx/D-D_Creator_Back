@@ -1,10 +1,19 @@
-import { AlignmentCandidate, LanguageCandidate, AbilityCandidate, SkillCandidate, Ability, BackgroundCandidate, Language, Skill, RaceCandidate, Race } from "@shared/model/models";
-import { AlignmentDto, LanguageDto, AbilityDto, SkillDto, BackgroundDto, RaceDto } from "@ext.api/dto/dtos";
+import { AlignmentCandidate, LanguageCandidate, AbilityCandidate, SkillCandidate, Ability, BackgroundCandidate, Language, Skill, RaceCandidate, Race, ClassCandidate, Class } from "@shared/model/models";
+import { AlignmentDto, LanguageDto, AbilityDto, SkillDto, BackgroundDto, RaceDto, ClassDto } from "@ext.api/dto/dtos";
 import { CacheUtils } from "@shared/utils/cache.utils";
 
 export class ImportConnector {
     private readonly BASE_URL = 'https://api.open5e.com/';
     private readonly CACHE_LIFETIME = 1000 * 60 * 60 * 24; // 24 hours
+    private readonly ENDPOINT = {
+        alignments: this.BASE_URL + 'v2/alignments/',
+        languages: this.BASE_URL + 'v2/languages/',
+        abilities: this.BASE_URL + 'v2/abilities/',
+        skills: this.BASE_URL + 'v2/skills/',
+        backgrounds: this.BASE_URL + 'v2/backgrounds/',
+        races: this.BASE_URL + 'v2/races/',
+        classes: this.BASE_URL + 'v2/classes/',
+    }
 
     /**
     * Fetch alignment data from the API and return it to model
@@ -14,7 +23,7 @@ export class ImportConnector {
     async getAlignments(): Promise<AlignmentCandidate[]> {
         try {
             let results = []
-            let endpoint = `${this.BASE_URL}v2/alignments/`
+            let endpoint = this.ENDPOINT.alignments;
 
             while (endpoint) {
                 const response = await CacheUtils.cacheData(endpoint, this.CACHE_LIFETIME);
@@ -39,7 +48,7 @@ export class ImportConnector {
     async getLanguages(): Promise<LanguageCandidate[]> {
         try {
             let results = []
-            let endpoint = `${this.BASE_URL}v2/languages/`
+            let endpoint = this.ENDPOINT.languages;
 
             while (endpoint) {
                 const response = await CacheUtils.cacheData(endpoint, this.CACHE_LIFETIME);
@@ -64,7 +73,7 @@ export class ImportConnector {
     async getAbilities(): Promise<AbilityCandidate[]> {
         try {
             let results = []
-            let endpoint = `${this.BASE_URL}v2/abilities/`
+            let endpoint = this.ENDPOINT.abilities;
 
             while (endpoint) {
                 const response = await CacheUtils.cacheData(endpoint, this.CACHE_LIFETIME);
@@ -89,7 +98,7 @@ export class ImportConnector {
     async getSkills(abilities: Ability[]): Promise<SkillCandidate[]> {
         try {
             let results = []
-            let endpoint = `${this.BASE_URL}v2/abilities/`
+            let endpoint = this.ENDPOINT.abilities;
 
             while (endpoint) {
                 const response = await CacheUtils.cacheData(endpoint, this.CACHE_LIFETIME);
@@ -118,7 +127,7 @@ export class ImportConnector {
     async getBackgrounds(abilities: Ability[], languages: Language[], skill: Skill[]): Promise<BackgroundCandidate[]> {
         try {
             let results = []
-            let endpoint = `${this.BASE_URL}v2/backgrounds/`
+            let endpoint = this.ENDPOINT.backgrounds;
 
             while (endpoint) {
                 const response = await CacheUtils.cacheData(endpoint, this.CACHE_LIFETIME);
@@ -138,7 +147,7 @@ export class ImportConnector {
     async getRaces(): Promise<RaceCandidate[]> {
         try {
             let results = []
-            let endpoint = `${this.BASE_URL}v2/races/`
+            let endpoint = this.ENDPOINT.races;
             while (endpoint) {
                 const response = await CacheUtils.cacheData(endpoint, this.CACHE_LIFETIME);
                 results = results.concat(response["results"]);
@@ -157,7 +166,7 @@ export class ImportConnector {
     async setSubRaces(races: Race[]): Promise<Race[]> {
         try {
             let results = []
-            let endpoint = `${this.BASE_URL}v2/races/`
+            let endpoint = this.ENDPOINT.races;
             while (endpoint) {
                 const response = await CacheUtils.cacheData(endpoint, this.CACHE_LIFETIME);
                 results = results.concat(response["results"]);
@@ -175,6 +184,72 @@ export class ImportConnector {
             return races;
         } catch (error) {
             console.error('Error fetching race data:', error);
+            throw error;
+        }
+    }
+
+    async getClass(abilities: Ability[]): Promise<ClassCandidate[]> {
+        try {
+            let results = []
+            let endpoint = this.ENDPOINT.classes;
+
+            while (endpoint) {
+                const response = await CacheUtils.cacheData(endpoint, this.CACHE_LIFETIME);
+                results = results.concat(response["results"]);
+                endpoint = response["next"];
+            }
+
+            const dtos = results.map((item: any) => ClassDto.fromRequest(item));
+            
+            results = []
+            endpoint = this.ENDPOINT.abilities;
+            while (endpoint) {
+                const response = await CacheUtils.cacheData(endpoint, this.CACHE_LIFETIME);
+                results = results.concat(response["results"]);
+                endpoint = response["next"];
+            }
+            const dtosAbility = results.map((item: any) => AbilityDto.fromRequest(item));
+
+            dtos.forEach((dto: ClassDto, index: number) => {
+                const savingThrows = dto.savingThrows.map((savingThrow: string | bigint) => {
+                    if (typeof savingThrow === 'bigint') return savingThrow;
+                    const ability = dtosAbility.find((ability: AbilityDto) => ability.url === savingThrow);
+                    if (ability) return abilities.find((a: Ability) => a.name === ability.name)?.id ?? undefined;
+                });
+                const filterSavingThrows = savingThrows.filter((id: bigint | undefined) => id != undefined);
+                dtos[index].savingThrows = filterSavingThrows;
+            });
+
+            return dtos.map((dto: ClassDto) => dto.toModel());
+
+        } catch (error) {
+            console.error('Error fetching class data:', error);
+            throw error;
+        }
+    }
+
+    async setSubClasses(classes: Class[]): Promise<Class[]> {
+        try {
+            let results = []
+            let endpoint = this.ENDPOINT.classes;
+
+            while (endpoint) {
+                const response = await CacheUtils.cacheData(endpoint, this.CACHE_LIFETIME);
+                results = results.concat(response["results"]);
+                endpoint = response["next"];
+            }
+
+            const dtos = results.map((item: any) => ClassDto.fromRequest(item));
+            dtos.filter((dto: ClassDto) => !!dto.subClass).forEach((dto: ClassDto) => {
+                const classModel = classes.find((classModel) => classModel.name === dtos.find((_dto) => _dto.url == dto.subClass)?.name);
+                const classIndex = classes.findIndex((classModel) => classModel.name === dto.name);
+                if (classIndex != -1 && classModel) {
+                    classes[classIndex].subClass = classModel.id;
+                }
+            });
+            return classes;
+        } catch (error) {
+            console.error('Error fetching sub-class data:', error);
             throw error;
         }
     }
