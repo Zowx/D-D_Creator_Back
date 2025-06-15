@@ -3,7 +3,7 @@ import { Ability } from './ability.model';
 export interface Class {
   id: bigint;
   name: string;
-  hitDie: number;
+  hitDice: number;
   savingThrows: Ability[];
   subClass?: bigint;
 }
