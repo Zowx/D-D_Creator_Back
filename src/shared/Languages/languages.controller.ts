@@ -24,14 +24,14 @@ export class LanguagesController {
 
   @Patch(':id')
   update(
-    @Param('id', ParseIntPipe) id: string,
+    @Param('id') id: string,
     @Body() dto: UpdateLanguageDto,
   ) {
     return this.svc.update(BigInt(id), dto);
   }
 
   @Delete(':id')
-  remove(@Param('id', ParseIntPipe) id: string) {
+  remove(@Param('id') id: string) {
     this.svc.remove(BigInt(id));
     return { deleted: true };
   }

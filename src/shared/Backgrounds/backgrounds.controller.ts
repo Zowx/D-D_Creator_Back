@@ -18,20 +18,20 @@ export class BackgroundsController {
   }
 
   @Get(':id')
-  findOne(@Param('id', ParseIntPipe) id: string) {
+  findOne(@Param('id',) id: string) {
     return this.svc.findOne(BigInt(id));
   }
 
   @Patch(':id')
   update(
-    @Param('id', ParseIntPipe) id: string,
+    @Param('id',) id: string,
     @Body() dto: UpdateBackgroundDto,
   ) {
     return this.svc.update(BigInt(id), dto);
   }
 
   @Delete(':id')
-  remove(@Param('id', ParseIntPipe) id: string) {
+  remove(@Param('id',) id: string) {
     this.svc.remove(BigInt(id));
     return { deleted: true };
   }
