@@ -5,7 +5,7 @@ export interface Class {
     name: string;
     casterType: string;
     hitDie: number;
-    savingThrows: Ability[];
+    savingThrows: bigint[];
     subClass?: bigint;
 }
 
@@ -13,6 +13,6 @@ export interface ClassCandidate {
     name: string;
     casterType: string;
     hitDie: number;
-    savingThrows: Ability[];
+    savingThrows: bigint[];
     subClass?: bigint;
 }
