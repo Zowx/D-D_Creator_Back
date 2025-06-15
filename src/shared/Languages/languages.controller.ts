@@ -1,4 +1,4 @@
-import {Controller, Get, Post, Patch, Delete,Body, Param, ParseIntPipe} from '@nestjs/common';
+import {Controller, Get, Post, Patch, Delete, Body, Param, ParseIntPipe, BadRequestException} from '@nestjs/common';
 import { LanguagesService } from './languages.service';
 import { CreateLanguageDto } from './dto/create-language.dto';
 import { UpdateLanguageDto } from './dto/update-language.dto';
@@ -18,20 +18,20 @@ export class LanguagesController {
   }
 
   @Get(':id')
-  findOne(@Param('id', ParseIntPipe) id: number) {
+  findOne(@Param('id') id: string) {
     return this.svc.findOne(BigInt(id));
   }
 
   @Patch(':id')
   update(
-    @Param('id', ParseIntPipe) id: number,
+    @Param('id', ParseIntPipe) id: string,
     @Body() dto: UpdateLanguageDto,
   ) {
     return this.svc.update(BigInt(id), dto);
   }
 
   @Delete(':id')
-  remove(@Param('id', ParseIntPipe) id: number) {
+  remove(@Param('id', ParseIntPipe) id: string) {
     this.svc.remove(BigInt(id));
     return { deleted: true };
   }
