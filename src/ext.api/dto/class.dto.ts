@@ -7,7 +7,7 @@ import { Class, ClassCandidate } from '@core/models/models';
  */
 export class ClassDto {
   name: string;
-  hitDice: number;
+  hitDice: string;
   savingThrows: string[] | bigint[];
   subClass?: string | bigint;
   url: string;
@@ -37,7 +37,9 @@ export class ClassDto {
     return {
       name: this.name,
       hitDice: this.hitDice,
-      savingThrows: this.savingThrows.filter((s) => ['bigint', 'number'].includes(typeof s)) as bigint[],
+      savingThrows: this.savingThrows.filter((s) =>
+        ['bigint', 'number'].includes(typeof s),
+      ) as bigint[],
       subClass: typeof this.subClass == 'bigint' ? this.subClass : undefined,
     };
   }

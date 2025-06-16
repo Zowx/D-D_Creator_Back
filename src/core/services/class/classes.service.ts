@@ -22,7 +22,7 @@ export class ClassesService {
     const classCandidate: ClassCandidate = {
       name: dto.name,
       casterType: dto.casterType,
-      hitDice: dto.hitDie,
+      hitDice: dto.hitDie.toString(),
       savingThrows: dto.savingThrows.map((n) => BigInt(n)),
       subClass: dto.subClass !== undefined ? BigInt(dto.subClass) : undefined,
     };
@@ -36,7 +36,7 @@ export class ClassesService {
       ...existing,
       ...(dto.name !== undefined && { name: dto.name }),
       ...(dto.casterType !== undefined && { casterType: dto.casterType }),
-      ...(dto.hitDie !== undefined && { hitDice: dto.hitDie }),
+      ...(dto.hitDie !== undefined && { hitDice: dto.hitDie.toString() }),
       ...(dto.subClass !== undefined && { subClass: BigInt(dto.subClass) }),
     };
 

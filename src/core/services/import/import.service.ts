@@ -57,10 +57,30 @@ export class ImportService {
       // Get class candidates from the API
       const classCandidates = await this.importConnector.getClass(abilities);
 
+      console.log('🔍 Debugging class candidates:');
+      classCandidates.slice(0, 3).forEach((cls, index) => {
+        console.log(`Class ${index + 1}:`, {
+          name: cls.name,
+          hitDice: cls.hitDice,
+          hitDiceType: typeof cls.hitDice,
+          savingThrows: cls.savingThrows,
+          subClass: cls.subClass,
+        });
+      });
+
       // Filter out subclasses that don't have valid hitDice (these are not standalone classes)
-      const validClassCandidates = classCandidates.filter(
-        (cls) => cls.hitDice != null && cls.hitDice > 0,
-      );
+      const validClassCandidates = classCandidates.filter((cls) => {
+        const isValid =
+          cls.hitDice != null && cls.hitDice !== '' && cls.hitDice !== 'null';
+        if (!isValid) {
+          console.log(
+            `❌ Filtering out "${cls.name}" - hitDice: ${cls.hitDice} (type: ${typeof cls.hitDice})`,
+          );
+        } else {
+          console.log(`✅ Valid class "${cls.name}" - hitDice: ${cls.hitDice}`);
+        }
+        return isValid;
+      });
 
       console.log(
         `Found ${classCandidates.length} total classes, ${validClassCandidates.length} valid standalone classes`,

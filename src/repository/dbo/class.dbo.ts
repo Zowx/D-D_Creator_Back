@@ -17,8 +17,7 @@ export class ClassDbo {
       id: this.id,
       name: this.name,
       casterType: this.caster_type,
-      hitDice:
-        this.hit_dice && this.hit_dice !== '' ? parseInt(this.hit_dice) : 0,
+      hitDice: this.hit_dice || '',
       savingThrows: this.savingThrows || [],
       subClass:
         this.subclass && this.subclass !== ''
@@ -33,7 +32,7 @@ export class ClassDbo {
       name: model.name,
       caster_type: model.casterType ?? '',
       subclass: model.subClass ? model.subClass.toString() : '',
-      hit_dice: model.hitDice ? model.hitDice.toString() : '',
+      hit_dice: model.hitDice || '',
       savingThrows: model.savingThrows,
     });
   }
