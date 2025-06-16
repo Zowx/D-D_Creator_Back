@@ -2,12 +2,13 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { CharacterRepository } from './character.repository';
 import { CreateCharacterDto } from '../../../UI/dto/character/create-character.dto';
 import { UpdateCharacterDto } from '../../../UI/dto/character/update-character.dto';
+import { Character, CharacterCandidate } from '@app/core/models/character.model';
 
 @Injectable()
 export class CharactersService {
   constructor(private readonly characterRepo: CharacterRepository) {}
 
-  async create(dto: CreateCharacterDto) {
+  async create(dto: CharacterCandidate) {
     return this.characterRepo.create(dto);
   }
 
@@ -21,11 +22,11 @@ export class CharactersService {
     return character;
   }
 
-  async update(id: bigint, dto: UpdateCharacterDto) {
-    const character = await this.characterRepo.findOne(id);
-    if (!character) throw new NotFoundException(`Character with ID ${id} not found`);
+  async update(dto: Character) {
+    const character = await this.characterRepo.findOne(dto.id);
+    if (!character) throw new NotFoundException(`Character with ID ${dto.id} not found`);
 
-    return this.characterRepo.update(id, dto);
+    return this.characterRepo.update(dto);
   }
 
   async remove(id: bigint) {

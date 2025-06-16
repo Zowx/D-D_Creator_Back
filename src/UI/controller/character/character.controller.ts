@@ -25,7 +25,11 @@ export class CharactersController {
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() dto: UpdateCharacterDto) {
-    return this.svc.update(BigInt(id), dto);
+    const character = typeof dto.ToModel === 'function' ? dto.ToModel(BigInt(id)) : undefined;
+    if (!character) {
+      throw new Error('Invalid character data');
+    }
+    return this.svc.update(character);
   }
 
   @Delete(':id')
