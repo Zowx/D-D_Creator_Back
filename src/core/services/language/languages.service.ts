@@ -1,16 +1,9 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { randomBytes } from 'crypto';
-import { CreateLanguageDto } from '@UI/dto/language/create-language.dto';
-import { UpdateLanguageDto } from '@UI/dto/language/update-language.dto';
+import { LanguageCandidate } from '@app/core/models/language.model';
+import { LanguagesRepository } from '@repository/languages.repository';
 
-export interface Language {
-  id: bigint;
-  name: string;
-  description: string;
-  exotic: boolean;
-  secret: boolean;
-}
-
+import { Language } from '@app/core/models/language.model';
 @Injectable()
 export class LanguagesService {
   private languages: Language[] = [];
@@ -29,7 +22,7 @@ export class LanguagesService {
     return lang;
   }
 
-  create(dto: CreateLanguageDto): Language {
+  create(dto: LanguageCandidate): Language {
     const newLang: Language = {
       id: this.generateId(),
       name: dto.name,
@@ -41,8 +34,8 @@ export class LanguagesService {
     return newLang;
   }
 
-  update(id: bigint, dto: UpdateLanguageDto): Language {
-    const existing = this.findOne(id);
+  update(dto: Language): Language {
+    const existing = this.findOne(dto.id);
     const updated: Language = {
       ...existing,
       ...(dto.name !== undefined && { name: dto.name }),
@@ -50,7 +43,7 @@ export class LanguagesService {
       ...(dto.exotic !== undefined && { exotic: dto.exotic }),
       ...(dto.secret !== undefined && { secret: dto.secret }),
     };
-    this.languages = this.languages.map(l => (l.id === id ? updated : l));
+    this.languages = this.languages.map(l => (l.id === dto.id ? updated : l));
     return updated;
   }
 

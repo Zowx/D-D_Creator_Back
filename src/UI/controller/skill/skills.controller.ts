@@ -9,7 +9,11 @@ export class SkillsController {
 
   @Post()
   create(@Body() dto: CreateSkillDto) {
-    return this.svc.create(dto);
+    const skill = dto.toCandidate();
+    if (!skill) {
+      throw new Error('Invalid skill data');
+    }
+    return this.svc.create(skill);
   }
 
   @Get()
@@ -27,7 +31,11 @@ export class SkillsController {
     @Param('id', ParseIntPipe) id: string,
     @Body() dto: UpdateSkillDto,
   ) {
-    return this.svc.update(BigInt(id), dto);
+    const skill = dto.toModel?.(BigInt(id));
+    if (!skill) {
+      throw new Error('Invalid skill data');
+    }
+    return this.svc.update(skill);
   }
 
   @Delete(':id')

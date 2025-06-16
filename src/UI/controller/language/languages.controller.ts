@@ -9,7 +9,9 @@ export class LanguagesController {
 
   @Post()
   create(@Body() dto: CreateLanguageDto) {
-    return this.svc.create(dto);
+    const language = dto.toCandidate();
+    
+    return this.svc.create(language);
   }
 
   @Get()
@@ -24,14 +26,18 @@ export class LanguagesController {
 
   @Patch(':id')
   update(
-    @Param('id', ParseIntPipe) id: string,
+    @Param('id') id: string,
     @Body() dto: UpdateLanguageDto,
   ) {
-    return this.svc.update(BigInt(id), dto);
+    const language = dto.toModel?.(BigInt(id));
+    if (!language) {
+      throw new BadRequestException('Invalid language data');
+    }
+    return this.svc.update(language);
   }
 
   @Delete(':id')
-  remove(@Param('id', ParseIntPipe) id: string) {
+  remove(@Param('id') id: string) {
     this.svc.remove(BigInt(id));
     return { deleted: true };
   }

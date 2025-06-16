@@ -3,16 +3,15 @@ import { Ability } from './ability.model';
 export interface Class {
   id: bigint;
   name: string;
-  casterType?: string;
-  hitDice: string;
-  savingThrows: Ability[];
+  
+  hitDice: number;
+  savingThrows: bigint[];
   subClass?: bigint;
 }
 
 export interface ClassCandidate {
   name: string;
-  casterType?: string;
-  hitDice: string;
+  hitDice: number;
   savingThrows: bigint[];
   subClass?: bigint;
 }

@@ -9,7 +9,11 @@ export class TraitsController {
 
   @Post()
   create(@Body() dto: CreateTraitDto) {
-    return this.svc.create(dto);
+    const trait = dto.toCandidate();
+    if (!trait) {
+      throw new Error('Invalid trait data');
+    }
+    return this.svc.create(trait);
   }
 
   @Get()
@@ -27,7 +31,11 @@ export class TraitsController {
     @Param('id', ParseIntPipe) id: string,
     @Body() dto: UpdateTraitDto,
   ) {
-    return this.svc.update(BigInt(id), dto);
+    const trait = dto.toModel?.(BigInt(id));
+    if (!trait) {
+      throw new Error('Invalid trait data');
+    }
+    return this.svc.update(trait);
   }
 
   @Delete(':id')

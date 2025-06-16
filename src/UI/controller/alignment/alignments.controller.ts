@@ -9,7 +9,8 @@ export class AlignmentsController {
 
   @Post()
   create(@Body() dto: CreateAlignmentDto) {
-    return this.svc.create(dto);
+    const alignment = dto.toCandidate();
+    return this.svc.create(alignment);
   }
 
   @Get()
@@ -27,7 +28,11 @@ export class AlignmentsController {
     @Param('id', ParseIntPipe) id: string,
     @Body() dto: UpdateAlignmentDto,
   ) {
-    return this.svc.update(BigInt(id), dto);
+    const alignment = dto.toModel?.(BigInt(id));
+    if (!alignment) {
+      throw new Error('Invalid alignment data');
+    }
+    return this.svc.update(alignment);
   }
 
   @Delete(':id')

@@ -1,68 +1,53 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { CreateRaceDto } from '@UI/dto/race/create-race.dto';
-import { UpdateRaceDto } from '@UI/dto/race/update-race.dto';
-import { Race, RaceCandidate } from '@app/core/models/models';
-import { RacesRepository } from '@repository/repository';
+import { randomBytes } from 'crypto';
+import { RaceCandidate,Race } from '@app/core/models/race.model';
+
 
 @Injectable()
 export class RacesService {
-  constructor(private readonly racesRepository: RacesRepository) {}
+  private races: Race[] = [];
 
-  async findAll(): Promise<Race[]> {
-    return await this.racesRepository.findAll();
+  private generateId(): bigint {
+    return BigInt('0x' + randomBytes(8).toString('hex'));
   }
 
-  async findOne(id: bigint): Promise<Race> {
-    const race = await this.racesRepository.findById(id);
+  findAll(): Race[] {
+    return this.races;
+  }
+
+  findOne(id: bigint): Race {
+    const race = this.races.find(r => r.id === id);
     if (!race) throw new NotFoundException(`Race ${id} introuvable`);
     return race;
   }
 
-  async create(dto: CreateRaceDto): Promise<Race> {
-    // Convert DTO to RaceCandidate model
-    const raceCandidate: RaceCandidate = {
+  create(dto: RaceCandidate): Race {
+    const newRace: Race = {
+      id: this.generateId(),
       name: dto.name,
       description: dto.description,
-      traits: [], // Les traits seront gérés séparément si nécessaire
-      subrace_of:
-        dto.subrace_of !== undefined ? BigInt(dto.subrace_of) : undefined,
+      traitsId: dto.traitsId.map(t => BigInt(t)),
+      subrace_of: dto.subrace_of !== undefined ? BigInt(dto.subrace_of) : undefined,
     };
-
-    return await this.racesRepository.create(raceCandidate);
+    this.races.push(newRace);
+    return newRace;
   }
 
-  async update(id: bigint, dto: UpdateRaceDto): Promise<Race> {
-    const existing = await this.findOne(id);
-    const updateDto = dto as Partial<CreateRaceDto>;
-
-    // Convert DTO to RaceCandidate model for update
-    const raceCandidate: RaceCandidate = {
-      name: updateDto.name ?? existing.name,
-      description: updateDto.description ?? existing.description,
-      traits: [], // Les traits seront gérés séparément si nécessaire
-      subrace_of:
-        updateDto.subrace_of !== undefined
-          ? BigInt(updateDto.subrace_of)
-          : existing.subrace_of,
+  update(dto: Race): Race {
+    const existing = this.findOne(dto.id);
+    const updated: Race = {
+      ...existing,
+      ...(dto.name        !== undefined && { name: dto.name }),
+      ...(dto.description !== undefined && { description: dto.description }),
+      ...(dto.traitsId    !== undefined && { traitsId: dto.traitsId.map(t => BigInt(t)) }),
+      ...(dto.subrace_of  !== undefined && { subrace_of: BigInt(dto.subrace_of) }),
     };
-
-    const updated = await this.racesRepository.update(id, raceCandidate);
-    if (!updated) throw new NotFoundException(`Race ${id} introuvable`);
+    this.races = this.races.map(r => (r.id === dto.id ? updated : r));
     return updated;
   }
 
-  async remove(id: bigint): Promise<void> {
-    await this.findOne(id); // Vérifie que la race existe
-    const deleted = await this.racesRepository.delete(id);
-    if (!deleted)
-      throw new NotFoundException(`Impossible de supprimer la race ${id}`);
-  }
-
-  async findSubraces(parentRaceId: bigint): Promise<Race[]> {
-    return await this.racesRepository.findSubraces(parentRaceId);
-  }
-
-  async findByName(name: string): Promise<Race | null> {
-    return await this.racesRepository.findByName(name);
+  remove(id: bigint): void {
+    this.findOne(id);
+    this.races = this.races.filter(r => r.id !== id);
   }
 }

@@ -1,38 +1,53 @@
-import {Controller, Get, Post, Body, Param,Patch, Delete, ParseIntPipe} from '@nestjs/common';
-import { BackgroundsService } from '@core/services/background/backgrounds.service';
-import { CreateBackgroundDto } from '@UI/dto/background/create-background.dto';
-import { UpdateBackgroundDto } from '@UI/dto/background/update-background.dto';
+import {
+  Controller,
+  Get,
+  Post,
+  Put,
+  Delete,
+  Param,
+  Body,
+  ParseIntPipe,
+  Patch,
+} from '@nestjs/common';
+import { CreateBackgroundDto } from '../../dto/background/create-background.dto';
+import { BackgroundService } from '../../../core/services/background/backgrounds.service';
+import { Background } from '@app/core/models/background.model';
+import { UpdateBackgroundDto } from '@app/UI/dto/background/update-background.dto';
 
 @Controller('backgrounds')
-export class BackgroundsController {
-  constructor(private readonly svc: BackgroundsService) {}
+export class BackgroundController {
+  constructor(private readonly backgroundService: BackgroundService) {}
 
   @Post()
-  create(@Body() dto: CreateBackgroundDto) {
-    return this.svc.create(dto);
-  }
-
-  @Get()
-  findAll() {
-    return this.svc.findAll();
+  async create(@Body() createDto: CreateBackgroundDto): Promise<Background> {
+    const candidate = createDto.toCandidate();
+    return this.backgroundService.create(candidate);
   }
 
   @Get(':id')
-  findOne(@Param('id', ParseIntPipe) id: string) {
-    return this.svc.findOne(BigInt(id));
+  async findOne(@Param('id') id: string): Promise<Background> {
+    return this.backgroundService.findOne(BigInt(id));
+  }
+
+  @Get()
+  async findAll(): Promise<Background[]> {
+    return this.backgroundService.findAll();
   }
 
   @Patch(':id')
-  update(
-    @Param('id', ParseIntPipe) id: string,
-    @Body() dto: UpdateBackgroundDto,
-  ) {
-    return this.svc.update(BigInt(id), dto);
+  async update(
+    @Param('id') id: string,
+    @Body() updateDto: UpdateBackgroundDto,
+  ): Promise<Background> {
+    if (typeof updateDto.toModel !== 'function') {
+      throw new Error('updateDto.toModel is undefined');
+    }
+    const model = updateDto.toModel(BigInt(id));
+    return this.backgroundService.update(model);
   }
 
   @Delete(':id')
-  remove(@Param('id', ParseIntPipe) id: string) {
-    this.svc.remove(BigInt(id));
-    return { deleted: true };
+  async remove(@Param('id') id: string): Promise<void> {
+    return this.backgroundService.remove(BigInt(id));
   }
 }

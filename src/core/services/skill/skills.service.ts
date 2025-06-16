@@ -1,14 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { randomBytes } from 'crypto';
-import { CreateSkillDto } from '@UI/dto/skill/create-skill.dto';
-import { UpdateSkillDto } from '@UI/dto/skill/update-skill.dto';
+import { SkillCandidate , Skill} from '@app/core/models/skill.model';
 
-export interface Skill {
-  id: bigint;
-  name: string;
-  description: string;
-  abilityId: bigint;
-}
 
 @Injectable()
 export class SkillsService {
@@ -28,7 +21,7 @@ export class SkillsService {
     return sk;
   }
 
-  create(dto: CreateSkillDto): Skill {
+  create(dto: SkillCandidate): Skill {
     const newSkill: Skill = {
       id: this.generateId(),
       name: dto.name,
@@ -39,16 +32,9 @@ export class SkillsService {
     return newSkill;
   }
 
-  update(id: bigint, dto: UpdateSkillDto): Skill {
-    const existing = this.findOne(id);
-    const updated: Skill = {
-      ...existing,
-      ...(dto.name       !== undefined && { name: dto.name }),
-      ...(dto.description!== undefined && { description: dto.description }),
-      ...(dto.abilityId  !== undefined && { abilityId: BigInt(dto.abilityId) }),
-    };
-    this.skills = this.skills.map(s => s.id === id ? updated : s);
-    return updated;
+  update(dto: Skill): Skill {
+    const existing = this.findOne(dto.id);
+    return dto;
   }
 
   remove(id: bigint): void {
