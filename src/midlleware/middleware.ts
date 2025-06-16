@@ -1,8 +1,8 @@
-import { Prisma } from 'generated/prisma';
-import { PrismaClientKnownRequestError, PrismaClientUnknownRequestError, PrismaClientValidationError, PrismaClientRustPanicError } from 'generated/prisma/runtime/library';
-import { Context, Next } from 'koa';
+import { PrismaClientKnownRequestError, PrismaClientUnknownRequestError, PrismaClientValidationError, PrismaClientRustPanicError } from '@prisma/client/runtime/library';
+import { Request, Response, NextFunction } from 'express';
 import * as fs from 'fs';
 import * as path from 'path';
+import { Context } from 'vm';
 
 const logFilePath = path.join(__dirname, 'error.log');
 
@@ -17,34 +17,38 @@ function logErrorToFile(error: any, ctx: Context) {
     fs.appendFileSync(logFilePath, logEntry, { encoding: 'utf8' });
 }
 
-export const middleware = async (ctx: Context, next: Next) => {
+export const middleware = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        console.log('Avant next');
         await next();
-        console.log('Après next');
     } catch (error) {
         console.error('Erreur capturée dans le middleware:', error);
-        logErrorToFile(error, ctx);
-        // Prisma errors
-        if (error instanceof PrismaClientKnownRequestError) {
-            ctx.status = 400;
-            ctx.body = { error: 'Database error', message: error.message, code: error.code };
-        } else if (error instanceof PrismaClientUnknownRequestError) {
-            ctx.status = 500;
-            ctx.body = { error: 'Unknown database error', message: error.message };
-        } else if (error instanceof PrismaClientValidationError) {
-            ctx.status = 422;
-            ctx.body = { error: 'Validation error', message: error.message };
-        } else if (error instanceof PrismaClientRustPanicError) {
-            ctx.status = 500;
-            ctx.body = { error: 'Database panic', message: error.message };
-        } else if (error.status === 401) {
-            ctx.status = 401;
-            ctx.body = { error: 'Unauthorized', message: error.message };
-        } else {
-            // Autres erreurs génériques
-            ctx.status = error.status || 500;
-            ctx.body = { error: error.name || 'InternalServerError', message: error.message || 'Une erreur est survenue.' };
-        }
+        logErrorToFile(error, req);
     }
-}
+};
+
+export const errorMiddleware = (error: any, req: Request, res: Response, next: NextFunction) => {
+    logErrorToFile(error, req);
+
+    if (error instanceof PrismaClientKnownRequestError) {
+        res.status(400).json({ error: 'Database error', message: error.message, code: error.code });
+    } else if (error instanceof PrismaClientUnknownRequestError) {
+        res.status(500).json({ error: 'Unknown database error', message: error.message });
+    } else if (error instanceof PrismaClientValidationError) {
+        res.status(422).json({ error: 'Validation error', message: error.message });
+    } else if (error instanceof PrismaClientRustPanicError) {
+        res.status(500).json({ error: 'Database panic', message: error.message });
+    } else if (error.status === 401) {
+        res.status(401).json({ error: 'Unauthorized', message: error.message });
+    } else if (error.status === 403) {
+        res.status(403).json({ error: 'Forbidden', message: error.message });
+    } else if (error.status === 404) {
+        console.log('404 error:', error);
+        res.status(404).json({ error: 'Not Found', message: error.message });
+    }
+    else {
+        res.status(error.status || 500).json({
+            error: error.name || 'InternalServerError',
+            message: error.message || 'Une erreur est survenue.'
+        });
+    }
+};
