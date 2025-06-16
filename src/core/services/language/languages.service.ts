@@ -1,6 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { randomBytes } from 'crypto';
 import { LanguageCandidate } from '@app/core/models/language.model';
+import { LanguagesRepository } from '@repository/repository';
 
 import { Language } from '@app/core/models/language.model';
 @Injectable()

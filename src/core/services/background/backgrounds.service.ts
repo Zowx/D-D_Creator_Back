@@ -7,6 +7,7 @@ export class BackgroundService {
   constructor(private readonly repository: BackgroundsRepository) {}
   
   async create(background: BackgroundCandidate): Promise<Background> {
+
     return this.repository.create(background);
   }
 

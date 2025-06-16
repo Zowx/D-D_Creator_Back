@@ -1,4 +1,4 @@
-import { Skill, SkillCandidate } from "@app/core/models/models";
+import { Skill, SkillCandidate } from "@core/models/models";
 
 export class SkillDbo {
     id: bigint;

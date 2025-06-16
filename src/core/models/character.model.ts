@@ -1,19 +1,9 @@
-import { Alignment } from './alignment.model';
-import { Background } from './background.model';
-import { Class } from './class.model';
-import { Race } from './race.model';
-import { Skill } from './skill.model';
-
 export interface Character {
   id: bigint;
   raceId: bigint;
-  race: Race;
   classId: bigint;
-  class: Class;
   backgroundId: bigint;
-  background: Background;
   alignmentId: bigint;
-  alignment: Alignment;
   userId?: string;
 
   xp: number;
@@ -41,9 +31,9 @@ export interface Character {
   treasure: string;
   traits: string;
 
-  abilities: CharacterAbility[];
-  skills: Skill[];
-  languages: CharacterLanguage[];
+  abilitieIds: bigint[];
+  skillIds: bigint[];
+  languageIds: bigint[];
 }
 
 export interface CharacterCandidate {
@@ -51,7 +41,7 @@ export interface CharacterCandidate {
   classId: bigint;
   backgroundId: bigint;
   alignmentId: bigint;
-  userId?: bigint;
+  userId?: string;
 
   xp: number;
   level: number;
@@ -78,9 +68,9 @@ export interface CharacterCandidate {
   treasure: string;
   traits: string;
 
-  abilities: CharacterAbilityCandidate[];
+  abilitieIds: bigint[];
   skillIds: bigint[];
-  languages: CharacterLanguageCandidate[];
+  languageIds: bigint[];
 }
 
 export interface CharacterSkill {
