@@ -24,7 +24,8 @@ export class RacesService {
       name: dto.name,
       description: dto.description,
       traits: [], // Les traits seront gérés séparément si nécessaire
-      subrace_of: dto.subrace_of !== undefined ? BigInt(dto.subrace_of) : undefined,
+      subrace_of:
+        dto.subrace_of !== undefined ? BigInt(dto.subrace_of) : undefined,
     };
 
     return await this.racesRepository.create(raceCandidate);
@@ -33,13 +34,16 @@ export class RacesService {
   async update(id: bigint, dto: UpdateRaceDto): Promise<Race> {
     const existing = await this.findOne(id);
     const updateDto = dto as Partial<CreateRaceDto>;
-    
+
     // Convert DTO to RaceCandidate model for update
     const raceCandidate: RaceCandidate = {
       name: updateDto.name ?? existing.name,
       description: updateDto.description ?? existing.description,
       traits: [], // Les traits seront gérés séparément si nécessaire
-      subrace_of: updateDto.subrace_of !== undefined ? BigInt(updateDto.subrace_of) : existing.subrace_of,
+      subrace_of:
+        updateDto.subrace_of !== undefined
+          ? BigInt(updateDto.subrace_of)
+          : existing.subrace_of,
     };
 
     const updated = await this.racesRepository.update(id, raceCandidate);
@@ -50,7 +54,8 @@ export class RacesService {
   async remove(id: bigint): Promise<void> {
     await this.findOne(id); // Vérifie que la race existe
     const deleted = await this.racesRepository.delete(id);
-    if (!deleted) throw new NotFoundException(`Impossible de supprimer la race ${id}`);
+    if (!deleted)
+      throw new NotFoundException(`Impossible de supprimer la race ${id}`);
   }
 
   async findSubraces(parentRaceId: bigint): Promise<Race[]> {

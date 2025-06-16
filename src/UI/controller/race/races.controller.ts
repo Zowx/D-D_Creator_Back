@@ -1,4 +1,13 @@
-import {Controller, Get, Post, Patch, Delete,Body, Param, ParseIntPipe} from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Patch,
+  Delete,
+  Body,
+  Param,
+  ParseIntPipe,
+} from '@nestjs/common';
 import { RacesService } from '@core/services/race/races.service';
 import { CreateRaceDto } from '@UI/dto/race/create-race.dto';
 import { UpdateRaceDto } from '@UI/dto/race/update-race.dto';
