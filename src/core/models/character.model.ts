@@ -79,43 +79,41 @@ export interface CharacterCandidate {
   traits: string;
 
   abilities: CharacterAbilityCandidate[];
-  skillIds: Skill[];
+  skillIds: bigint[];
   languages: CharacterLanguageCandidate[];
 }
-
 
 export interface CharacterSkill {
   id: bigint;
   characterId: bigint;
-  skills: bigint;
+  skillId: bigint;
 }
 
 export interface CharacterSkillCandidate {
   characterId: bigint;
-  skills: bigint;
+  skillId: bigint;
 }
 
 export interface CharacterAbility {
   id: bigint;
   value: string;
   characterId: bigint;
-  abilityId: bigint[];
+  abilityId: bigint;
 }
 
 export interface CharacterAbilityCandidate {
   value: string;
   characterId: bigint;
-  abilityId: bigint[];
+  abilityId: bigint;
 }
 
 export interface CharacterLanguage {
   id: bigint;
-  characterId: BigInt;
-  languageId:  BigInt[];
-
+  characterId: bigint;
+  languageId: bigint;
 }
-export interface CharacterLanguageCandidate {
-  characterId: BigInt;
-  languageId:  BigInt[];
 
+export interface CharacterLanguageCandidate {
+  characterId: bigint;
+  languageId: bigint;
 }
