@@ -3,8 +3,9 @@ import { Ability } from './ability.model';
 export interface Class {
   id: bigint;
   name: string;
+  
   hitDice: number;
-  savingThrows: Ability[];
+  savingThrows: bigint[];
   subClass?: bigint;
 }
 

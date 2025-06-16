@@ -9,7 +9,8 @@ export class RacesController {
 
   @Post()
   create(@Body() dto: CreateRaceDto) {
-    return this.svc.create(dto);
+    const race = dto.toCandidate();
+    return this.svc.create(race);
   }
 
   @Get()
@@ -27,7 +28,11 @@ export class RacesController {
     @Param('id', ParseIntPipe) id: string,
     @Body() dto: UpdateRaceDto,
   ) {
-    return this.svc.update(BigInt(id), dto);
+    const race = dto.toModel?.(BigInt(id));
+    if (!race) {
+      throw new Error('Invalid race data');
+    }
+    return this.svc.update(race);
   }
 
   @Delete(':id')

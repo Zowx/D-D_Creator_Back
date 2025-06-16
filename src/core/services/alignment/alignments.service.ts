@@ -1,54 +1,40 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { randomBytes } from 'crypto';
-import { CreateAlignmentDto } from '@UI/dto/alignments/create-alignment.dto';
-import { UpdateAlignmentDto } from '@UI/dto/alignments/update-alignment.dto';
-import { AlignmentsRepository } from '@repository/alignments.repository';
-
-export interface Alignment {
-  id: bigint;
-  name: string;
-  description: string;
-}
+import { Alignment, AlignmentCandidate } from '@app/core/models/alignment.model';
+import { AlignmentsRepository } from '@app/core/repositories/alignments.repository';
 
 @Injectable()
 export class AlignmentsService {
+  constructor(private readonly repository: AlignmentsRepository) {}
 
-  constructor(private readonly alignmentsRepository: AlignmentsRepository) {}
-
-  private alignments: Alignment[] = [];
-
-  private generateId(): bigint {
-    return BigInt('0x' + randomBytes(8).toString('hex'));
+  async create(alignment: AlignmentCandidate): Promise<Alignment> {
+    return this.repository.create(alignment);
   }
 
-  findAll(): Alignment[] {
-    return this.alignments;
+  async findAll(): Promise<Alignment[]> {
+    return this.repository.findAll();
   }
 
-  findOne(id: bigint): Alignment {
-    const alignment = this.alignments.find(a => a.id === id);
-    if (!alignment) throw new NotFoundException(`Alignment ${id} introuvable`);
+  async findOne(id: bigint): Promise<Alignment> {
+    const alignment = await this.repository.findOne(id);
+    if (!alignment) {
+      throw new NotFoundException(`Alignment with id ${id} not found`);
+    }
     return alignment;
   }
 
-  create(dto: CreateAlignmentDto): Alignment {
-    const newAlignment: Alignment = {
-      id: this.generateId(),
-      ...dto,
-    };
-    this.alignments.push(newAlignment);
-    return newAlignment;
+  async update(updated: Alignment): Promise<Alignment> {
+    const existing = await this.repository.findOne(updated.id);
+    if (!existing) {
+      throw new NotFoundException(`Alignment with id ${updated.id} not found`);
+    }
+    return this.repository.update(updated);
   }
 
-  update(id: bigint, dto: UpdateAlignmentDto): Alignment {
-    const alignment = this.findOne(id);
-    const updated = { ...alignment, ...dto };
-    this.alignments = this.alignments.map(a => a.id === id ? updated : a);
-    return updated;
-  }
-
-  remove(id: bigint): void {
-    this.findOne(id);
-    this.alignments = this.alignments.filter(a => a.id !== id);
+  async remove(id: bigint): Promise<void> {
+    const existing = await this.repository.findOne(id);
+    if (!existing) {
+      throw new NotFoundException(`Alignment with id ${id} not found`);
+    }
+    await this.repository.remove(id);
   }
 }

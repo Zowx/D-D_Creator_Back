@@ -27,7 +27,11 @@ export class ClassesController {
     @Param('id', ParseIntPipe) id: string,
     @Body() dto: UpdateClassDto,
   ) {
-    return this.svc.update(BigInt(id), dto);
+    const classData = dto.toModel?.(BigInt(id));
+    if (!classData) {
+      throw new Error('Invalid class data');
+    }
+    return this.svc.update(classData);
   }
 
   @Delete(':id')

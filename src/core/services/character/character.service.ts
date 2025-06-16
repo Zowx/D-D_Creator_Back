@@ -1,33 +1,37 @@
-import { Injectable } from "@nestjs/common";
-import { CharacterDto } from "@app/UI/dto/character/character.dto";
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { CharacterRepository } from './character.repository';
+import { CreateCharacterDto } from '../../../UI/dto/character/create-character.dto';
+import { UpdateCharacterDto } from '../../../UI/dto/character/update-character.dto';
 
 @Injectable()
-export class CharacterService {
-  createCharacter(characterData: CharacterDto) {
-    // appel bdd pour creer le personnage
-    return {
-      message: "Character created successfully",
-      character: characterData,
-    };
+export class CharactersService {
+  constructor(private readonly characterRepo: CharacterRepository) {}
+
+  async create(dto: CreateCharacterDto) {
+    return this.characterRepo.create(dto);
   }
 
-  getCharacter(id: number): string {
-    //appeler bdd pour recup les infos
-    let rep = "pour id " + id + " : " + {
-      id: "1",
-      name: "John Doe",
-      race: "Human",
-      class: "Warrior",
-      level: 1,
-      alignment: "Neutral Good",
-      background: "Soldier",
-      strength: 15,
-      dexterity: 12,
-      constitution: 14,
-      intelligence: 10,
-      wisdom: 13,
-      charisma: 8,
-    };
-    return rep;
+  async findAll() {
+    return this.characterRepo.findAll();
+  }
+
+  async findOne(id: bigint) {
+    const character = await this.characterRepo.findOne(id);
+    if (!character) throw new NotFoundException(`Character with ID ${id} not found`);
+    return character;
+  }
+
+  async update(id: bigint, dto: UpdateCharacterDto) {
+    const character = await this.characterRepo.findOne(id);
+    if (!character) throw new NotFoundException(`Character with ID ${id} not found`);
+
+    return this.characterRepo.update(id, dto);
+  }
+
+  async remove(id: bigint) {
+    const character = await this.characterRepo.findOne(id);
+    if (!character) throw new NotFoundException(`Character with ID ${id} not found`);
+
+    return this.characterRepo.delete(id);
   }
 }
