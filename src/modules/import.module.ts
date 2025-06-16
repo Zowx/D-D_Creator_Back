@@ -5,15 +5,17 @@ import { DatabaseModule } from './database.module';
 import { ImportController } from '@UI/controller/import/import.controller';
 import { AbilitiesRepository } from '@repository/abilities.repository';
 import { AlignmentsRepository } from '@app/repository/alignments.repository';
+import { RacesRepository } from '@repository/repository';
 
 @Module({
-    imports: [DatabaseModule],
-    controllers: [ImportController],
-    providers: [
-        ImportService,
-        ImportConnector,
-        AbilitiesRepository,
-        AlignmentsRepository,
-    ],
+  imports: [DatabaseModule],
+  controllers: [ImportController],
+  providers: [
+    ImportService,
+    ImportConnector,
+    AbilitiesRepository,
+    AlignmentsRepository,
+    RacesRepository,
+  ],
 })
-export class ImportModule { }
+export class ImportModule {}
