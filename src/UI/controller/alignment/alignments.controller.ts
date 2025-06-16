@@ -9,7 +9,8 @@ export class AlignmentsController {
 
   @Post()
   create(@Body() dto: CreateAlignmentDto) {
-    return this.svc.create(dto);
+    const alignment = dto.toModel();
+    return this.svc.create(alignment);
   }
 
   @Get()

@@ -1,53 +1,40 @@
-// import { AbilitiesRepository } from '@repository/abilities.repository';
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { Ability, AbilityCandidate } from '@app/core/models/ability.model';
+import { Ability } from '@app/core/models/ability.model';
+import { AbilitiesRepository } from '@app/core/repositories/abilities.repository';
 
 @Injectable()
 export class AbilitiesService {
+  constructor(private readonly repository: AbilitiesRepository) {}
 
-  constructor(
-    // private readonly AbilitiesRepository: AbilitiesRepository,
-  ) {}
+  async create(ability: Ability): Promise<Ability> {
+    return this.repository.create(ability);
+  }
 
   async findAll(): Promise<Ability[]> {
-    // return await this.AbilitiesRepository.findAll();
-    return []
+    return this.repository.findAll();
   }
 
-  async findOne(id: bigint) {
-    // const ability = await this.AbilitiesRepository.findById(id);
-    // if (!ability) {
-    //   throw new NotFoundException(`Ability with id ${id} not found`);
-    // }
-    // return ability;
+  async findOne(id: bigint): Promise<Ability> {
+    const ability = await this.repository.findOne(id);
+    if (!ability) {
+      throw new NotFoundException(`Ability with id ${id} not found`);
+    }
+    return ability;
   }
 
-  async create(candidate: AbilityCandidate) {
-    // const newAbility = await this.AbilitiesRepository.create(candidate);
-    // if (!newAbility) {
-    //   throw new NotFoundException('Failed to create ability');
-    // }
-    // return newAbility;
+  async update(ability: Ability): Promise<Ability> {
+    const existing = await this.repository.findOne(ability.id);
+    if (!existing) {
+      throw new NotFoundException(`Ability with id ${ability.id} not found`);
+    }
+    return this.repository.update(ability);
   }
 
-  async update(candidate: Ability) {
-    // const ability = await this.findOne(candidate.id);
-    // if (!ability) {
-    //   throw new NotFoundException(`Ability with id ${candidate.id} not found`);
-    // }
-    // const updated = await this.AbilitiesRepository.update(candidate);
-    // if (!updated) {
-    //   throw new NotFoundException(`Failed to update ability with id ${candidate.id}`);
-    // }
-    // return updated;
-  }
-
-  async remove(id: bigint) {
-    // await this.findOne(id);
-    // const deleted = await this.AbilitiesRepository.delete(id);
-    // if (!deleted) {
-    //   throw new NotFoundException(`Failed to delete ability with id ${id}`);
-    // }
-    // return deleted;
+  async remove(id: bigint): Promise<void> {
+    const existing = await this.repository.findOne(id);
+    if (!existing) {
+      throw new NotFoundException(`Ability with id ${id} not found`);
+    }
+    await this.repository.remove(id);
   }
 }

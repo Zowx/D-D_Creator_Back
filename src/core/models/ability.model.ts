@@ -10,3 +10,4 @@ export interface AbilityCandidate {
     description: string;
     shortDescription: string;
 }
+

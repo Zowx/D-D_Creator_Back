@@ -1,8 +1,7 @@
-import {Controller, Get, Post, Body, Param,Patch, Delete, ParseIntPipe} from '@nestjs/common';
+import {Controller,Get,Post,Body,Param,Patch,Delete,} from '@nestjs/common';
 import { AbilitiesService } from '@core/services/ability/abilities.service';
 import { CreateAbilityDto } from '@UI/dto/ability/create-ability.dto';
 import { UpdateAbilityDto } from '@UI/dto/ability/update-ability.dto';
-import { Ability } from '@core/models/models';
 
 @Controller('abilities')
 export class AbilitiesController {
@@ -10,7 +9,8 @@ export class AbilitiesController {
 
   @Post()
   create(@Body() dto: CreateAbilityDto) {
-    return this.svc.create(dto);
+    const ability = dto.toModel();
+    return this.svc.create(ability);
   }
 
   @Get()
@@ -19,24 +19,22 @@ export class AbilitiesController {
   }
 
   @Get(':id')
-  findOne(@Param('id', ParseIntPipe) id: string) {
+  findOne(@Param('id') id: string) {
     return this.svc.findOne(BigInt(id));
   }
 
   @Patch(':id')
-  update(
-    @Param('id', ParseIntPipe) id: string,
-    @Body() dto: UpdateAbilityDto,
-  ) {
-    const data = {
-      ...dto,
-      id: BigInt(id),
-    } as Ability;
-    return this.svc.update(data);
+  update(@Param('id') id: string, @Body() dto: UpdateAbilityDto) {
+    if (typeof dto.toModel !== 'function') {
+      throw new Error('dto.toModel is not defined');
+    }
+    const ability = dto.toModel();
+    ability.id = BigInt(id);
+    return this.svc.update(ability);
   }
 
   @Delete(':id')
-  remove(@Param('id', ParseIntPipe) id: string) {
+  remove(@Param('id') id: string) {
     this.svc.remove(BigInt(id));
     return { deleted: true };
   }
