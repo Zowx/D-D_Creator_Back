@@ -14,22 +14,24 @@ datasource db {
 }
 
 model User {
-  id         BigInt @id @default(autoincrement())
-  username   String @unique
+  id         BigInt   @id @default(autoincrement())
+  username   String   @unique
   password   String
   characters Character[]
 }
 
 model Character {
-  id           BigInt @id @default(autoincrement())
+  id           BigInt   @id @default(autoincrement())
   raceId       BigInt
-  race         Race @relation(fields: [raceId], references: [id])
+  race         Race     @relation(fields: [raceId], references: [id])
   classId      BigInt
-  class        Class @relation(fields: [classId], references: [id])
+  class        Class    @relation(fields: [classId], references: [id])
   backgroundId BigInt
   background   Background @relation(fields: [backgroundId], references: [id])
   alignmentId  BigInt
   alignment    Alignment @relation(fields: [alignmentId], references: [id])
+
+
   xp           Int
   level        Int
   name         String
@@ -37,8 +39,8 @@ model Character {
   AC           Int
   speed        Int
   hp           Int
-  max_hp       Int
-  temp_hp      Int
+  maxHp        Int
+  tempHp       Int
   personality  String
   ideals       String
   bonds        String
@@ -55,25 +57,23 @@ model Character {
   treasure     String
   traits       String
 
-  Userid BigInt?
-  User   User? @relation(fields: [Userid], references: [id])
-
-  playerSkills       PlayerSkill[]
-  abilities          CharacterAbility[]
-  languages          CharacterLanguage[]
+  abilities    CharacterAbility[]
+  skills       Skill[]             @relation("CharacterSkills", references: [id])
+  languages    CharacterLanguage[]
 }
 
 model Race {
-  id          BigInt @id @default(autoincrement())
+  id          BigInt      @id @default(autoincrement())
   name        String
   description String
-  subrace_of  BigInt?
+  subraceOf   BigInt?
 
   raceTraits RaceTrait[]
+  characters Character[]
 }
 
 model Trait {
-  id          BigInt @id @default(autoincrement())
+  id          BigInt      @id @default(autoincrement())
   name        String
   description String
 
@@ -81,43 +81,49 @@ model Trait {
 }
 
 model RaceTrait {
-  id       Int @id @default(autoincrement())
-  raceId   BigInt
-  race     Race @relation(fields: [raceId], references: [id])
-  traitId  BigInt
-  trait    Trait @relation(fields: [traitId], references: [id])
+  id      Int     @id @default(autoincrement())
+  raceId  BigInt
+  traitId BigInt
+
+  race    Race    @relation(fields: [raceId], references: [id])
+  trait   Trait   @relation(fields: [traitId], references: [id])
 }
 
 model Class {
-  id           BigInt @id @default(autoincrement())
+  id           BigInt   @id @default(autoincrement())
   name         String
   hitDice      Int
   subclassId   BigInt?
-  subclass     Class? @relation("SubclassRelation", fields: [subclassId], references: [id])
 
+  subclass     Class?   @relation("SubclassRelation", fields: [subclassId], references: [id])
   savingThrows Ability[] @relation("SavingThrows")
+  characters   Character[]
 }
 
 model Ability {
-  id           BigInt @id @default(autoincrement())
-  name         String
-  description  String
-  short_desc   String
-  skill        Skill? @relation(fields: [skillid], references: [id])
+  id          BigInt     @id @default(autoincrement())
+  name        String
+  description String
+  shortDesc   String
+  skillId     BigInt?
 
-  class        Class[] @relation("SavingThrows")
+  skill       Skill?     @relation(fields: [skillId], references: [id])
+  classes     Class[]    @relation("SavingThrows")
   characterAbilities CharacterAbility[]
 }
 
 model Skill {
-  id          BigInt @id @default(autoincrement()) @unique
+  id          BigInt  @id @default(autoincrement())
   name        String
   description String
   abilityId   BigInt
+
+  ability     Ability @relation(fields: [abilityId], references: [id])
+  characters  Character[] @relation("CharacterSkills")
 }
 
 model Background {
-  id                       BigInt @id @default(autoincrement()) @unique
+  id                       BigInt @id @default(autoincrement())
   name                     String
   description              String
   abilityChoice            Int
@@ -128,64 +134,56 @@ model Background {
   featureName              String
   featureDescription       String
 
-  ability      BackgroundAbility[]
-  skills       Background_Skill[]
-  languages    BackgroundLanguage[]
-  characters   Character[]
+  abilities  BackgroundAbility[]
+  skills     BackgroundSkill[]
+  languages  BackgroundLanguage[]
+  characters Character[]
 }
 
-model Background_Skill {
+model BackgroundSkill {
   id           BigInt @id @default(autoincrement())
-  skillId      BigInt
   backgroundId BigInt
+  skillId      BigInt
 
-  skill       Skill     @relation(fields: [skillId], references: [id])
-  background  Background @relation(fields: [backgroundId], references: [id])
+  background   Background @relation(fields: [backgroundId], references: [id])
+  skill        Skill      @relation(fields: [skillId], references: [id])
 }
 
 model BackgroundLanguage {
-  id           BigInt @id @default(autoincrement()) @unique
-  languageId   BigInt
+  id           BigInt @id @default(autoincrement())
   backgroundId BigInt
+  languageId   BigInt
 
-  language    Language   @relation(fields: [languageId], references: [id])
-  background  Background @relation(fields: [backgroundId], references: [id])
+  background   Background @relation(fields: [backgroundId], references: [id])
+  language     Language   @relation(fields: [languageId], references: [id])
 }
 
 model BackgroundAbility {
-  id           BigInt @id @default(autoincrement()) @unique
-  abilityId    BigInt
+  id           BigInt @id @default(autoincrement())
   backgroundId BigInt
+  abilityId    BigInt
   value        Int
 
-  ability     Ability    @relation(fields: [abilityId], references: [id])
-  background  Background @relation(fields: [backgroundId], references: [id])
+  background   Background @relation(fields: [backgroundId], references: [id])
+  ability      Ability    @relation(fields: [abilityId], references: [id])
 }
 
 model Alignment {
-  id          BigInt @id @default(autoincrement()) @unique
+  id          BigInt @id @default(autoincrement())
   name        String
   description String
 
-  Character Character[]
-}
-
-model CharacterSkill {
-  id          BigInt @id @default(autoincrement()) @unique
-  value       String
-  characterId BigInt
-
-  character   Character @relation(fields: [characterId], references: [id])
-  skills      Skill[]
+  characters  Character[]
 }
 
 model CharacterAbility {
-  id          BigInt @id @default(autoincrement()) @unique
+  id          BigInt @id @default(autoincrement())
   characterId BigInt
   abilityId   BigInt
+  value       String
 
   character   Character @relation(fields: [characterId], references: [id])
-  ability     Ability @relation(fields: [abilityId], references: [id])
+  ability     Ability   @relation(fields: [abilityId], references: [id])
 }
 
 model Language {
@@ -193,6 +191,7 @@ model Language {
   name        String
   description String
   exotic      Boolean
+  secret      Boolean
 
   characters  CharacterLanguage[]
 }

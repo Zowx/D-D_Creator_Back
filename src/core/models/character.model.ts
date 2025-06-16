@@ -1,38 +1,121 @@
+import { Alignment } from './alignment.model';
+import { Background } from './background.model';
+import { Class } from './class.model';
+import { Race } from './race.model';
 import { Skill } from './skill.model';
+
 export interface Character {
-    id: bigint;
-    name: string;
-    description: string;
-    shortDescription: string;
+  id: bigint;
+  raceId: bigint;
+  race: Race;
+  classId: bigint;
+  class: Class;
+  backgroundId: bigint;
+  background: Background;
+  alignmentId: bigint;
+  alignment: Alignment;
+  userId?: string;
+
+  xp: number;
+  level: number;
+  name: string;
+  player: string;
+  AC: number;
+  speed: number;
+  hp: number;
+  maxHp: number;
+  tempHp: number;
+  personality: string;
+  ideals: string;
+  bonds: string;
+  flaws: string;
+  age: number;
+  height: string;
+  weight: string;
+  eyes: string;
+  skin: string;
+  hair: string;
+  appearance: string;
+  allies: string;
+  backstory: string;
+  treasure: string;
+  traits: string;
+
+  abilities: CharacterAbility[];
+  skills: Skill[];
+  languages: CharacterLanguage[];
 }
 
 export interface CharacterCandidate {
-    name: string;
-    description: string;
-    shortDescription: string;
+  raceId: bigint;
+  classId: bigint;
+  backgroundId: bigint;
+  alignmentId: bigint;
+  userId?: bigint;
+
+  xp: number;
+  level: number;
+  name: string;
+  player: string;
+  AC: number;
+  speed: number;
+  hp: number;
+  maxHp: number;
+  tempHp: number;
+  personality: string;
+  ideals: string;
+  bonds: string;
+  flaws: string;
+  age: number;
+  height: string;
+  weight: string;
+  eyes: string;
+  skin: string;
+  hair: string;
+  appearance: string;
+  allies: string;
+  backstory: string;
+  treasure: string;
+  traits: string;
+
+  abilities: CharacterAbilityCandidate[];
+  skillIds: Skill[];
+  languages: CharacterLanguageCandidate[];
 }
+
 
 export interface CharacterSkill {
   id: bigint;
+  characterId: bigint;
+  skills: bigint;
+}
+
+export interface CharacterSkillCandidate {
+  characterId: bigint;
+  skills: bigint;
+}
+
+export interface CharacterAbility {
+  id: bigint;
   value: string;
   characterId: bigint;
-  skills:   Skill[];
+  abilityId: bigint[];
 }
 
-/*model CharacterAbility {
-  id          BigInt @id @default(autoincrement()) @unique
-  characterId BigInt
-  abilityId   BigInt
-
-  character   Character @relation(fields: [characterId], references: [id])
-  ability     Ability @relation(fields: [abilityId], references: [id])
+export interface CharacterAbilityCandidate {
+  value: string;
+  characterId: bigint;
+  abilityId: bigint[];
 }
 
-model CharacterLanguage {
-  id          BigInt @id @default(autoincrement())
-  characterId BigInt
-  languageId  BigInt
+export interface CharacterLanguage {
+  id: bigint;
+  characterId: BigInt;
+  languageId:  BigInt[];
 
-  character   Character @relation(fields: [characterId], references: [id])
-  language    Language  @relation(fields: [languageId], references: [id])
-}*/
+}
+export interface CharacterLanguageCandidate {
+  characterId: BigInt;
+  languageId:  BigInt[];
+
+}
