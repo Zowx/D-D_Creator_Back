@@ -1,5 +1,6 @@
 // Importation de l'interface modèle
 import { Skill } from '@core/models/skill.model';
+import { AbilityDto } from './ability.dto';
 
 /**
  * Représente un Data Transfer Object (DTO) pour l'entité Skill.
@@ -11,17 +12,17 @@ export class SkillDto {
   description: string;
   abilityId?: bigint;
 
-    /**
-   * Crée une nouvelle instance de SkillDto.
-   *
-   * @param {Object} init - Données pour initialiser les propriétés du DTO. Les données doivent être de la forme suivante :
-   * {
-   *  id: number;
-   *  name: string;
-   *  description: string;
-   *  abilityid: bigint;
-   * }
-   */
+  /**
+ * Crée une nouvelle instance de SkillDto.
+ *
+ * @param {Object} init - Données pour initialiser les propriétés du DTO. Les données doivent être de la forme suivante :
+ * {
+ *  id: number;
+ *  name: string;
+ *  description: string;
+ *  abilityid: AbilityDto;
+ * }
+ */
   constructor(data?: Partial<SkillDto>) {
     Object.assign(this, data);
   }

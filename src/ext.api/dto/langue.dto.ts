@@ -10,7 +10,6 @@ export class LanguageDto {
   name: string;
   description: string;
   exotic: boolean;
-  secret: boolean;
 
     /**
    * Crée une nouvelle instance de LanguageDto.
@@ -38,7 +37,6 @@ export class LanguageDto {
       name: this.name,
       description: this.description,
       exotic: this.exotic,
-      secret: this.secret,
     };
   }
 
@@ -54,7 +52,6 @@ export class LanguageDto {
       name: req.name,
       description: req.desc,
       exotic: req.is_exotic,
-      secret: req.is_secret,
     });
   }
 }

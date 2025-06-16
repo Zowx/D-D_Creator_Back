@@ -44,6 +44,21 @@ export class AbilityDto {
   }
 
   /**
+   * Crée un DTO à partir d'un modèle Ability.
+   * 
+   * @param {Ability} model - Modèle à convertir en DTO.
+   * @returns AbilityDto - Nouvelle instance du DTO.
+   */
+  static fromModel(model: Ability): AbilityDto {
+    return new AbilityDto({
+      id: model.id,
+      name: model.name,
+      description: model.description,
+      shortDescription: model.shortDescription,
+    });
+  }
+
+  /**
    * Crée un DTO à partir des données d'une requête.
    * 
    * @param {any} req - Données de la requête à convertir.
