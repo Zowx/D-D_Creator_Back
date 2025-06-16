@@ -17,30 +17,12 @@ importers:
       '@nestjs/jwt':
         specifier: ^11.0.0
         version: 11.0.0(@nestjs/common@11.1.0(class-transformer@0.5.1)(class-validator@0.14.2)(reflect-metadata@0.2.2)(rxjs@7.8.2))
-      '@nestjs/mapped-types':
-        specifier: ^2.1.0
-        version: 2.1.0(@nestjs/common@11.1.0(class-transformer@0.5.1)(class-validator@0.14.2)(reflect-metadata@0.2.2)(rxjs@7.8.2))(class-transformer@0.5.1)(class-validator@0.14.2)(reflect-metadata@0.2.2)
       '@nestjs/platform-express':
         specifier: ^11.0.1
         version: 11.1.0(@nestjs/common@11.1.0(class-transformer@0.5.1)(class-validator@0.14.2)(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.1.0)
       '@prisma/client':
         specifier: 6.7.0
         version: 6.7.0(prisma@6.7.0(typescript@5.8.3))(typescript@5.8.3)
-      abort-controller:
-        specifier: ^3.0.0
-        version: 3.0.0
-      class-transformer:
-        specifier: ^0.5.1
-        version: 0.5.1
-      class-validator:
-        specifier: ^0.14.2
-        version: 0.14.2
-      path:
-        specifier: ^0.12.7
-        version: 0.12.7
-      pnpm:
-        specifier: ^10.12.1
-        version: 10.12.1
       reflect-metadata:
         specifier: ^0.2.2
         version: 0.2.2
@@ -930,19 +912,6 @@ packages:
     peerDependencies:
       '@nestjs/common': ^8.0.0 || ^9.0.0 || ^10.0.0 || ^11.0.0
 
-  '@nestjs/mapped-types@2.1.0':
-    resolution: {integrity: sha512-W+n+rM69XsFdwORF11UqJahn4J3xi4g/ZEOlJNL6KoW5ygWSmBB2p0S2BZ4FQeS/NDH72e6xIcu35SfJnE8bXw==}
-    peerDependencies:
-      '@nestjs/common': ^10.0.0 || ^11.0.0
-      class-transformer: ^0.4.0 || ^0.5.0
-      class-validator: ^0.13.0 || ^0.14.0
-      reflect-metadata: ^0.1.12 || ^0.2.0
-    peerDependenciesMeta:
-      class-transformer:
-        optional: true
-      class-validator:
-        optional: true
-
   '@nestjs/platform-express@11.1.0':
     resolution: {integrity: sha512-lxv73GT9VdQaxndciqKcyzLsT2j3gMRX+tO6J06oa7RIfp4Dp4oMTIu57lM1gkIJ+gLGq29bob+mfPv/K8RIuw==}
     peerDependencies:
@@ -1389,10 +1358,6 @@ packages:
 
   '@xtuc/long@4.2.2':
     resolution: {integrity: sha512-NuHqBY1PB/D8xU6s/thBgOAiAP7HOYDQ32+BFZILJ8ivkUkAHQnWfn6WhL79Owj1qmUnoN/YPhktdIoucipkAQ==}
-
-  abort-controller@3.0.0:
-    resolution: {integrity: sha512-h8lQ8tacZYnR3vNQTgibj+tODHI5/+l06Au2Pcriv/Gmet0eaj4TwWH41sO9wnHDiQsEj19q0drzdWdeAHtweg==}
-    engines: {node: '>=6.5'}
 
   accepts@2.0.0:
     resolution: {integrity: sha512-5cvg6CtKwfgdmVqY1WIiXKc3Q1bkRqGLi+2W/6ao+6Y7gu/RCwRuAhGEzh5B4KlszSuTLgZYuqFqo5bImjNKng==}
@@ -2020,10 +1985,6 @@ packages:
     resolution: {integrity: sha512-aIL5Fx7mawVa300al2BnEE4iNvo1qETxLrPI/o05L7z6go7fCw1J6EQmbK4FmJ2AS7kgVF/KEZWufBfdClMcPg==}
     engines: {node: '>= 0.6'}
 
-  event-target-shim@5.0.1:
-    resolution: {integrity: sha512-i/2XbnSz/uxRCU6+NdVJgKWDTM427+MqYbkQzD321DuCQJUqOuJKIA0IM2+W2xtYHdKOmZ4dR6fExsd4SXL+WQ==}
-    engines: {node: '>=6'}
-
   events@3.3.0:
     resolution: {integrity: sha512-mQw+2fkQbALzQ7V0MY0IqdnXNOeTtP4r0lN9z7AAawCXgqea7bDii20AYrIBrFd/Hx0M2Ocz6S111CaFkUcb0Q==}
     engines: {node: '>=0.8.x'}
@@ -2346,9 +2307,6 @@ packages:
   inflight@1.0.6:
     resolution: {integrity: sha512-k92I/b08q4wvFscXCLvqfsHCrjrF7yiXsQuIVvVE7N82W3+aqpzuUdBbfhWcy/FZR3/4IgflMgKLOsvPDrGCJA==}
     deprecated: This module is not supported, and leaks memory. Do not use it. Check out lru-cache if you want a good and tested way to coalesce async requests by a key value, which is much more comprehensive and powerful.
-
-  inherits@2.0.3:
-    resolution: {integrity: sha512-x00IRNXNy63jwGkJmzPigoySHbaqpNuzKbBOmzK+g2OdZpQ9w+sxCN+VSB3ja7IAge2OP2qpfxTjeNcyjmW1uw==}
 
   inherits@2.0.4:
     resolution: {integrity: sha512-k/vGaX4/Yla3WzyMCvTQOXYeIHvqOKtnqBduzTHpzpQZzAskKMhZ2K+EnBiSM9zGSoIFeMpXKxa4dYeZIQqewQ==}
@@ -2973,9 +2931,6 @@ packages:
     resolution: {integrity: sha512-gDKb8aZMDeD/tZWs9P6+q0J9Mwkdl6xMV8TjnGP3qJVJ06bdMgkbBlLU8IdfOsIsFz2BW1rNVT3XuNEl8zPAvw==}
     engines: {node: '>=8'}
 
-  path@0.12.7:
-    resolution: {integrity: sha512-aXXC6s+1w7otVF9UletFkFcDsJeO7lSZBPUQhtb5O0xJe8LtYhj/GxldoL09bBj9+ZmE2hNoHqQSFMN5fikh4Q==}
-
   peek-readable@5.4.2:
     resolution: {integrity: sha512-peBp3qZyuS6cNIJ2akRNG1uo1WJ1d0wTxg/fxMdZ0BqCVhx242bSFHM9eNqflfJVS9SsgkzgT/1UgnsurBOTMg==}
     engines: {node: '>=14.16'}
@@ -3017,11 +2972,6 @@ packages:
     resolution: {integrity: sha512-Nc3IT5yHzflTfbjgqWcCPpo7DaKy4FnpB0l/zCAW0Tc7jxAiuqSxHasntB3D7887LSrA93kDJ9IXovxJYxyLCA==}
     engines: {node: '>=4'}
 
-  pnpm@10.12.1:
-    resolution: {integrity: sha512-8N2oWA8O6UgcXHmh2Se5Fk8sR46QmSrSaLuyRlpzaYQ5HWMz0sMnkTV4soBK8zR0ylVLopwEqLEwYKcXZ1rjrA==}
-    engines: {node: '>=18.12'}
-    hasBin: true
-
   prelude-ls@1.2.1:
     resolution: {integrity: sha512-vkcDPrRZo1QZLbn5RLGPpg/WmIQ65qoWWhcGKf/b5eplkkarX0m9z8ppCat4mlOqUsWpyNuYgO3VRyrYHSzX5g==}
     engines: {node: '>= 0.8.0'}
@@ -3051,10 +3001,6 @@ packages:
 
   process-nextick-args@2.0.1:
     resolution: {integrity: sha512-3ouUOpQhtgrbOa17J7+uxOTpITYWaGP7/AhoR3+A+/1e9skrzelGi/dXzEYyvbxubEF6Wn2ypscTKiKJFFn1ag==}
-
-  process@0.11.10:
-    resolution: {integrity: sha512-cdGef/drWFoydD1JsMzuFf8100nZl+GT+yacc2bEced5f9Rjk4z+WtFUTBu9PhOi9j/jfmBPu0mMEY4wIdAF8A==}
-    engines: {node: '>= 0.6.0'}
 
   prompts@2.4.2:
     resolution: {integrity: sha512-NxNv/kLguCA7p3jE8oL2aEBsrJWgAakBpgmgK6lpPWV+WuOmY6r2/zbAVnP+T8bQlA0nzHXSJSJW0Hq7ylaD2Q==}
@@ -3577,9 +3523,6 @@ packages:
 
   util-deprecate@1.0.2:
     resolution: {integrity: sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==}
-
-  util@0.10.4:
-    resolution: {integrity: sha512-0Pm9hTQ3se5ll1XihRic3FDIku70C+iHUdT/W926rSgHV5QgXsYbKZN8MSC3tJtSkhuROzvsQjAaFENRXr+19A==}
 
   v8-compile-cache-lib@3.0.1:
     resolution: {integrity: sha512-wa7YjyUGfNZngI/vtK0UHAN+lgDCxBPCylVXGp0zu59Fz5aiGtNXaq3DhIov063MorB+VfufLh3JlF2KdTK3xg==}
@@ -4571,14 +4514,6 @@ snapshots:
       '@types/jsonwebtoken': 9.0.7
       jsonwebtoken: 9.0.2
 
-  '@nestjs/mapped-types@2.1.0(@nestjs/common@11.1.0(class-transformer@0.5.1)(class-validator@0.14.2)(reflect-metadata@0.2.2)(rxjs@7.8.2))(class-transformer@0.5.1)(class-validator@0.14.2)(reflect-metadata@0.2.2)':
-    dependencies:
-      '@nestjs/common': 11.1.0(class-transformer@0.5.1)(class-validator@0.14.2)(reflect-metadata@0.2.2)(rxjs@7.8.2)
-      reflect-metadata: 0.2.2
-    optionalDependencies:
-      class-transformer: 0.5.1
-      class-validator: 0.14.2
-
   '@nestjs/platform-express@11.1.0(@nestjs/common@11.1.0(class-transformer@0.5.1)(class-validator@0.14.2)(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.1.0)':
     dependencies:
       '@nestjs/common': 11.1.0(class-transformer@0.5.1)(class-validator@0.14.2)(reflect-metadata@0.2.2)(rxjs@7.8.2)
@@ -4893,7 +4828,8 @@ snapshots:
       '@types/methods': 1.1.4
       '@types/superagent': 8.1.9
 
-  '@types/validator@13.15.2': {}
+  '@types/validator@13.15.2':
+    optional: true
 
   '@types/yargs-parser@21.0.3': {}
 
@@ -5125,10 +5061,6 @@ snapshots:
   '@xtuc/ieee754@1.2.0': {}
 
   '@xtuc/long@4.2.2': {}
-
-  abort-controller@3.0.0:
-    dependencies:
-      event-target-shim: 5.0.1
 
   accepts@2.0.0:
     dependencies:
@@ -5410,13 +5342,15 @@ snapshots:
 
   cjs-module-lexer@1.4.3: {}
 
-  class-transformer@0.5.1: {}
+  class-transformer@0.5.1:
+    optional: true
 
   class-validator@0.14.2:
     dependencies:
       '@types/validator': 13.15.2
       libphonenumber-js: 1.12.9
       validator: 13.15.15
+    optional: true
 
   cli-cursor@3.1.0:
     dependencies:
@@ -5767,8 +5701,6 @@ snapshots:
   esutils@2.0.3: {}
 
   etag@1.8.1: {}
-
-  event-target-shim@5.0.1: {}
 
   events@3.3.0: {}
 
@@ -6151,8 +6083,6 @@ snapshots:
     dependencies:
       once: 1.4.0
       wrappy: 1.0.2
-
-  inherits@2.0.3: {}
 
   inherits@2.0.4: {}
 
@@ -6637,7 +6567,8 @@ snapshots:
       prelude-ls: 1.2.1
       type-check: 0.4.0
 
-  libphonenumber-js@1.12.9: {}
+  libphonenumber-js@1.12.9:
+    optional: true
 
   lines-and-columns@1.2.4: {}
 
@@ -6896,11 +6827,6 @@ snapshots:
 
   path-type@4.0.0: {}
 
-  path@0.12.7:
-    dependencies:
-      process: 0.11.10
-      util: 0.10.4
-
   peek-readable@5.4.2: {}
 
   peek-readable@7.0.0: {}
@@ -6927,8 +6853,6 @@ snapshots:
 
   pluralize@8.0.0: {}
 
-  pnpm@10.12.1: {}
-
   prelude-ls@1.2.1: {}
 
   prettier-linter-helpers@1.0.0:
@@ -6954,8 +6878,6 @@ snapshots:
       - supports-color
 
   process-nextick-args@2.0.1: {}
-
-  process@0.11.10: {}
 
   prompts@2.4.2:
     dependencies:
@@ -7502,10 +7424,6 @@ snapshots:
 
   util-deprecate@1.0.2: {}
 
-  util@0.10.4:
-    dependencies:
-      inherits: 2.0.3
-
   v8-compile-cache-lib@3.0.1: {}
 
   v8-to-istanbul@9.3.0:
@@ -7514,7 +7432,8 @@ snapshots:
       '@types/istanbul-lib-coverage': 2.0.6
       convert-source-map: 2.0.0
 
-  validator@13.15.15: {}
+  validator@13.15.15:
+    optional: true
 
   vary@1.1.2: {}
 

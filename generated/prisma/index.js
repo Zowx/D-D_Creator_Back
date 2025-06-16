@@ -259,7 +259,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "/home/mat/ynov/architecture-logicielle/creator_dnd/d-d_creator_back/generated/prisma",
+      "value": "/Users/enzo/DEV/D-D_Creator/D-D_Creator_Back/generated/prisma",
       "fromEnvVar": null
     },
     "config": {
@@ -268,16 +268,16 @@ const config = {
     "binaryTargets": [
       {
         "fromEnvVar": null,
-        "value": "debian-openssl-3.0.x",
+        "value": "darwin-arm64",
         "native": true
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "/home/mat/ynov/architecture-logicielle/creator_dnd/d-d_creator_back/prisma/schema.prisma",
+    "sourceFilePath": "/Users/enzo/DEV/D-D_Creator/D-D_Creator_Back/prisma/schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
-    "rootEnvPath": "../../.env"
+    "rootEnvPath": null
   },
   "relativePath": "../../prisma",
   "clientVersion": "6.7.0",
@@ -286,11 +286,12 @@ const config = {
     "db"
   ],
   "activeProvider": "postgresql",
+  "postinstall": false,
   "inlineDatasources": {
     "db": {
       "url": {
         "fromEnvVar": "DATABASE_URL",
-        "value": "postgresql://neondb_owner:npg_uNSIkUqm78We@ep-plain-dawn-a2sgmmu6-pooler.eu-central-1.aws.neon.tech/neondb?sslmode=require"
+        "value": null
       }
     }
   },
@@ -304,8 +305,8 @@ const fs = require('fs')
 config.dirname = __dirname
 if (!fs.existsSync(path.join(__dirname, 'schema.prisma'))) {
   const alternativePaths = [
-    "../generated/prisma",
     "generated/prisma",
+    "prisma",
   ]
   
   const alternativePath = alternativePaths.find((altPath) => {
@@ -334,8 +335,8 @@ exports.PrismaClient = PrismaClient
 Object.assign(exports, Prisma)
 
 // file annotations for bundling tools to include these files
-path.join(__dirname, "libquery_engine-debian-openssl-3.0.x.so.node");
-path.join(process.cwd(), "../generated/prisma/libquery_engine-debian-openssl-3.0.x.so.node")
+path.join(__dirname, "libquery_engine-darwin-arm64.dylib.node");
+path.join(process.cwd(), "generated/prisma/libquery_engine-darwin-arm64.dylib.node")
 // file annotations for bundling tools to include these files
 path.join(__dirname, "schema.prisma");
-path.join(process.cwd(), "../generated/prisma/schema.prisma")
+path.join(process.cwd(), "generated/prisma/schema.prisma")
