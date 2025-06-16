@@ -1,14 +1,24 @@
-import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-import { CharacterController } from './character/character.controller';
-import { CharacterService } from './character/character.service';
-import { AuthModule } from './auth/auth.module';
-import { UsersModule } from './users/users.module';
+import { Module } from "@nestjs/common";
+
+import { AbilitiesModule, AlignmentsModule, AuthModule, BackgroundsModule, ClassesModule, LanguagesModule, RacesModule, SkillsModule, TraitsModule, UsersModule, ExtApiModule, DatabaseModule } from "@app/modules/module";
+import { ImportModule } from "./modules/import.module";
 
 @Module({
-  imports: [AuthModule, UsersModule],
-  controllers: [AppController, CharacterController],
-  providers: [AppService, CharacterService],
+  imports: [
+    AuthModule,
+    UsersModule,
+    ExtApiModule,
+    DatabaseModule,
+
+    AbilitiesModule,
+    AlignmentsModule,
+    BackgroundsModule,
+    ClassesModule,
+    LanguagesModule,
+    SkillsModule,
+    TraitsModule,
+    RacesModule,
+    ImportModule,
+  ],
 })
-export class AppModule {}
+export class AppModule { }

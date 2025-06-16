@@ -6,7 +6,6 @@
 
 generator client {
   provider = "prisma-client-js"
-  output   = "../generated/prisma"
 } 
 
 datasource db {
@@ -14,6 +13,13 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model User {
+  id       BigInt @id @default(autoincrement())
+  username     String @unique
+  password  String
+
+  characters Character[]
+}
 model Character {
   id            BigInt @id @default(autoincrement())
   race          Race @relation(fields: [raceId], references: [id])
@@ -51,6 +57,9 @@ model Character {
   playerSkills  PlayerSkill[]
   abilities     CharacterAbility[]
   languages     CharacterLanguage[]
+
+  User User? @relation(fields: [Userid], references: [id])
+  Userid BigInt?
 }
 
 model Race {
@@ -101,10 +110,9 @@ model Ability {
   id          BigInt @id @default(autoincrement())
   name        String
   description String
-  short_desc  String
+  shortDescription  String
 
-  skill Skill? @relation(fields: [skillid], references: [id])
-  skillid BigInt?
+  skill Skill[]
   class Class[] @relation("SavingThrows")
 
   CharacterAbility CharacterAbility[]

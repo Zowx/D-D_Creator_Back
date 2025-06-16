@@ -1,0 +1,12 @@
+export { AlignmentsModule } from './alignments.module';
+export { AbilitiesModule } from './abilities.module';
+export { BackgroundsModule } from './backgrounds.module';
+export { ClassesModule } from './classes.module';
+export { LanguagesModule } from './languages.module';
+export { SkillsModule } from './skills.module';
+export { TraitsModule } from './traits.module';
+export { RacesModule } from './races.module';
+export { AuthModule } from './auth.module';
+export { UsersModule } from './users.module';
+export { ExtApiModule } from './ext.api.module';
+export { DatabaseModule } from './database.module';
