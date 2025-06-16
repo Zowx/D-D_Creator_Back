@@ -1,7 +1,8 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { randomBytes } from 'crypto';
-import { CreateAlignmentDto } from '../../../UI/dto/alignments/create-alignment.dto';
-import { UpdateAlignmentDto } from '../../../UI/dto/alignments/update-alignment.dto';
+import { CreateAlignmentDto } from '@UI/dto/alignments/create-alignment.dto';
+import { UpdateAlignmentDto } from '@UI/dto/alignments/update-alignment.dto';
+import { AlignmentsRepository } from '@repository/alignments.repository';
 
 export interface Alignment {
   id: bigint;
@@ -11,6 +12,9 @@ export interface Alignment {
 
 @Injectable()
 export class AlignmentsService {
+
+  constructor(private readonly alignmentsRepository: AlignmentsRepository) {}
+
   private alignments: Alignment[] = [];
 
   private generateId(): bigint {

@@ -1,13 +1,14 @@
 import { Module } from "@nestjs/common";
 
-import { AbilitiesModule, AlignmentsModule, AuthModule, BackgroundsModule, ClassesModule, LanguagesModule, RacesModule, SkillsModule, TraitsModule, UsersModule, ExtApiModule } from "@app/modules/module";
+import { AbilitiesModule, AlignmentsModule, AuthModule, BackgroundsModule, ClassesModule, LanguagesModule, RacesModule, SkillsModule, TraitsModule, UsersModule, ExtApiModule, DatabaseModule } from "@app/modules/module";
+import { ImportModule } from "./modules/import.module";
 
 @Module({
   imports: [
     AuthModule,
     UsersModule,
     ExtApiModule,
-    // DatabaseModule,
+    DatabaseModule,
 
     AbilitiesModule,
     AlignmentsModule,
@@ -17,6 +18,7 @@ import { AbilitiesModule, AlignmentsModule, AuthModule, BackgroundsModule, Class
     SkillsModule,
     TraitsModule,
     RacesModule,
+    ImportModule,
   ],
 })
 export class AppModule { }

@@ -27,6 +27,15 @@ export class AbilityDbo {
             shortDescription: model.shortDescription
         });
     }
+
+    static fromDb(dbData: any): AbilityDbo {
+        return new AbilityDbo({
+            id: dbData.id,
+            name: dbData.name,
+            description: dbData.description,
+            shortDescription: dbData.shortDescription
+        });
+    }
 }
 
 export class AbilityCandidateDbo {
@@ -44,5 +53,13 @@ export class AbilityCandidateDbo {
             description: model.description,
             shortDescription: model.shortDescription
         });
+    }
+
+    toDb(): any {
+        return {
+            name: this.name,
+            description: this.description,
+            shortDescription: this.shortDescription
+        };
     }
 }

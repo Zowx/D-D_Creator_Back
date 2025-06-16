@@ -110,10 +110,9 @@ model Ability {
   id          BigInt @id @default(autoincrement())
   name        String
   description String
-  short_desc  String
+  shortDescription  String
 
-  skill Skill? @relation(fields: [skillid], references: [id])
-  skillid BigInt?
+  skill Skill[]
   class Class[] @relation("SavingThrows")
 
   CharacterAbility CharacterAbility[]
