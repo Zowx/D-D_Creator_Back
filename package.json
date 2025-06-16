@@ -35,6 +35,8 @@
     "class-validator": "^0.14.2",
     "path": "^0.12.7",
     "pnpm": "^10.12.1",
+    "@types/koa": "^2.15.0",
+    "koa": "^3.0.0",
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.1"
   },
