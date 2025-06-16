@@ -1,12 +1,12 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { Ability } from '@app/core/models/ability.model';
+import { Ability, AbilityCandidate } from '@app/core/models/ability.model';
 import { AbilitiesRepository } from '@app/core/repositories/abilities.repository';
 
 @Injectable()
 export class AbilitiesService {
   constructor(private readonly repository: AbilitiesRepository) {}
 
-  async create(ability: Ability): Promise<Ability> {
+  async create(ability: AbilityCandidate): Promise<Ability> {
     return this.repository.create(ability);
   }
 

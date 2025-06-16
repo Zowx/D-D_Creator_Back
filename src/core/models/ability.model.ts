@@ -9,5 +9,7 @@ export interface AbilityCandidate {
     name: string;
     description: string;
     shortDescription: string;
+
+    
 }
 

@@ -1,15 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { randomBytes } from 'crypto';
-import { CreateRaceDto } from '@UI/dto/race/create-race.dto';
-import { UpdateRaceDto } from '@UI/dto/race/update-race.dto';
+import { RaceCandidate,Race } from '@app/core/models/race.model';
 
-export interface Race {
-  id: bigint;
-  name: string;
-  description: string;
-  traitsId: bigint[];
-  subrace_of?: bigint;
-}
 
 @Injectable()
 export class RacesService {
@@ -29,7 +21,7 @@ export class RacesService {
     return race;
   }
 
-  create(dto: CreateRaceDto): Race {
+  create(dto: RaceCandidate): Race {
     const newRace: Race = {
       id: this.generateId(),
       name: dto.name,
@@ -41,8 +33,8 @@ export class RacesService {
     return newRace;
   }
 
-  update(id: bigint, dto: UpdateRaceDto): Race {
-    const existing = this.findOne(id);
+  update(dto: Race): Race {
+    const existing = this.findOne(dto.id);
     const updated: Race = {
       ...existing,
       ...(dto.name        !== undefined && { name: dto.name }),
@@ -50,7 +42,7 @@ export class RacesService {
       ...(dto.traitsId    !== undefined && { traitsId: dto.traitsId.map(t => BigInt(t)) }),
       ...(dto.subrace_of  !== undefined && { subrace_of: BigInt(dto.subrace_of) }),
     };
-    this.races = this.races.map(r => (r.id === id ? updated : r));
+    this.races = this.races.map(r => (r.id === dto.id ? updated : r));
     return updated;
   }
 

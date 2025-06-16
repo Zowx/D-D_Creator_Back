@@ -1,13 +1,12 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { Alignment } from '@app/core/models/alignment.model';
+import { Alignment, AlignmentCandidate } from '@app/core/models/alignment.model';
 import { AlignmentsRepository } from '@app/core/repositories/alignments.repository';
-import { UpdateAlignmentDto } from '@UI/dto/alignments/update-alignment.dto';
 
 @Injectable()
 export class AlignmentsService {
   constructor(private readonly repository: AlignmentsRepository) {}
 
-  async create(alignment: Alignment): Promise<Alignment> {
+  async create(alignment: AlignmentCandidate): Promise<Alignment> {
     return this.repository.create(alignment);
   }
 
@@ -23,18 +22,11 @@ export class AlignmentsService {
     return alignment;
   }
 
-  async update(id: bigint, dto: UpdateAlignmentDto): Promise<Alignment> {
-    const existing = await this.repository.findOne(id);
+  async update(updated: Alignment): Promise<Alignment> {
+    const existing = await this.repository.findOne(updated.id);
     if (!existing) {
-      throw new NotFoundException(`Alignment with id ${id} not found`);
+      throw new NotFoundException(`Alignment with id ${updated.id} not found`);
     }
-
-    const updated: Alignment = {
-      ...existing,
-      ...dto.toModel?.(),
-      id,
-    };
-
     return this.repository.update(updated);
   }
 

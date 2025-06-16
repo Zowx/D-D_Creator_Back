@@ -1,16 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { randomBytes } from 'crypto';
-import { CreateClassDto } from '@UI/dto/class/create-class.dto';
-import { UpdateClassDto } from '@UI/dto/class/update-class.dto';
-
-export interface Class {
-  id: bigint;
-  name: string;
-  casterType: string;
-  hitDie: number;
-  savingThrows: bigint[];
-  subClass?: bigint;
-}
+import { Class, ClassCandidate } from '@app/core/models/class.model';
 
 @Injectable()
 export class ClassesService {
@@ -30,13 +20,12 @@ export class ClassesService {
     return cls;
   }
 
-  create(dto: CreateClassDto): Class {
+  create(dto: ClassCandidate): Class {
     const newId = this.generateId();
     const newClass: Class = {
       id: newId,
       name: dto.name,
-      casterType: dto.casterType,
-      hitDie: dto.hitDie,
+      hitDice: dto.hitDice,
       savingThrows: dto.savingThrows.map(n => BigInt(n)),
       subClass: dto.subClass !== undefined ? BigInt(dto.subClass) : undefined,
     };
@@ -44,19 +33,18 @@ export class ClassesService {
     return newClass;
   }
 
-  update(id: bigint, dto: UpdateClassDto): Class {
-    const existing = this.findOne(id);
+  update(dto: Class): Class {
+    const existing = this.findOne(dto.id);
     const updated: Class = {
       ...existing,
       ...(dto.name !== undefined && { name: dto.name }),
-      ...(dto.casterType !== undefined && { casterType: dto.casterType }),
-      ...(dto.hitDie !== undefined && { hitDie: dto.hitDie }),
+      ...(dto.hitDice !== undefined && { hitDice: dto.hitDice }),
       ...(dto.savingThrows !== undefined && {
         savingThrows: dto.savingThrows.map(n => BigInt(n)),
       }),
       ...(dto.subClass !== undefined && { subClass: BigInt(dto.subClass) }),
     };
-    this.classes = this.classes.map(c => (c.id === id ? updated : c));
+    this.classes = this.classes.map(c => (c.id === dto.id ? updated : c));
     return updated;
   }
 

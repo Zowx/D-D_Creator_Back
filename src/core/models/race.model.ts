@@ -12,6 +12,6 @@ export interface RaceCandidate {
     id?: bigint;
     name: string;
     description: string;
-    traits: TraitsCandidate[];
+    traitsId: bigint[];
     subrace_of?: bigint;
 }

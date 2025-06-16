@@ -9,7 +9,7 @@ export class AbilitiesController {
 
   @Post()
   create(@Body() dto: CreateAbilityDto) {
-    const ability = dto.toModel();
+    const ability = dto.toCandidate();
     return this.svc.create(ability);
   }
 
@@ -28,8 +28,8 @@ export class AbilitiesController {
     if (typeof dto.toModel !== 'function') {
       throw new Error('dto.toModel is not defined');
     }
-    const ability = dto.toModel();
-    ability.id = BigInt(id);
+    const ability = dto.toModel(BigInt(id));
+
     return this.svc.update(ability);
   }
 

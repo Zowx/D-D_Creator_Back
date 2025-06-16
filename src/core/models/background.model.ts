@@ -2,11 +2,11 @@ export interface Background {
     id: bigint;
     name: string;
     description: string;
-    ability: BackgroundAbility[];
+    abilityIds: bigint[];
     abilityChoice: number;
-    skills: BackgroundSkill[];
+    skillsIds: bigint[];
     skillChoice: number;
-    languages: BackgroundLanguage[];
+    languagesIds: bigint[];
     languagesChoice: number;
     connectionAndMemento: string;
     adventuresAndAdvancement: string;

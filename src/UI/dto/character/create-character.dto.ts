@@ -7,6 +7,7 @@ import {
   ValidateNested
 } from 'class-validator';
 import { Type } from 'class-transformer';
+import { Character, CharacterCandidate } from '@app/core/models/character.model';
 
 
 export class CreateCharacterAbilityDto {
@@ -116,4 +117,79 @@ export class CreateCharacterDto {
   @ValidateNested({ each: true })
   @Type(() => CreateCharacterLanguageDto)
   languages: CreateCharacterLanguageDto[];
+
+  toModel(id: bigint): Character {
+    return {
+      id: id,
+      raceId: this.raceId,
+      classId: this.classId,
+      backgroundId: this.backgroundId,
+      alignmentId: this.alignmentId,
+      userId: this.userId,
+      xp: this.xp,
+      level: this.level,
+      name: this.name,
+      player: this.player,
+      AC: this.AC,
+      speed: this.speed,
+      hp: this.hp,
+      maxHp: this.maxHp,
+      tempHp: this.tempHp,
+      personality: this.personality,
+      ideals: this.ideals,
+      bonds: this.bonds,
+      flaws: this.flaws,
+      age: this.age,
+      height: this.height,
+      weight: this.weight,
+      eyes: this.eyes,
+      skin: this.skin,
+      hair: this.hair,
+      appearance: this.appearance,
+      allies: this.allies,
+      backstory: this.backstory,
+      treasure: this.treasure,
+      traits: this.traits,
+      abilities: this.abilities.map(a => ({ abilityId: a.abilityId, value: a.value })),
+      skillIds: this.skillIds,
+      languages: this.languages.map(l => l.languageId)
+    };
+  }
+
+  toCandidate(): CharacterCandidate {
+    return {
+      raceId: this.raceId,
+      classId: this.classId,
+      backgroundId: this.backgroundId,
+      alignmentId: this.alignmentId,
+      userId: this.userId,
+      xp: this.xp,
+      level: this.level,
+      name: this.name,
+      player: this.player,
+      AC: this.AC,
+      speed: this.speed,
+      hp: this.hp,
+      maxHp: this.maxHp,
+      tempHp: this.tempHp,
+      personality: this.personality,
+      ideals: this.ideals,
+      bonds: this.bonds,
+      flaws: this.flaws,
+      age: this.age,
+      height: this.height,
+      weight: this.weight,
+      eyes: this.eyes,
+      skin: this.skin,
+      hair: this.hair,
+      appearance: this.appearance,
+      allies: this.allies,
+      backstory: this.backstory,
+      treasure: this.treasure,
+      traits: this.traits,
+      abilities: this.abilities.map(a => ({ abilityId: a.abilityId, value: a.value })),
+      skillIds: this.skillIds,
+      languages: this.languages.map(l => ({ languageId: l.languageId }))
+    };
+  }
 }

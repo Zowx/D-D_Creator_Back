@@ -1,4 +1,4 @@
-import { Ability } from "@app/core/models/ability.model";
+import { Ability, AbilityCandidate } from "@app/core/models/ability.model";
 
 export class AbilityDto {
     id: bigint;
@@ -24,12 +24,11 @@ export class AbilityDto {
     return dto;
   }
 
-   toModel(): Ability {
+   toModel(): AbilityCandidate {
     return {
-      id: this.id,
       name: this.name,
       description: this.description,
       shortDescription: this.shortDescription,
-    } as Ability;
+    };
   }
 }
