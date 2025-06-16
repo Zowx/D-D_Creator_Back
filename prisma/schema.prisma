@@ -103,7 +103,6 @@ model Ability {
   name         String
   description  String
   short_desc   String
-  skillid      BigInt?
   skill        Skill? @relation(fields: [skillid], references: [id])
 
   class        Class[] @relation("SavingThrows")
@@ -171,7 +170,7 @@ model Alignment {
   Character Character[]
 }
 
-model PlayerSkill {
+model CharacterSkill {
   id          BigInt @id @default(autoincrement()) @unique
   value       String
   characterId BigInt
