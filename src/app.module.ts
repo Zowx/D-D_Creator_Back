@@ -1,6 +1,4 @@
 import { Module } from "@nestjs/common";
-import { AppController } from "./app.controller";
-import { AppService } from "./app.service";
 
 import { AbilitiesModule, AlignmentsModule, AuthModule, BackgroundsModule, ClassesModule, LanguagesModule, RacesModule, SkillsModule, TraitsModule, UsersModule, ExtApiModule } from "@app/modules/module";
 
@@ -9,6 +7,7 @@ import { AbilitiesModule, AlignmentsModule, AuthModule, BackgroundsModule, Class
     AuthModule,
     UsersModule,
     ExtApiModule,
+    // DatabaseModule,
 
     AbilitiesModule,
     AlignmentsModule,
@@ -18,12 +17,6 @@ import { AbilitiesModule, AlignmentsModule, AuthModule, BackgroundsModule, Class
     SkillsModule,
     TraitsModule,
     RacesModule,
-  ],
-  controllers: [
-    AppController,
-  ],
-  providers: [
-    AppService,
   ],
 })
 export class AppModule { }

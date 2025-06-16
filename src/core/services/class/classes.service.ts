@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { randomBytes } from 'crypto';
-import { CreateClassDto } from './dto/create-class.dto';
-import { UpdateClassDto } from './dto/update-class.dto';
+import { CreateClassDto } from '@UI/dto/class/create-class.dto';
+import { UpdateClassDto } from '@UI/dto/class/update-class.dto';
 
 export interface Class {
   id: bigint;

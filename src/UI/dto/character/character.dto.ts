@@ -1,4 +1,4 @@
-import { Race } from "@app/shared/models/race.model";
+import { Race } from "@core/models/race.model";
 
 export class CharacterDto {
     id: bigint; 

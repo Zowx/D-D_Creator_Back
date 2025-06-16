@@ -1,5 +1,5 @@
 // Importation de l'interface modèle
-import { Class, ClassCandidate } from '../../shared/models/class.model';
+import { Class, ClassCandidate } from '@core/models/models';
 
 /**
  * Représente un Data Transfer Object (DTO) pour l'entité Class.

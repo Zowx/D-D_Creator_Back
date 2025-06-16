@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { randomBytes } from 'crypto';
-import { CreateLanguageDto } from './dto/create-language.dto';
-import { UpdateLanguageDto } from './dto/update-language.dto';
+import { CreateLanguageDto } from '@UI/dto/language/create-language.dto';
+import { UpdateLanguageDto } from '@UI/dto/language/update-language.dto';
 
 export interface Language {
   id: bigint;

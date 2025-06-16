@@ -1,5 +1,5 @@
 // Importation de l'interface modèle
-import { Alignment } from '@app/shared/models/alignment.model';
+import { Alignment } from '@core/models/alignment.model';
 
 /**
  * Représente un Data Transfer Object (DTO) pour l'entité Alignment.

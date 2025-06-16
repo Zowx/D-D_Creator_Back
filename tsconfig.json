@@ -22,6 +22,7 @@
       "@UI/*": ["src/UI/*"],
       "@core/*": ["src/core/*"],
       "@ext.api/*": ["src/ext.api/*"],
+      "@repository/*": ["src/repository/*"],
     }
   }
 }

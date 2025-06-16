@@ -1,5 +1,5 @@
 // Importation de l'interface modèle
-import { TraitsCandidate } from '@app/shared/models/models';
+import { TraitsCandidate } from '@core/models/models';
 
 /**
  * Représente un Data Transfer Object (DTO) pour l'entité Traits.

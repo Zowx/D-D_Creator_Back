@@ -1,4 +1,4 @@
-import { AlignmentCandidate, LanguageCandidate, AbilityCandidate, SkillCandidate, Ability, BackgroundCandidate, Language, Skill, RaceCandidate, Race, ClassCandidate, Class } from "@app/shared/models/models";
+import { AlignmentCandidate, LanguageCandidate, AbilityCandidate, SkillCandidate, Ability, BackgroundCandidate, Language, Skill, RaceCandidate, Race, ClassCandidate, Class } from "@core/models/models";
 import { AlignmentDto, LanguageDto, AbilityDto, SkillDto, BackgroundDto, RaceDto, ClassDto } from "@ext.api/dto/dtos";
 import { CacheUtils } from "@core/utils/cache.utils";
 

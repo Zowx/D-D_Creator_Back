@@ -1,5 +1,5 @@
 // Importation de l'interface modèle
-import { Ability } from '@app/shared/models/models';
+import { Ability } from '@core/models/models';
 import { SkillDto } from './skill.dto';
 
 /**

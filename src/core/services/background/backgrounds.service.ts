@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { randomBytes } from 'crypto';
-import { CreateBackgroundDto } from './dto/create-background.dto';
-import { UpdateBackgroundDto } from './dto/update-background.dto';
+import { CreateBackgroundDto } from '@UI/dto/background/create-background.dto';
+import { UpdateBackgroundDto } from '@UI/dto/background/update-background.dto';
 
 export interface BackgroundAbility {
   id: bigint;

@@ -9,3 +9,4 @@ export { RacesModule } from './races.module';
 export { AuthModule } from './auth.module';
 export { UsersModule } from './users.module';
 export { ExtApiModule } from './ext.api.module';
+// export { DatabaseModule } from './database.module';

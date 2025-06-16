@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { randomBytes } from 'crypto';
-import { CreateSkillDto } from './dto/create-skill.dto';
-import { UpdateSkillDto } from './dto/update-skill.dto';
+import { CreateSkillDto } from '@UI/dto/skill/create-skill.dto';
+import { UpdateSkillDto } from '@UI/dto/skill/update-skill.dto';
 
 export interface Skill {
   id: bigint;

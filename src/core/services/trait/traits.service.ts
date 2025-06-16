@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { randomBytes } from 'crypto';
-import { CreateTraitDto } from './dto/create-trait.dto';
-import { UpdateTraitDto } from './dto/update-trait.dto';
+import { CreateTraitDto } from '@UI/dto/trait/create-trait.dto';
+import { UpdateTraitDto } from '@UI/dto/trait/update-trait.dto';
 
 export interface Trait {
   id: bigint;

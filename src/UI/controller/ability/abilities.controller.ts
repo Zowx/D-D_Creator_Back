@@ -2,6 +2,7 @@ import {Controller, Get, Post, Body, Param,Patch, Delete, ParseIntPipe} from '@n
 import { AbilitiesService } from '@core/services/ability/abilities.service';
 import { CreateAbilityDto } from '@UI/dto/ability/create-ability.dto';
 import { UpdateAbilityDto } from '@UI/dto/ability/update-ability.dto';
+import { Ability } from '@core/models/models';
 
 @Controller('abilities')
 export class AbilitiesController {
@@ -27,7 +28,11 @@ export class AbilitiesController {
     @Param('id', ParseIntPipe) id: string,
     @Body() dto: UpdateAbilityDto,
   ) {
-    return this.svc.update(BigInt(id), dto);
+    const data = {
+      ...dto,
+      id: BigInt(id),
+    } as Ability;
+    return this.svc.update(data);
   }
 
   @Delete(':id')

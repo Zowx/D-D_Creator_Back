@@ -266,7 +266,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "/home/mat/ynov/architecture-logicielle/creator_dnd/d-d_creator_back/generated/prisma",
+      "value": "C:\\Users\\tetra\\OneDrive\\Documents\\ecole\\M1\\D-D_Creator_Back\\generated\\prisma",
       "fromEnvVar": null
     },
     "config": {
@@ -275,16 +275,17 @@ const config = {
     "binaryTargets": [
       {
         "fromEnvVar": null,
-        "value": "debian-openssl-3.0.x",
+        "value": "windows",
         "native": true
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "/home/mat/ynov/architecture-logicielle/creator_dnd/d-d_creator_back/prisma/schema.prisma",
+    "sourceFilePath": "C:\\Users\\tetra\\OneDrive\\Documents\\ecole\\M1\\D-D_Creator_Back\\prisma\\schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
-    "rootEnvPath": null
+    "rootEnvPath": null,
+    "schemaEnvPath": "../../.env"
   },
   "relativePath": "../../prisma",
   "clientVersion": "6.7.0",
@@ -297,7 +298,7 @@ const config = {
     "db": {
       "url": {
         "fromEnvVar": "DATABASE_URL",
-        "value": "postgresql://neondb_owner:npg_uNSIkUqm78We@ep-plain-dawn-a2sgmmu6-pooler.eu-central-1.aws.neon.tech/neondb?sslmode=require"
+        "value": "postgresql://postgres:root@localhost:5432/DnD"
       }
     }
   },

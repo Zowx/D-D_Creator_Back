@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { randomBytes } from 'crypto';
-import { CreateRaceDto } from './dto/create-race.dto';
-import { UpdateRaceDto } from './dto/update-race.dto';
+import { CreateRaceDto } from '@UI/dto/race/create-race.dto';
+import { UpdateRaceDto } from '@UI/dto/race/update-race.dto';
 
 export interface Race {
   id: bigint;

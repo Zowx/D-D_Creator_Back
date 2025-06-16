@@ -1,5 +1,5 @@
 // Importation de l'interface modèle
-import { Language } from '@app/shared/models/language.model';
+import { Language } from '@core/models/language.model';
 
 /**
  * Représente un Data Transfer Object (DTO) pour l'entité Language.
