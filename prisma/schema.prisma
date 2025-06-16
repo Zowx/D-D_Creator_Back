@@ -213,6 +213,7 @@ model Language {
   name        String
   description String
   exotic      Boolean
+  secret      Boolean
 
   characters  CharacterLanguage[]
   backgrounds BackgroundLanguage[]

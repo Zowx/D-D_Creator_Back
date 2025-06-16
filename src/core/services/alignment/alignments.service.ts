@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { Alignment, AlignmentCandidate } from '@app/core/models/alignment.model';
-import { AlignmentsRepository } from '@app/core/repositories/alignments.repository';
+import { AlignmentsRepository } from '@repository/repository';
 
 @Injectable()
 export class AlignmentsService {
@@ -15,7 +15,7 @@ export class AlignmentsService {
   }
 
   async findOne(id: bigint): Promise<Alignment> {
-    const alignment = await this.repository.findOne(id);
+    const alignment = await this.repository.findById(id);
     if (!alignment) {
       throw new NotFoundException(`Alignment with id ${id} not found`);
     }
@@ -23,7 +23,7 @@ export class AlignmentsService {
   }
 
   async update(updated: Alignment): Promise<Alignment> {
-    const existing = await this.repository.findOne(updated.id);
+    const existing = await this.repository.findById(updated.id);
     if (!existing) {
       throw new NotFoundException(`Alignment with id ${updated.id} not found`);
     }
@@ -31,10 +31,10 @@ export class AlignmentsService {
   }
 
   async remove(id: bigint): Promise<void> {
-    const existing = await this.repository.findOne(id);
+    const existing = await this.repository.findById(id);
     if (!existing) {
       throw new NotFoundException(`Alignment with id ${id} not found`);
     }
-    await this.repository.remove(id);
+    await this.repository.delete(id);
   }
 }

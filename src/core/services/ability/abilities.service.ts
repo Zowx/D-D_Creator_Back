@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { Ability, AbilityCandidate } from '@app/core/models/ability.model';
-import { AbilitiesRepository } from '@app/core/repositories/abilities.repository';
+import { Ability, AbilityCandidate } from '@core/models/ability.model';
+import { AbilitiesRepository } from '@repository/repository';
 
 @Injectable()
 export class AbilitiesService {
@@ -15,7 +15,7 @@ export class AbilitiesService {
   }
 
   async findOne(id: bigint): Promise<Ability> {
-    const ability = await this.repository.findOne(id);
+    const ability = await this.repository.findById(id);
     if (!ability) {
       throw new NotFoundException(`Ability with id ${id} not found`);
     }
@@ -23,7 +23,7 @@ export class AbilitiesService {
   }
 
   async update(ability: Ability): Promise<Ability> {
-    const existing = await this.repository.findOne(ability.id);
+    const existing = await this.repository.findById(ability.id);
     if (!existing) {
       throw new NotFoundException(`Ability with id ${ability.id} not found`);
     }
@@ -31,10 +31,10 @@ export class AbilitiesService {
   }
 
   async remove(id: bigint): Promise<void> {
-    const existing = await this.repository.findOne(id);
+    const existing = await this.repository.findById(id);
     if (!existing) {
       throw new NotFoundException(`Ability with id ${id} not found`);
     }
-    await this.repository.remove(id);
+    await this.repository.delete(id);
   }
 }

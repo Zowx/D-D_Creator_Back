@@ -150,10 +150,10 @@ export class CreateCharacterDto {
       backstory: this.backstory,
       treasure: this.treasure,
       traits: this.traits,
-      abilities: this.abilities.map(a => ({ abilityId: a.abilityId, value: a.value })),
+      // abilities: this.abilities.map(a => ({ abilityId: a.abilityId, value: a.value })),
       skillIds: this.skillIds,
-      languages: this.languages.map(l => l.languageId)
-    };
+      // languages: this.languages.map(l => l.languageId)
+    } as any;
   }
 
   toCandidate(): CharacterCandidate {
@@ -187,9 +187,9 @@ export class CreateCharacterDto {
       backstory: this.backstory,
       treasure: this.treasure,
       traits: this.traits,
-      abilities: this.abilities.map(a => ({ abilityId: a.abilityId, value: a.value })),
+      // abilities: this.abilities.map(a => ({ abilityId: a.abilityId, value: a.value })),
       skillIds: this.skillIds,
-      languages: this.languages.map(l => ({ languageId: l.languageId }))
-    };
+      // languages: this.languages.map(l => ({ languageId: l.languageId }))
+    } as any;
   }
 }

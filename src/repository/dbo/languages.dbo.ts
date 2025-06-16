@@ -5,8 +5,9 @@ export class LanguageDbo {
     name: string;
     description: string;
     exotic: boolean;
+    secret: boolean;
 
-    constructor(id: bigint, name: string, description: string, exotic: boolean) {
+    constructor(id: bigint, name: string, description: string, exotic: boolean, secret: boolean) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -19,6 +20,7 @@ export class LanguageDbo {
             model.name,
             model.description,
             model.exotic,
+            model.secret ?? false,
         );
     }
 
@@ -28,6 +30,7 @@ export class LanguageDbo {
             name: this.name,
             description: this.description,
             exotic: this.exotic,
+            secret: this.secret,
         };
     }
 
@@ -37,6 +40,7 @@ export class LanguageDbo {
             dbData.name,
             dbData.description,
             dbData.exotic,
+            dbData.secret ?? false,
         );
     }
 
@@ -54,6 +58,7 @@ export class LanguageCandidateDbo {
     name: string;
     description: string;
     exotic: boolean;
+    secret: boolean;
 
     constructor(data?: Partial<LanguageCandidateDbo>) {
         Object.assign(this, data);
@@ -64,6 +69,7 @@ export class LanguageCandidateDbo {
             name: model.name,
             description: model.description,
             exotic: model.exotic,
+            secret: model.secret ?? false,
         });
     }
 
@@ -72,6 +78,7 @@ export class LanguageCandidateDbo {
             name: this.name,
             description: this.description,
             exotic: this.exotic,
+            secret: this.secret ?? false,
         };
     }
 }
