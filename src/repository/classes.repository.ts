@@ -67,4 +67,17 @@ export class ClassesRepository {
       where: { id },
     });
   }
+
+  async findByName(name: string): Promise<Class | null> {
+    const cls = await this.database.class.findUnique({
+      where: { name },
+      include: {
+        savingThrows: true,
+      },
+    });
+
+    if (!cls) return null;
+
+    return ClassDbo.fromDb(cls).toModel();
+  }
 }

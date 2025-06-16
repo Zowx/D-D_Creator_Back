@@ -21,64 +21,28 @@ export class ImportService {
   async importData() {
     const data: any[] = [];
 
-    // Import alignments
-    (await this.importConnector.getAlignments()).forEach(async (alignment) => {
-      await this.alignmentRepository.create(alignment);
-    });
-    const alignments = await this.importConnector.getAlignments();
-    data.push(alignments);
+    try {
+      // Import alignments with duplicate check
+      const alignments = await this.importAlignments();
+      data.push(alignments);
 
-    // Import abilities
-    (await this.importConnector.getAbilities()).forEach(async (ability) => {
-      await this.abilitiesRepository.create(ability);
-    });
-    const abilities = await this.abilitiesRepository.findAll();
-    data.push(abilities);
+      // Import abilities with duplicate check
+      const abilities = await this.importAbilities();
+      data.push(abilities);
 
-    // Import classes
-    const classes = await this.importClasses();
-    data.push(classes);
+      // Import classes with duplicate check
+      const classes = await this.importClasses();
+      data.push(classes);
 
-    // Import races
-    const racesCandidates = await this.importConnector.getRaces();
-    const createdRaces: Race[] = [];
+      // Import races with duplicate check
+      const races = await this.importRaces();
+      data.push(races);
 
-    // Create races in database
-    for (const raceCandidate of racesCandidates) {
-      try {
-        const createdRace = await this.racesRepository.create(raceCandidate);
-        createdRaces.push(createdRace);
-      } catch (error) {
-        console.error(`Error creating race ${raceCandidate.name}:`, error);
-      }
+      return data;
+    } catch (error) {
+      console.error('Error during import:', error);
+      throw error;
     }
-
-    // Handle subraces by updating parent relationships
-    const racesWithSubraces =
-      await this.importConnector.setSubRaces(createdRaces);
-
-    // Update races with subrace relationships
-    for (const race of racesWithSubraces) {
-      if (race.subrace_of) {
-        try {
-          const parentRace = createdRaces.find((r) => r.id === race.subrace_of);
-          if (parentRace) {
-            await this.racesRepository.update(race.id, {
-              name: race.name,
-              description: race.description,
-              traits: [],
-              subrace_of: parentRace.id,
-            });
-          }
-        } catch (error) {
-          console.error(`Error updating subrace ${race.name}:`, error);
-        }
-      }
-    }
-
-    data.push(createdRaces);
-
-    return data;
   }
 
   /**
@@ -107,10 +71,24 @@ export class ImportService {
       // Create classes in database
       for (const classCandidate of validClassCandidates) {
         try {
-          const createdClass =
-            await this.classesRepository.create(classCandidate);
-          createdClasses.push(createdClass);
-          console.log(`✅ Successfully created class: ${classCandidate.name}`);
+          // Check if class already exists
+          const existingClass = await this.classesRepository.findByName(
+            classCandidate.name,
+          );
+
+          if (existingClass) {
+            console.log(
+              `⏭️  Class "${classCandidate.name}" already exists, skipping`,
+            );
+            createdClasses.push(existingClass);
+          } else {
+            const createdClass =
+              await this.classesRepository.create(classCandidate);
+            createdClasses.push(createdClass);
+            console.log(
+              `✅ Successfully created class: ${classCandidate.name}`,
+            );
+          }
         } catch (error) {
           console.error(
             `❌ Error creating class ${classCandidate.name}:`,
@@ -153,6 +131,13 @@ export class ImportService {
    */
   async importClassByName(className: string): Promise<Class | null> {
     try {
+      // Check if class already exists in database
+      const existingClass = await this.classesRepository.findByName(className);
+      if (existingClass) {
+        console.log(`⏭️  Class "${className}" already exists in database`);
+        return existingClass;
+      }
+
       const abilities = await this.abilitiesRepository.findAll();
       const classCandidates = await this.importConnector.getClass(abilities);
 
@@ -165,9 +150,10 @@ export class ImportService {
       }
 
       const createdClass = await this.classesRepository.create(classCandidate);
+      console.log(`✅ Successfully imported class: ${className}`);
       return createdClass;
     } catch (error) {
-      console.error(`Error importing class ${className}:`, error);
+      console.error(`❌ Error importing class ${className}:`, error);
       throw error;
     }
   }
@@ -222,14 +208,32 @@ export class ImportService {
    */
   private async importAlignments() {
     const alignmentCandidates = await this.importConnector.getAlignments();
+    const importedAlignments: any[] = [];
+
     for (const alignment of alignmentCandidates) {
       try {
-        await this.alignmentRepository.create(alignment);
+        // Check if alignment already exists
+        const existingAlignment = await this.alignmentRepository.findByName(
+          alignment.name,
+        );
+
+        if (existingAlignment) {
+          console.log(
+            `⏭️  Alignment "${alignment.name}" already exists, skipping`,
+          );
+          importedAlignments.push(existingAlignment);
+        } else {
+          const createdAlignment =
+            await this.alignmentRepository.create(alignment);
+          console.log(`✅ Successfully created alignment: ${alignment.name}`);
+          importedAlignments.push(createdAlignment);
+        }
       } catch (error) {
-        console.error(`Error creating alignment ${alignment.name}:`, error);
+        console.error(`❌ Error creating alignment ${alignment.name}:`, error);
       }
     }
-    return alignmentCandidates;
+
+    return importedAlignments;
   }
 
   /**
@@ -237,14 +241,29 @@ export class ImportService {
    */
   private async importAbilities() {
     const abilityCandidates = await this.importConnector.getAbilities();
+    const importedAbilities: any[] = [];
+
     for (const ability of abilityCandidates) {
       try {
-        await this.abilitiesRepository.create(ability);
+        // Check if ability already exists
+        const existingAbility = await this.abilitiesRepository.findByName(
+          ability.name,
+        );
+
+        if (existingAbility) {
+          console.log(`⏭️  Ability "${ability.name}" already exists, skipping`);
+          importedAbilities.push(existingAbility);
+        } else {
+          const createdAbility = await this.abilitiesRepository.create(ability);
+          console.log(`✅ Successfully created ability: ${ability.name}`);
+          importedAbilities.push(createdAbility);
+        }
       } catch (error) {
-        console.error(`Error creating ability ${ability.name}:`, error);
+        console.error(`❌ Error creating ability ${ability.name}:`, error);
       }
     }
-    return await this.abilitiesRepository.findAll();
+
+    return importedAbilities;
   }
 
   /**
@@ -257,10 +276,23 @@ export class ImportService {
     // Create races in database
     for (const raceCandidate of racesCandidates) {
       try {
-        const createdRace = await this.racesRepository.create(raceCandidate);
-        createdRaces.push(createdRace);
+        // Check if race already exists
+        const existingRace = await this.racesRepository.findByName(
+          raceCandidate.name,
+        );
+
+        if (existingRace) {
+          console.log(
+            `⏭️  Race "${raceCandidate.name}" already exists, skipping`,
+          );
+          createdRaces.push(existingRace);
+        } else {
+          const createdRace = await this.racesRepository.create(raceCandidate);
+          createdRaces.push(createdRace);
+          console.log(`✅ Successfully created race: ${raceCandidate.name}`);
+        }
       } catch (error) {
-        console.error(`Error creating race ${raceCandidate.name}:`, error);
+        console.error(`❌ Error creating race ${raceCandidate.name}:`, error);
       }
     }
 
@@ -282,7 +314,7 @@ export class ImportService {
             });
           }
         } catch (error) {
-          console.error(`Error updating subrace ${race.name}:`, error);
+          console.error(`❌ Error updating subrace ${race.name}:`, error);
         }
       }
     }

@@ -64,7 +64,7 @@ model Character {
 
 model Race {
   id          BigInt @id @default(autoincrement())
-  name        String
+  name        String @unique
   description String
 
   Race Race[] @relation("Subrace")
@@ -80,7 +80,7 @@ model Race {
 
 model Trait {
   id          BigInt @id @default(autoincrement())
-  name        String
+  name        String @unique
   description String
 
   Race          Race[]
@@ -97,7 +97,7 @@ model RaceTrait {
 
 model Class {
   id            BigInt @id @default(autoincrement())
-  name          String
+  name          String @unique
   caster_type   String
   subclass      String
   savingThrows Ability[] @relation("SavingThrows")
@@ -108,7 +108,7 @@ model Class {
 
 model Ability {
   id          BigInt @id @default(autoincrement())
-  name        String
+  name        String @unique
   description String
   shortDescription  String
 
@@ -120,7 +120,7 @@ model Ability {
 
 model Skill {
   id          BigInt @id @default(autoincrement()) @unique
-  name        String
+  name        String @unique
   description String
   ability     Ability[]
 
@@ -130,7 +130,7 @@ model Skill {
 
 model Background {
   id          BigInt @id @default(autoincrement()) @unique
-  name        String
+  name        String @unique
   description String
   character   Character?
   skills       Background_Skill[]
@@ -146,7 +146,7 @@ model Background_Skill {
 
 model Alignment {
   id          BigInt @id @default(autoincrement())
-  name        String
+  name        String @unique
   description String
   
   Character Character[]
@@ -177,7 +177,7 @@ model CharacterAbility {
 
 model Language {
   id          BigInt @id @default(autoincrement())
-  name        String
+  name        String @unique
   description String
   exotic      Boolean
   characters    CharacterLanguage[]

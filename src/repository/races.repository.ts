@@ -185,7 +185,7 @@ export class RacesRepository {
   }
 
   async findByName(name: string): Promise<Race | null> {
-    const race = await this.database.race.findFirst({
+    const race = await this.database.race.findUnique({
       where: { name },
       include: {
         traits: {
