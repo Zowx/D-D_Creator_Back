@@ -19,8 +19,11 @@ function logErrorToFile(error: any, ctx: Context) {
 
 export const middleware = async (ctx: Context, next: Next) => {
     try {
+        console.log('Avant next');
         await next();
+        console.log('Après next');
     } catch (error) {
+        console.error('Erreur capturée dans le middleware:', error);
         logErrorToFile(error, ctx);
         // Prisma errors
         if (error instanceof PrismaClientKnownRequestError) {
