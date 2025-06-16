@@ -1,5 +1,5 @@
 # Backend Dockerfile
-FROM node:20-alpine AS builder
+FROM node:20-slim AS builder
 
 # Installer pnpm
 RUN npm install -g pnpm
@@ -25,7 +25,7 @@ RUN pnpm prisma generate
 RUN pnpm run build
 
 # Production stage
-FROM node:20-alpine AS production
+FROM node:20-slim AS production
 
 # Installer pnpm
 RUN npm install -g pnpm
@@ -35,19 +35,19 @@ WORKDIR /app
 # Copier les fichiers de dépendances
 COPY package.json pnpm-lock.yaml* ./
 
-# Installer seulement les dépendances de production
-RUN pnpm install --no-frozen-lockfile --prod
-
 # Copier les fichiers Prisma
 COPY prisma ./prisma
 
-# Générer le client Prisma pour la production
-RUN pnpm prisma generate
+# Installer toutes les dépendances, générer Prisma, puis nettoyer
+ENV DATABASE_URL="postgresql://dummy:dummy@dummy:5432/dummy"
+RUN pnpm install --no-frozen-lockfile && \
+    pnpm prisma generate && \
+    pnpm install --no-frozen-lockfile --prod
 
 # Copier les fichiers buildés depuis le stage builder
 COPY --from=builder /app/dist ./dist
 
-# Copier les fichiers générés de Prisma
+# Copier les fichiers générés de Prisma depuis le builder
 COPY --from=builder /app/generated ./generated
 
 # Exposer le port
