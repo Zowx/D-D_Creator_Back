@@ -59,7 +59,7 @@ export class RaceCandidateDbo {
   toDb(): any {
     return {
       name: this.name,
-      description: this.description,
+      description: this.description ?? 'No description available',
       subraceOfId: this.subraceOfId,
     };
   }

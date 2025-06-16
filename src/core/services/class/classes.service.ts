@@ -25,7 +25,7 @@ export class ClassesService {
   }
 
   findOne(id: bigint): Class {
-    const cls = this.classes.find(c => c.id === id);
+    const cls = this.classes.find((c) => c.id === id);
     if (!cls) throw new NotFoundException(`Class ${id} introuvable`);
     return cls;
   }
@@ -37,7 +37,7 @@ export class ClassesService {
       name: dto.name,
       casterType: dto.casterType,
       hitDie: dto.hitDie,
-      savingThrows: dto.savingThrows.map(n => BigInt(n)),
+      savingThrows: dto.savingThrows.map((n) => BigInt(n)),
       subClass: dto.subClass !== undefined ? BigInt(dto.subClass) : undefined,
     };
     this.classes.push(newClass);
@@ -52,16 +52,16 @@ export class ClassesService {
       ...(dto.casterType !== undefined && { casterType: dto.casterType }),
       ...(dto.hitDie !== undefined && { hitDie: dto.hitDie }),
       ...(dto.savingThrows !== undefined && {
-        savingThrows: dto.savingThrows.map(n => BigInt(n)),
+        savingThrows: dto.savingThrows.map((n) => BigInt(n)),
       }),
       ...(dto.subClass !== undefined && { subClass: BigInt(dto.subClass) }),
     };
-    this.classes = this.classes.map(c => (c.id === id ? updated : c));
+    this.classes = this.classes.map((c) => (c.id === id ? updated : c));
     return updated;
   }
 
   remove(id: bigint): void {
     this.findOne(id);
-    this.classes = this.classes.filter(c => c.id !== id);
+    this.classes = this.classes.filter((c) => c.id !== id);
   }
 }

@@ -13,7 +13,7 @@ export class RaceDto {
   subrace_of: string;
   url: string;
 
-    /**
+  /**
    * Crée une nouvelle instance de RaceDto.
    *
    * @param {Object} init - Données pour initialiser les propriétés du DTO. Les données doivent être de la forme suivante :
@@ -28,31 +28,32 @@ export class RaceDto {
     Object.assign(this, data);
   }
 
-
   /**
    * Convertit le DTO en modèle Race.
-   * 
+   *
    * @returns Race - Nouvelle instance du modèle.
    */
   toModel(): RaceCandidate {
     return {
       name: this.name,
-      description: this.description,
-      traits: this.traits ? this.traits.map(trait => trait.toModel()) : [],
+      description: this.description ?? 'No description available',
+      traits: this.traits ? this.traits.map((trait) => trait.toModel()) : [],
     };
   }
 
   /**
    * Crée un DTO à partir des données d'une requête.
-   * 
+   *
    * @param {any} req - Données de la requête à convertir.
    * @returns RaceDto - Nouvelle instance du DTO.
    */
   static fromRequest(req: any): RaceDto {
     return new RaceDto({
       name: req.name,
-      description: req.description,
-      traits: req.traits ? req.traits.map((trait: any) => TraitsDto.fromRequest(trait)) : [],
+      description: req.description ?? 'No description available',
+      traits: req.traits
+        ? req.traits.map((trait: any) => TraitsDto.fromRequest(trait))
+        : [],
       subrace_of: req.subrace_of,
       url: req.url,
     });

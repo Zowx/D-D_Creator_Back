@@ -48,7 +48,6 @@ export class RacesRepository {
     raceModel.traitsId = race.traits.map((rt) => rt.trait.id);
     return raceModel;
   }
-
   async create(raceCandidate: RaceCandidate): Promise<Race> {
     const raceData = RaceCandidateDbo.fromModel(raceCandidate).toDb();
 
