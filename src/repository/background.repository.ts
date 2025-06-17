@@ -12,7 +12,7 @@ export class BackgroundsRepository {
     async findAll(): Promise<Background[]> {
     const dbResults = await this.database.background.findMany({
         include: {
-            ability: true,
+            abilities: true,
             skills: {
                 include: {
                     BackgroundSkillSkill: true,

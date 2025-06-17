@@ -48,7 +48,7 @@ model Character {
   backstory     String
   treasure      String
   traits        String
-  playerSkills  PlayerSkill[]
+  skills        CharacterSkill[]
   abilities     CharacterAbility[]
   languages     CharacterLanguage[]
 
@@ -118,13 +118,13 @@ model Skill {
   abilityId      BigInt
   ability        Ability           @relation(fields: [abilityId], references: [id])
 
-  playerSkill    PlayerSkill[]
+  CharacterSkill    CharacterSkill[]
   backgrounds    BackgroundSkillSkill[]
 }
 
 model Background {
   id                       BigInt                @id @default(autoincrement())
-  name                     String
+  name                     String  @unique
   description              String
   abilityChoice            Int
   skillChoice              Int
@@ -134,7 +134,7 @@ model Background {
   featureName              String?
   featureDescription       String?
 
-  ability   BackgroundAbility[]
+  abilities   BackgroundAbility[]
   skills    BackgroundSkill[]
   languages BackgroundLanguage[]
   Character Character?
@@ -188,14 +188,15 @@ model Alignment {
   Character   Character[]
 }
 
-model PlayerSkill {
+model CharacterSkill {
   id          BigInt     @id @default(autoincrement()) @unique
   value       String
 
   character   Character  @relation(fields: [characterId], references: [id])
   characterId BigInt
 
-  Skill       Skill[]
+  skill       Skill     @relation(fields: [skillId], references: [id])
+  skillId     BigInt
 }
 
 model CharacterAbility {
