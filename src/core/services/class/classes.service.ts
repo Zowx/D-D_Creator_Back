@@ -4,7 +4,7 @@ import { ClassesRepository } from '@repository/classes.repository';
 
 @Injectable()
 export class ClassesService {
-  constructor(private readonly classesRepository: ClassesRepository) {}
+  constructor(private readonly classesRepository: ClassesRepository) { }
 
   async findAll(): Promise<Class[]> {
     return this.classesRepository.findAll();
@@ -15,6 +15,7 @@ export class ClassesService {
     if (!foundClass) {
       throw new NotFoundException(`Class ${id} introuvable`);
     }
+    console.log('ClassesService.findAll', foundClass);
     return foundClass;
   }
 

@@ -10,7 +10,12 @@ export class ClassesRepository {
     constructor(private readonly database: DatabaseService) { }
 
     async findAll(): Promise<Class[]> {
-        return (await this.database.class.findMany()).map(
+        return (await this.database.class.findMany({
+            include: {
+                savingThrows: true,
+                subclass: true,
+            },
+        })).map(
             (cls) => ClassDbo.fromDb(cls).toModel()
         );
     }
@@ -18,6 +23,10 @@ export class ClassesRepository {
     async findById(id: bigint): Promise<Class | null> {
         const dbResult = await this.database.class.findUnique({
             where: { id },
+            include: {
+                savingThrows: true,
+                subclass: true,
+            },
         });
 
         return dbResult ? ClassDbo.fromDb(dbResult).toModel() : null;
