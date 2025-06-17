@@ -2,7 +2,6 @@ import { ClassesRepository } from '@app/repository/classes.repository';
 import { AbilitiesRepository, AlignmentsRepository, BackgroundsRepository, LanguagesRepository, RacesRepository, SkillRepository } from '@repository/repository';
 import { ImportConnector } from '@app/ext.api/connector/import.connector';
 import { Injectable } from '@nestjs/common';
-import { race } from 'rxjs';
 
 @Injectable()
 export class ImportService {
@@ -19,46 +18,70 @@ export class ImportService {
     ) { }
 
     async importData() {
-        const data: any[] = [];
+        const alignmentsCandidate = await this.importConnector.getAlignments();
+        await Promise.all(
+            alignmentsCandidate.map((alignment) =>
+                this.alignmentRepository.create(alignment)
+            )
+        );
 
-        (await this.importConnector.getAlignments()).forEach(async (alignment) => {
-            await this.alignmentRepository.create(alignment);
-        });
-
-        (await this.importConnector.getLanguages()).forEach(async (language) => {
-            await this.languagesRepository.create(language);
-        });
+        const languagesCandidate = await this.importConnector.getLanguages();
+        await Promise.all(
+            languagesCandidate.map((language) =>
+                this.languagesRepository.create(language)
+            )
+        );
         const languages = await this.languagesRepository.findAll();
 
-        (await this.importConnector.getAbilities()).forEach(async (ability) => {
-            await this.abilitiesRepository.create(ability);
-        });
+        const abilitiesCandidate = await this.importConnector.getAbilities();
+        await Promise.all(
+            abilitiesCandidate.map((ability) =>
+                this.abilitiesRepository.create(ability)
+            )
+        );
         const abilities = await this.abilitiesRepository.findAll();
 
-        (await this.importConnector.getSkills(abilities)).forEach(async (skill) => {
-            await this.skillsRepository.create(skill);
-        });
+        const skillsCandidate = await this.importConnector.getSkills(abilities);
+        await Promise.all(
+            skillsCandidate.map((skill) =>
+                this.skillsRepository.create(skill)
+            )
+        );
         const skills = await this.skillsRepository.findAll();
 
-        (await this.importConnector.getBackgrounds(abilities, languages, skills)).forEach(async (background) => {
-            await this.backgroundsRepository.create(background);
-        });
+        const backgroundsCandidate = await this.importConnector.getBackgrounds(abilities, languages, skills);
+        await Promise.all(
+            backgroundsCandidate.map((background) =>
+                this.backgroundsRepository.create(background)
+            )
+        );
 
-        (await this.importConnector.getRaces()).forEach(async (race) => {
-            await this.racesRepository.create(race);
-        });
+        const racesCandidate = await this.importConnector.getRaces();
+        await Promise.all(
+            racesCandidate.map((race) =>
+                this.racesRepository.create(race)
+            ));
         const races = await this.racesRepository.findAll();
-        (await this.importConnector.setSubRaces(races)).forEach(async (subRace) => {
-            await this.racesRepository.update(subRace);
-        });
+        const abilitiesWithSubRaces = await this.importConnector.setSubRaces(races);
+        await Promise.all(
+            abilitiesWithSubRaces.map((subRace) =>
+                this.racesRepository.update(subRace)
+            )
+        );
 
-        (await this.importConnector.getClass(abilities)).forEach(async (cls) => {
-            await this.classesRepository.create(cls);
-        });
+        const classesCandidate = await this.importConnector.getClass(abilities);
+        await Promise.all(
+            classesCandidate.map((cls) =>
+                this.classesRepository.create(cls)
+            )
+        );
         const classes = await this.classesRepository.findAll();
-        (await this.importConnector.setSubClasses(classes)).forEach(async (subClass) => {
-            await this.classesRepository.update(subClass);
-        });
+        const classesWithSubClasses = await this.importConnector.setSubClasses(classes);
+        await Promise.all(
+            classesWithSubClasses.map((subClass) =>
+                this.classesRepository.update(subClass)
+            )
+        );
 
         return "Import completed successfully";
     }
