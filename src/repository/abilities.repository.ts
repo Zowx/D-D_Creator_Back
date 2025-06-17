@@ -22,21 +22,21 @@ export class AbilitiesRepository {
     }
 
     async create(ability: AbilityCandidate) {
-        return this.database.ability.create({
+        return await this.database.ability.create({
             data: AbilityCandidateDbo.fromModel(ability).toDb(),
         });
     }
 
     async update(ability: Ability) {
         const id = ability.id;
-        return this.database.ability.update({
+        return await this.database.ability.update({
             where: { id },
             data: AbilityCandidateDbo.fromModel(ability).toDb(),
         });
     }
 
     async delete(id: bigint) {
-        return this.database.ability.delete({
+        return await this.database.ability.delete({
             where: { id },
         });
     }

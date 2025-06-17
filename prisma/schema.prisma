@@ -91,10 +91,17 @@ model RaceTrait {
 model Class {
   id            BigInt     @id @default(autoincrement())
   name          String
-  subclass      String
-  savingThrows  Ability[]  @relation("SavingThrows")
-  hit_dice      String
+  hitDice       String?
 
+  // Auto-référence : une classe peut avoir une sous-classe
+  subclassId    BigInt?           // nullable = pas toujours une sous-classe
+  subclass      Class?            @relation("SubclassRelation", fields: [subclassId], references: [id])
+  subclasses    Class[]           @relation("SubclassRelation") // les classes dont celle-ci est la sous-classe
+
+  // Many-to-Many avec Ability
+  savingThrows  Ability[]         @relation("SavingThrows")
+
+  // One-to-Many avec Character
   Character     Character[]
 }
 

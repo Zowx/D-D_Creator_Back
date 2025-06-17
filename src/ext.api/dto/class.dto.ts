@@ -7,7 +7,7 @@ import { Class, ClassCandidate } from '@core/models/models';
  */
 export class ClassDto {
   name: string;
-  hitDice: number;
+  hitDice?: number;
   savingThrows: string[] | bigint[];
   subClass?: string | bigint;
   url: string;

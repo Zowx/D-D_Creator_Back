@@ -4,14 +4,14 @@ export interface Class {
   id: bigint;
   name: string;
   
-  hitDice: number;
+  hitDice?: number;
   savingThrows: bigint[];
   subClass?: bigint;
 }
 
 export interface ClassCandidate {
   name: string;
-  hitDice: number;
+  hitDice?: number;
   savingThrows: bigint[];
   subClass?: bigint;
 }

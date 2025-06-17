@@ -23,21 +23,21 @@ export class AlignmentsRepository {
     }
 
     async create(alignment: AlignmentCandidate) {
-        return this.database.alignment.create({
+        return await this.database.alignment.create({
             data: AlignmentCandidateDbo.fromModel(alignment).toDb(),
         });
     }
 
     async update(alignment: Alignment) {
         const id = alignment.id;
-        return this.database.alignment.update({
+        return await this.database.alignment.update({
             where: { id },
             data: AlignmentCandidateDbo.fromModel(alignment).toDb(),
         });
     }
 
     async delete(id: bigint) {
-        return this.database.alignment.delete({
+        return await this.database.alignment.delete({
             where: { id },
         });
     }

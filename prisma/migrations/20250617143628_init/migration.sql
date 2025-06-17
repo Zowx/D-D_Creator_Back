@@ -75,9 +75,8 @@ CREATE TABLE "RaceTrait" (
 CREATE TABLE "Class" (
     "id" BIGSERIAL NOT NULL,
     "name" TEXT NOT NULL,
-    "caster_type" TEXT NOT NULL,
-    "subclass" TEXT NOT NULL,
-    "hit_dice" TEXT NOT NULL,
+    "hitDice" TEXT,
+    "subclassId" BIGINT,
 
     CONSTRAINT "Class_pkey" PRIMARY KEY ("id")
 );
@@ -87,8 +86,7 @@ CREATE TABLE "Ability" (
     "id" BIGSERIAL NOT NULL,
     "name" TEXT NOT NULL,
     "description" TEXT NOT NULL,
-    "short_desc" TEXT NOT NULL,
-    "skillid" BIGINT,
+    "shortDescription" TEXT NOT NULL,
 
     CONSTRAINT "Ability_pkey" PRIMARY KEY ("id")
 );
@@ -98,6 +96,7 @@ CREATE TABLE "Skill" (
     "id" BIGSERIAL NOT NULL,
     "name" TEXT NOT NULL,
     "description" TEXT NOT NULL,
+    "abilityId" BIGINT NOT NULL,
 
     CONSTRAINT "Skill_pkey" PRIMARY KEY ("id")
 );
@@ -107,17 +106,51 @@ CREATE TABLE "Background" (
     "id" BIGSERIAL NOT NULL,
     "name" TEXT NOT NULL,
     "description" TEXT NOT NULL,
+    "abilityChoice" INTEGER NOT NULL,
+    "skillChoice" INTEGER NOT NULL,
+    "languagesChoice" INTEGER NOT NULL,
+    "connectionAndMemento" TEXT,
+    "adventuresAndAdvancement" TEXT,
+    "featureName" TEXT,
+    "featureDescription" TEXT,
 
     CONSTRAINT "Background_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
-CREATE TABLE "Background_Skill" (
+CREATE TABLE "BackgroundSkill" (
     "id" BIGSERIAL NOT NULL,
-    "skillId" BIGINT NOT NULL,
-    "backgroundId" BIGINT NOT NULL,
+    "BackgroundId" BIGINT NOT NULL,
 
-    CONSTRAINT "Background_Skill_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "BackgroundSkill_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "BackgroundSkillSkill" (
+    "id" BIGSERIAL NOT NULL,
+    "BackgroundSkillId" BIGINT NOT NULL,
+    "SkillId" BIGINT NOT NULL,
+
+    CONSTRAINT "BackgroundSkillSkill_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "BackgroundAbility" (
+    "id" BIGSERIAL NOT NULL,
+    "value" INTEGER NOT NULL,
+    "BackgroundId" BIGINT NOT NULL,
+    "AbilityId" BIGINT NOT NULL,
+
+    CONSTRAINT "BackgroundAbility_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "BackgroundLanguage" (
+    "id" BIGSERIAL NOT NULL,
+    "LanguageId" BIGINT NOT NULL,
+    "BackgroundId" BIGINT NOT NULL,
+
+    CONSTRAINT "BackgroundLanguage_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -130,19 +163,13 @@ CREATE TABLE "Alignment" (
 );
 
 -- CreateTable
-CREATE TABLE "PlayerSkill" (
+CREATE TABLE "CharacterSkill" (
     "id" BIGSERIAL NOT NULL,
     "value" TEXT NOT NULL,
     "characterId" BIGINT NOT NULL,
+    "skillId" BIGINT NOT NULL,
 
-    CONSTRAINT "PlayerSkill_pkey" PRIMARY KEY ("id")
-);
-
--- CreateTable
-CREATE TABLE "SavingThrows" (
-    "id" SERIAL NOT NULL,
-    "skill" TEXT NOT NULL,
-    "character" TEXT NOT NULL
+    CONSTRAINT "CharacterSkill_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -160,6 +187,7 @@ CREATE TABLE "Language" (
     "name" TEXT NOT NULL,
     "description" TEXT NOT NULL,
     "exotic" BOOLEAN NOT NULL,
+    "secret" BOOLEAN NOT NULL,
 
     CONSTRAINT "Language_pkey" PRIMARY KEY ("id")
 );
@@ -174,11 +202,11 @@ CREATE TABLE "CharacterLanguage" (
 );
 
 -- CreateTable
-CREATE TABLE "_RaceToTrait" (
+CREATE TABLE "_RaceTraitsThroughDirectRelation" (
     "A" BIGINT NOT NULL,
     "B" BIGINT NOT NULL,
 
-    CONSTRAINT "_RaceToTrait_AB_pkey" PRIMARY KEY ("A","B")
+    CONSTRAINT "_RaceTraitsThroughDirectRelation_AB_pkey" PRIMARY KEY ("A","B")
 );
 
 -- CreateTable
@@ -189,46 +217,11 @@ CREATE TABLE "_SavingThrows" (
     CONSTRAINT "_SavingThrows_AB_pkey" PRIMARY KEY ("A","B")
 );
 
--- CreateTable
-CREATE TABLE "_PlayerSkillToSkill" (
-    "A" BIGINT NOT NULL,
-    "B" BIGINT NOT NULL,
-
-    CONSTRAINT "_PlayerSkillToSkill_AB_pkey" PRIMARY KEY ("A","B")
-);
-
 -- CreateIndex
-CREATE UNIQUE INDEX "User_username_key" ON "User"("username");
-
--- CreateIndex
-CREATE UNIQUE INDEX "Character_backgroundId_key" ON "Character"("backgroundId");
-
--- CreateIndex
-CREATE UNIQUE INDEX "Skill_id_key" ON "Skill"("id");
-
--- CreateIndex
-CREATE UNIQUE INDEX "Background_id_key" ON "Background"("id");
-
--- CreateIndex
-CREATE UNIQUE INDEX "Background_Skill_backgroundId_key" ON "Background_Skill"("backgroundId");
-
--- CreateIndex
-CREATE UNIQUE INDEX "PlayerSkill_id_key" ON "PlayerSkill"("id");
-
--- CreateIndex
-CREATE UNIQUE INDEX "SavingThrows_id_key" ON "SavingThrows"("id");
-
--- CreateIndex
-CREATE UNIQUE INDEX "CharacterAbility_id_key" ON "CharacterAbility"("id");
-
--- CreateIndex
-CREATE INDEX "_RaceToTrait_B_index" ON "_RaceToTrait"("B");
+CREATE INDEX "_RaceTraitsThroughDirectRelation_B_index" ON "_RaceTraitsThroughDirectRelation"("B");
 
 -- CreateIndex
 CREATE INDEX "_SavingThrows_B_index" ON "_SavingThrows"("B");
-
--- CreateIndex
-CREATE INDEX "_PlayerSkillToSkill_B_index" ON "_PlayerSkillToSkill"("B");
 
 -- AddForeignKey
 ALTER TABLE "Character" ADD CONSTRAINT "Character_raceId_fkey" FOREIGN KEY ("raceId") REFERENCES "Race"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
@@ -255,16 +248,37 @@ ALTER TABLE "RaceTrait" ADD CONSTRAINT "RaceTrait_raceId_fkey" FOREIGN KEY ("rac
 ALTER TABLE "RaceTrait" ADD CONSTRAINT "RaceTrait_traitId_fkey" FOREIGN KEY ("traitId") REFERENCES "Trait"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Ability" ADD CONSTRAINT "Ability_skillid_fkey" FOREIGN KEY ("skillid") REFERENCES "Skill"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "Class" ADD CONSTRAINT "Class_subclassId_fkey" FOREIGN KEY ("subclassId") REFERENCES "Class"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Background_Skill" ADD CONSTRAINT "Background_Skill_skillId_fkey" FOREIGN KEY ("skillId") REFERENCES "Skill"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Skill" ADD CONSTRAINT "Skill_abilityId_fkey" FOREIGN KEY ("abilityId") REFERENCES "Ability"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Background_Skill" ADD CONSTRAINT "Background_Skill_backgroundId_fkey" FOREIGN KEY ("backgroundId") REFERENCES "Background"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "BackgroundSkill" ADD CONSTRAINT "BackgroundSkill_BackgroundId_fkey" FOREIGN KEY ("BackgroundId") REFERENCES "Background"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "PlayerSkill" ADD CONSTRAINT "PlayerSkill_characterId_fkey" FOREIGN KEY ("characterId") REFERENCES "Character"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "BackgroundSkillSkill" ADD CONSTRAINT "BackgroundSkillSkill_BackgroundSkillId_fkey" FOREIGN KEY ("BackgroundSkillId") REFERENCES "BackgroundSkill"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "BackgroundSkillSkill" ADD CONSTRAINT "BackgroundSkillSkill_SkillId_fkey" FOREIGN KEY ("SkillId") REFERENCES "Skill"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "BackgroundAbility" ADD CONSTRAINT "BackgroundAbility_BackgroundId_fkey" FOREIGN KEY ("BackgroundId") REFERENCES "Background"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "BackgroundAbility" ADD CONSTRAINT "BackgroundAbility_AbilityId_fkey" FOREIGN KEY ("AbilityId") REFERENCES "Ability"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "BackgroundLanguage" ADD CONSTRAINT "BackgroundLanguage_LanguageId_fkey" FOREIGN KEY ("LanguageId") REFERENCES "Language"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "BackgroundLanguage" ADD CONSTRAINT "BackgroundLanguage_BackgroundId_fkey" FOREIGN KEY ("BackgroundId") REFERENCES "Background"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "CharacterSkill" ADD CONSTRAINT "CharacterSkill_characterId_fkey" FOREIGN KEY ("characterId") REFERENCES "Character"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "CharacterSkill" ADD CONSTRAINT "CharacterSkill_skillId_fkey" FOREIGN KEY ("skillId") REFERENCES "Skill"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "CharacterAbility" ADD CONSTRAINT "CharacterAbility_characterId_fkey" FOREIGN KEY ("characterId") REFERENCES "Character"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
@@ -279,19 +293,13 @@ ALTER TABLE "CharacterLanguage" ADD CONSTRAINT "CharacterLanguage_characterId_fk
 ALTER TABLE "CharacterLanguage" ADD CONSTRAINT "CharacterLanguage_languageId_fkey" FOREIGN KEY ("languageId") REFERENCES "Language"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "_RaceToTrait" ADD CONSTRAINT "_RaceToTrait_A_fkey" FOREIGN KEY ("A") REFERENCES "Race"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "_RaceTraitsThroughDirectRelation" ADD CONSTRAINT "_RaceTraitsThroughDirectRelation_A_fkey" FOREIGN KEY ("A") REFERENCES "Race"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "_RaceToTrait" ADD CONSTRAINT "_RaceToTrait_B_fkey" FOREIGN KEY ("B") REFERENCES "Trait"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "_RaceTraitsThroughDirectRelation" ADD CONSTRAINT "_RaceTraitsThroughDirectRelation_B_fkey" FOREIGN KEY ("B") REFERENCES "Trait"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "_SavingThrows" ADD CONSTRAINT "_SavingThrows_A_fkey" FOREIGN KEY ("A") REFERENCES "Ability"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "_SavingThrows" ADD CONSTRAINT "_SavingThrows_B_fkey" FOREIGN KEY ("B") REFERENCES "Class"("id") ON DELETE CASCADE ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "_PlayerSkillToSkill" ADD CONSTRAINT "_PlayerSkillToSkill_A_fkey" FOREIGN KEY ("A") REFERENCES "PlayerSkill"("id") ON DELETE CASCADE ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "_PlayerSkillToSkill" ADD CONSTRAINT "_PlayerSkillToSkill_B_fkey" FOREIGN KEY ("B") REFERENCES "Skill"("id") ON DELETE CASCADE ON UPDATE CASCADE;

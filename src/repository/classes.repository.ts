@@ -7,7 +7,7 @@ import { ClassCandidateDbo, ClassDbo } from './dbo/classes.dbo';
 @Injectable()
 export class ClassesRepository {
 
-    constructor(private readonly database: DatabaseService) {}
+    constructor(private readonly database: DatabaseService) { }
 
     async findAll(): Promise<Class[]> {
         return (await this.database.class.findMany()).map(
@@ -24,21 +24,21 @@ export class ClassesRepository {
     }
 
     async create(candidate: ClassCandidate) {
-        return this.database.class.create({
+        return await this.database.class.create({
             data: ClassCandidateDbo.fromModel(candidate).toDb(),
         });
     }
 
     async update(cls: Class) {
         const id = cls.id;
-        return this.database.class.update({
+        return await this.database.class.update({
             where: { id },
             data: ClassCandidateDbo.fromModel(cls).toDb(),
         });
     }
 
     async delete(id: bigint) {
-        return this.database.class.delete({
+        return await this.database.class.delete({
             where: { id },
         });
     }

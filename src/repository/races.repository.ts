@@ -21,20 +21,20 @@ export class RacesRepository {
     }
 
     async create(race: RaceCandidate) {
-        return this.database.race.create({
+        return await this.database.race.create({
             data: new RaceCandidateDbo(race).toDb(),
         });
     }
 
     async update(race: Race) {
-        return this.database.race.update({
+        return await this.database.race.update({
             where: { id: race.id },
             data: RaceCandidateDbo.fromModel(race).toDb(),
         });
     }
 
     async delete(id: bigint) {
-        return this.database.race.delete({
+        return await this.database.race.delete({
             where: { id },
         });
     }

@@ -13,11 +13,11 @@ export class RacesService {
   }
 
   async findOne(id: bigint): Promise<Race> {
-    return this.racesRepository.findById(id);
+    return await this.racesRepository.findById(id);
   }
 
   async create(candidate: RaceCandidate): Promise<Race> {
-    return this.racesRepository.create(candidate);
+    return await this.racesRepository.create(candidate) as any;
   }
 
   async update(data: Race): Promise<Race> {
@@ -25,7 +25,7 @@ export class RacesService {
     if (!existing) {
       throw new NotFoundException(`Race with id ${data.id} not found`);
     }
-    return this.racesRepository.update(data);
+    return await this.racesRepository.update(data) as any;
   }
 
   async remove(id: bigint): Promise<void> {
@@ -33,6 +33,6 @@ export class RacesService {
     if (!existing) {
       throw new NotFoundException(`Race with id ${id} not found`);
     }
-    await this.racesRepository.delete(id);
+    await this.racesRepository.delete(id) as any;
   }
 }

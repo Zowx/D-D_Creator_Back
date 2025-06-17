@@ -23,21 +23,21 @@ export class SkillRepository {
     }
 
     async create(skill: SkillCandidate) {
-        return this.database.skill.create({
+        return await this.database.skill.create({
             data: SkillCandidateDbo.fromModel(skill).toDb(),
         });
     }
 
     async update(skill: Skill) {
         const id = skill.id;
-        return this.database.skill.update({
+        return await this.database.skill.update({
             where: { id },
             data: SkillCandidateDbo.fromModel(skill).toDb(),
         });
     }
 
     async delete(id: bigint) {
-        return this.database.alignment.delete({
+        return await this.database.alignment.delete({
             where: { id },
         });
 

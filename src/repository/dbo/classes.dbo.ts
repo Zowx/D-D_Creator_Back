@@ -3,15 +3,15 @@ import { Class, ClassCandidate } from "@core/models/class.model";
 export class ClassDbo {
     id: bigint;
     name: string;
-    hitDice: number;
+    hitDice?: number;
     savingThrows: bigint[];
     subClass?: bigint;
 
     constructor(
         id: bigint,
         name: string,
-        hitDice: number,
         savingThrows: bigint[],
+        hitDice?: number,
         subClass?: bigint,
     ) {
         this.id = id;
@@ -25,8 +25,8 @@ export class ClassDbo {
         return new ClassDbo(
             model.id,
             model.name,
-            model.hitDice,
             model.savingThrows,
+            model.hitDice,
             model.subClass,
         );
     }
@@ -45,9 +45,9 @@ export class ClassDbo {
         return new ClassDbo(
             dbData.id,
             dbData.name,
-            dbData.hitDice,
             dbData.savingThrows,
-            dbData.subClass,
+            dbData.hitDice,
+            dbData.subclass,
         );
     }
 
@@ -56,16 +56,20 @@ export class ClassDbo {
             id: this.id,
             name: this.name,
             hitDice: this.hitDice,
-            savingThrows: this.savingThrows,
-            subClass: this.subClass,
+            savingThrows: {
+                connect: this.savingThrows.map((id) => ({ id })),
+            },
+            subclass: this.subClass
+            ? { connect: { id: this.subClass } }
+            : undefined,
         };
     }
 }
 
 export class ClassCandidateDbo {
     name: string;
-    hitDice: number;
     savingThrows: bigint[];
+    hitDice?: number;
     subClass?: bigint;
 
     constructor(data?: Partial<ClassCandidateDbo>) {
@@ -75,8 +79,8 @@ export class ClassCandidateDbo {
     static fromModel(model: ClassCandidate): ClassCandidateDbo {
         return new ClassCandidateDbo({
             name: model.name,
-            hitDice: model.hitDice,
             savingThrows: model.savingThrows,
+            hitDice: model.hitDice,
             subClass: model.subClass,
         });
     }
@@ -85,8 +89,12 @@ export class ClassCandidateDbo {
         return {
             name: this.name,
             hitDice: this.hitDice,
-            savingThrows: this.savingThrows,
-            subClass: this.subClass,
+            savingThrows: {
+                connect: this.savingThrows.map((id) => ({ id })),
+            },
+            subclass: this.subClass
+            ? { connect: { id: this.subClass } }
+            : undefined,
         };
     }
 }

@@ -23,21 +23,21 @@ export class LanguagesRepository {
     }
 
     async create(language: LanguageCandidate) {
-        return this.database.language.create({
+        return await this.database.language.create({
             data: LanguageCandidateDbo.fromModel(language).toDb(),
         });
     }
 
     async update(language: Language) {
         const id = language.id;
-        return this.database.language.update({
+        return await this.database.language.update({
             where: { id },
             data: LanguageCandidateDbo.fromModel(language).toDb(),
         });
     }
 
     async delete(id: bigint) {
-        return this.database.alignment.delete({
+        return await this.database.alignment.delete({
             where: { id },
         });
 
