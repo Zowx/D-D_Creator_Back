@@ -5,7 +5,6 @@ export interface Traits {
 }
 
 export interface TraitsCandidate {
-    id?: bigint;
     name: string;
     description: string;
 }

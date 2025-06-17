@@ -1,5 +1,6 @@
 // Importation de l'interface modèle
 import { RaceCandidate } from '@core/models/models';
+import { TraitsDto } from './traits.dto';
 
 /**
  * Représente un Data Transfer Object (DTO) pour l'entité Race.
@@ -8,7 +9,7 @@ import { RaceCandidate } from '@core/models/models';
 export class RaceDto {
   name: string;
   description: string;
-  traits: bigint[];
+  traits: bigint[] | TraitsDto[];
   subrace_of: string;
   url: string;
 
@@ -37,7 +38,7 @@ export class RaceDto {
     return {
       name: this.name,
       description: this.description,
-      traitsId: this.traits,
+      traits: this.traits instanceof Array ? this.traits.filter(trait => trait instanceof TraitsDto) : [],
     };
   }
 

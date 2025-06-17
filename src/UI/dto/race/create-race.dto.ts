@@ -1,5 +1,6 @@
 import { Race, RaceCandidate } from '@app/core/models/race.model';
 import {IsString,IsNotEmpty,MaxLength,IsArray,ArrayNotEmpty,IsNumber,IsOptional,} from 'class-validator';
+import { CreateTraitDto } from '../trait/create-trait.dto';
 
 export class CreateRaceDto {
   @IsString() @IsNotEmpty() @MaxLength(100)
@@ -9,7 +10,7 @@ export class CreateRaceDto {
   description: string;
 
   @IsArray() @ArrayNotEmpty()
-  traitsId: bigint[];
+  traits: CreateTraitDto[] | BigInt[];
 
   @IsOptional()
   @IsNumber()
@@ -20,7 +21,7 @@ export class CreateRaceDto {
             id: id,
             name: this.name,
             description: this.description,
-            traitsId: this.traitsId,
+            traitsId: this.traits.map(trait => typeof trait === 'bigint' ? trait : trait.id),
             subrace_of: this.subrace_of,
           };
         }
@@ -28,7 +29,9 @@ export class CreateRaceDto {
           return {
             name: this.name,
             description: this.description,
-            traitsId: this.traitsId,
+            traits: this.traits.map(trait =>
+              typeof trait === 'bigint' ? { id: trait } : trait.toCandidate()
+            ),
             subrace_of: this.subrace_of,
           };
         }

@@ -3,7 +3,7 @@ import { ImportConnector } from '@ext.api/connector/import.connector';
 import { Module } from '@nestjs/common';
 import { DatabaseModule } from './database.module';
 import { ImportController } from '@UI/controller/import/import.controller';
-import { LanguagesRepository, AlignmentsRepository, AbilitiesRepository, SkillRepository, BackgroundsRepository } from '@repository/repository';
+import { LanguagesRepository, AlignmentsRepository, AbilitiesRepository, SkillRepository, BackgroundsRepository, RacesRepository } from '@repository/repository';
 import { ClassesRepository } from '@app/repository/classes.repository';
 
 @Module({
@@ -18,6 +18,7 @@ import { ClassesRepository } from '@app/repository/classes.repository';
         SkillRepository,
         BackgroundsRepository,
         ClassesRepository,
+        RacesRepository,
     ],
 })
 export class ImportModule { }

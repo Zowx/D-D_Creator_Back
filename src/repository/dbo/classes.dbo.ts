@@ -60,8 +60,8 @@ export class ClassDbo {
                 connect: this.savingThrows.map((id) => ({ id })),
             },
             subclass: this.subClass
-            ? { connect: { id: this.subClass } }
-            : undefined,
+                ? { connect: { id: this.subClass } }
+                : undefined,
         };
     }
 }
@@ -89,12 +89,12 @@ export class ClassCandidateDbo {
         return {
             name: this.name,
             hitDice: this.hitDice,
-            savingThrows: {
+            savingThrows: this.savingThrows ? {
                 connect: this.savingThrows.map((id) => ({ id })),
-            },
+            } : undefined,
             subclass: this.subClass
-            ? { connect: { id: this.subClass } }
-            : undefined,
+                ? { connect: { id: this.subClass } }
+                : undefined,
         };
     }
 }

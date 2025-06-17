@@ -1,7 +1,8 @@
 import { ClassesRepository } from '@app/repository/classes.repository';
-import { AbilitiesRepository, AlignmentsRepository, BackgroundsRepository, LanguagesRepository, SkillRepository } from '@repository/repository';
+import { AbilitiesRepository, AlignmentsRepository, BackgroundsRepository, LanguagesRepository, RacesRepository, SkillRepository } from '@repository/repository';
 import { ImportConnector } from '@app/ext.api/connector/import.connector';
 import { Injectable } from '@nestjs/common';
+import { race } from 'rxjs';
 
 @Injectable()
 export class ImportService {
@@ -14,6 +15,7 @@ export class ImportService {
         private readonly skillsRepository: SkillRepository,
         private readonly backgroundsRepository: BackgroundsRepository,
         private readonly classesRepository: ClassesRepository,
+        private readonly racesRepository: RacesRepository,
     ) { }
 
     async importData() {
@@ -42,11 +44,13 @@ export class ImportService {
             await this.backgroundsRepository.create(background);
         });
 
-
-        
-        // data.push(this.fakeCreate(await this.importConnector.getRaces()));
-        // data[5] = await this.importConnector.setSubRaces(data[5]);
-        // data.push(this.fakeCreate(await this.importConnector.getClass(data[2])));
+        (await this.importConnector.getRaces()).forEach(async (race) => {
+            await this.racesRepository.create(race);
+        });
+        const races = await this.racesRepository.findAll();
+        (await this.importConnector.setSubRaces(races)).forEach(async (subRace) => {
+            await this.racesRepository.update(subRace);
+        });
 
         (await this.importConnector.getClass(abilities)).forEach(async (cls) => {
             await this.classesRepository.create(cls);

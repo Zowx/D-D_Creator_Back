@@ -22,14 +22,14 @@ export class RacesRepository {
 
     async create(race: RaceCandidate) {
         return await this.database.race.create({
-            data: new RaceCandidateDbo(race).toDb(),
+            data: RaceCandidateDbo.fromModel(race).toDb(),
         });
     }
 
     async update(race: Race) {
         return await this.database.race.update({
             where: { id: race.id },
-            data: RaceCandidateDbo.fromModel(race).toDb(),
+            data: RaceDbo.fromModel(race).toDb(),
         });
     }
 
