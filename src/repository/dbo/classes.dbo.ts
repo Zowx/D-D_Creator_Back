@@ -45,9 +45,9 @@ export class ClassDbo {
         return new ClassDbo(
             dbData.id,
             dbData.name,
-            dbData.savingThrows?.map((a: any) => a.id) ?? [],
+            dbData.savingThrows?.map((a: any) => a.id.id) ?? [],
             dbData.hitDice,
-            dbData.subclass,
+            dbData.subclass.id,
         );
     }
 
