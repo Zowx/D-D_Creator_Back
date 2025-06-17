@@ -5,7 +5,7 @@ import { BackgroundDbo, BackgroundCandidateDbo } from '@repository/dbo/backgroun
 
 @Injectable()
 export class BackgroundsRepository {
-  constructor(private readonly database: DatabaseService) {}
+  constructor(private readonly database: DatabaseService) { }
 
   async findAll(): Promise<Background[]> {
     const backgrounds = await this.database.background.findMany({
@@ -34,14 +34,9 @@ export class BackgroundsRepository {
     return BackgroundDbo.fromDb(bg).toModel();
   }
 
-  async create(candidate: BackgroundCandidate): Promise<Background> {
+  async create(background: BackgroundCandidate): Promise<Background> {
     const created = await this.database.background.create({
-      data: BackgroundCandidateDbo.fromModel(candidate).toDb(),
-      include: {
-        abilities: true,
-        skills: true,
-        languages: true,
-      },
+      data: BackgroundCandidateDbo.fromModel(background).toDb()
     });
 
     return BackgroundDbo.fromDb(created).toModel();
@@ -96,20 +91,5 @@ export class BackgroundsRepository {
     await this.database.background.delete({
       where: { id },
     });
-  }
-
-  async findByName(name: string): Promise<Background | null> {
-    const bg = await this.database.background.findUnique({
-      where: { name },
-      include: {
-        abilities: true,
-        skills: true,
-        languages: true,
-      },
-    });
-
-    if (!bg) return null;
-
-    return BackgroundDbo.fromDb(bg).toModel();
   }
 }

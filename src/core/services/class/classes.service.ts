@@ -19,7 +19,7 @@ export class ClassesService {
   }
 
   async create(candidate: ClassCandidate): Promise<Class> {
-    return this.classesRepository.create(candidate);
+    return this.classesRepository.create(candidate) as any;
   }
 
   async update(data: Class): Promise<Class> {
@@ -27,7 +27,7 @@ export class ClassesService {
     if (!existingClass) {
       throw new NotFoundException(`Class ${data.id} introuvable`);
     }
-    return this.classesRepository.update(data);
+    return this.classesRepository.update(data) as any;
   }
 
   async remove(id: bigint): Promise<void> {
@@ -35,6 +35,6 @@ export class ClassesService {
     if (!existingClass) {
       throw new NotFoundException(`Class ${id} introuvable`);
     }
-    return this.classesRepository.delete(id);
+    return this.classesRepository.delete(id) as any;
   }
 }

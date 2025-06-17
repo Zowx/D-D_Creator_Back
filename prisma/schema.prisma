@@ -9,7 +9,7 @@ datasource db {
 
 model User {
   id         BigInt     @id @default(autoincrement())
-  username   String     @unique
+  username   String     
   password   String
   characters Character[]
 }
@@ -21,7 +21,7 @@ model Character {
   class         Class               @relation(fields: [classId], references: [id])
   classId       BigInt
   background    Background          @relation(fields: [backgroundId], references: [id])
-  backgroundId  BigInt  @unique
+  backgroundId  BigInt  
   alignment     Alignment           @relation(fields: [alignmentId], references: [id])
   alignmentId   BigInt
   xp            Int
@@ -91,7 +91,6 @@ model RaceTrait {
 model Class {
   id            BigInt     @id @default(autoincrement())
   name          String
-  caster_type   String
   subclass      String
   savingThrows  Ability[]  @relation("SavingThrows")
   hit_dice      String
@@ -112,7 +111,7 @@ model Ability {
 }
 
 model Skill {
-  id             BigInt            @id @default(autoincrement()) @unique
+  id             BigInt            @id @default(autoincrement()) 
   name           String
   description    String
   abilityId      BigInt
@@ -124,7 +123,7 @@ model Skill {
 
 model Background {
   id                       BigInt                @id @default(autoincrement())
-  name                     String  @unique
+  name                     String  
   description              String
   abilityChoice            Int
   skillChoice              Int
@@ -137,7 +136,7 @@ model Background {
   abilities   BackgroundAbility[]
   skills    BackgroundSkill[]
   languages BackgroundLanguage[]
-  Character Character?
+  Character Character[]
 }
 
 model BackgroundSkill {
@@ -189,7 +188,7 @@ model Alignment {
 }
 
 model CharacterSkill {
-  id          BigInt     @id @default(autoincrement()) @unique
+  id          BigInt     @id @default(autoincrement()) 
   value       String
 
   character   Character  @relation(fields: [characterId], references: [id])
@@ -200,7 +199,7 @@ model CharacterSkill {
 }
 
 model CharacterAbility {
-  id          BigInt     @id @default(autoincrement()) @unique
+  id          BigInt     @id @default(autoincrement()) 
 
   character   Character  @relation(fields: [characterId], references: [id])
   characterId BigInt

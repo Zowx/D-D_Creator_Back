@@ -309,9 +309,9 @@ export class BackgroundCandidateDbo {
         return {
             name: this.name,
             description: this.description,
-            abilityChoice: this.abilityChoice,
-            skillChoice: this.skillChoice,
-            languagesChoice: this.languagesChoice,
+            abilityChoice: this.abilityChoice ?? 0,
+            skillChoice: this.skillChoice ?? 0,
+            languagesChoice: this.languagesChoice ?? 0,
             abilities: {
                 create: this.ability.map(a => a.toDb())
             },

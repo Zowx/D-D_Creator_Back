@@ -1,10 +1,11 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { RaceCandidate, Race } from '@app/core/models/race.model';
-
+import { RacesRepository } from '@app/repository/repository';
 
 
 @Injectable()
 export class RacesService {
+
   constructor(private readonly racesRepository: RacesRepository) {}
 
   async findAll(): Promise<Race[]> {
