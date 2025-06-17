@@ -119,11 +119,11 @@ export class BackgroundDbo {
     id: bigint;
     name: string;
     description: string;
-    ability: BackgroundAbilityDbo[];
+    ability: bigint[];
     abilityChoice: number;
-    skills: BackgroundSkillDbo[];
+    skills: bigint[];
     skillChoice: number;
-    languages: BackgroundLanguageDbo[];
+    languages: bigint[];
     languagesChoice: number;
     connectionAndMemento: string;
     adventuresAndAdvancement: string;
@@ -139,11 +139,11 @@ export class BackgroundDbo {
             id: model.id,
             name: model.name,
             description: model.description,
-            ability: model.ability.map(BackgroundAbilityDbo.fromModel),
+            ability: model.abilityIds,
             abilityChoice: model.abilityChoice,
-            skills: model.skills.map(BackgroundSkillDbo.fromModel),
+            skills: model.skillsIds,
             skillChoice: model.skillChoice,
-            languages: model.languages.map(BackgroundLanguageDbo.fromModel),
+            languages: model.languagesIds,
             languagesChoice: model.languagesChoice,
             connectionAndMemento: model.connectionAndMemento,
             adventuresAndAdvancement: model.adventuresAndAdvancement,
@@ -157,11 +157,11 @@ export class BackgroundDbo {
             id: this.id,
             name: this.name,
             description: this.description,
-            ability: this.ability?.map(a => a.toModel()) ?? [],
+            abilityIds: this.ability,
             abilityChoice: this.abilityChoice,
-            skills: this.skills?.map(s => s.toModel()) ?? [],
+            skillsIds: this.skills,
             skillChoice: this.skillChoice,
-            languages: this.languages?.map(l => l.toModel()) ?? [],
+            languagesIds: this.languages,
             languagesChoice: this.languagesChoice,
             connectionAndMemento: this.connectionAndMemento,
             adventuresAndAdvancement: this.adventuresAndAdvancement,
@@ -184,11 +184,11 @@ export class BackgroundDbo {
             id: this.id,
             name: this.name,
             description: this.description,
-            ability: this.ability.map(a => a.toDb()),
+            ability: this.ability,
             abilityChoice: this.abilityChoice,
-            skills: this.skills.map(s => s.toDb()),
+            skills: this.skills,
             skillChoice: this.skillChoice,
-            languages: this.languages.map(l => l.toDb()),
+            languages: this.languages,
             languagesChoice: this.languagesChoice,
             connectionAndMemento: this.connectionAndMemento,
             adventuresAndAdvancement: this.adventuresAndAdvancement,
