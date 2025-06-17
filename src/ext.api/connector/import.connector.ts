@@ -153,7 +153,6 @@ export class ImportConnector {
                 results = results.concat(response["results"]);
                 endpoint = response["next"];
             }
-
             const dtos = results.map((item: any) => RaceDto.fromRequest(item));
 
             return dtos.map((dto: RaceDto) => dto.toModel());

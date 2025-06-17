@@ -51,8 +51,8 @@ export class RaceDto {
   static fromRequest(req: any): RaceDto {
     return new RaceDto({
       name: req.name,
-      description: req.description,
-      traits: req.traits,
+      description: req.desc,
+      traits: req.traits.map((trait) => TraitsDto.fromRequest(trait)),
       subrace_of: req.subrace_of,
       url: req.url,
     });

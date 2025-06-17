@@ -33,12 +33,13 @@ export class RaceDbo {
     }
 
     static fromDb(dbData: any): RaceDbo {
+        console.log('RaceDbo.fromDb', dbData);
         return new RaceDbo({
             id: dbData.id,
             name: dbData.name,
             description: dbData.description ?? '',
-            traitsId: dbData.traitsId,
-            subrace_of: dbData.subrace_of
+            traitsId: dbData.Trait,
+            subrace_of: dbData.subrace_of ? dbData.subrace_of.id : undefined
         });
     }
 
@@ -76,7 +77,7 @@ export class RaceCandidateDbo {
         return {
             name: this.name,
             description: this.description ?? '',
-            traits: { create: this.traits.map(a => a.toDb()) },
+            Trait: { create: this.traits.map(a => a.toDb()) },
             subrace_of: this.subrace_of
         };
     }

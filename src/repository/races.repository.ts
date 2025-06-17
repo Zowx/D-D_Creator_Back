@@ -6,21 +6,31 @@ import { RaceDbo, RaceCandidateDbo } from './dbo/races.dbo';
 
 @Injectable()
 export class RacesRepository {
-    constructor(private readonly database: DatabaseService) {}
+    constructor(private readonly database: DatabaseService) { }
 
     async findAll(): Promise<Race[]> {
-        const results = await this.database.race.findMany();
+        const results = await this.database.race.findMany({
+            include: {
+                Trait: true,
+                subrace_of: true,
+            },
+        });
         return results.map((race) => RaceDbo.fromDb(race).toModel());
     }
 
     async findById(id: bigint): Promise<Race> {
         const result = await this.database.race.findUnique({
             where: { id },
+            include: {
+                Trait: true,
+                subrace_of: true,
+            },
         });
         return RaceDbo.fromDb(result).toModel();
     }
 
     async create(race: RaceCandidate) {
+        console.log('Creating race', race);
         return await this.database.race.create({
             data: RaceCandidateDbo.fromModel(race).toDb(),
         });

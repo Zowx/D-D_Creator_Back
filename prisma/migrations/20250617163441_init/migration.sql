@@ -58,17 +58,9 @@ CREATE TABLE "Trait" (
     "id" BIGSERIAL NOT NULL,
     "name" TEXT NOT NULL,
     "description" TEXT NOT NULL,
+    "raceId" BIGINT NOT NULL,
 
     CONSTRAINT "Trait_pkey" PRIMARY KEY ("id")
-);
-
--- CreateTable
-CREATE TABLE "RaceTrait" (
-    "id" SERIAL NOT NULL,
-    "raceId" BIGINT NOT NULL,
-    "traitId" BIGINT NOT NULL,
-
-    CONSTRAINT "RaceTrait_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -202,23 +194,12 @@ CREATE TABLE "CharacterLanguage" (
 );
 
 -- CreateTable
-CREATE TABLE "_RaceTraitsThroughDirectRelation" (
-    "A" BIGINT NOT NULL,
-    "B" BIGINT NOT NULL,
-
-    CONSTRAINT "_RaceTraitsThroughDirectRelation_AB_pkey" PRIMARY KEY ("A","B")
-);
-
--- CreateTable
 CREATE TABLE "_SavingThrows" (
     "A" BIGINT NOT NULL,
     "B" BIGINT NOT NULL,
 
     CONSTRAINT "_SavingThrows_AB_pkey" PRIMARY KEY ("A","B")
 );
-
--- CreateIndex
-CREATE INDEX "_RaceTraitsThroughDirectRelation_B_index" ON "_RaceTraitsThroughDirectRelation"("B");
 
 -- CreateIndex
 CREATE INDEX "_SavingThrows_B_index" ON "_SavingThrows"("B");
@@ -242,10 +223,7 @@ ALTER TABLE "Character" ADD CONSTRAINT "Character_Userid_fkey" FOREIGN KEY ("Use
 ALTER TABLE "Race" ADD CONSTRAINT "Race_subraceOfId_fkey" FOREIGN KEY ("subraceOfId") REFERENCES "Race"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "RaceTrait" ADD CONSTRAINT "RaceTrait_raceId_fkey" FOREIGN KEY ("raceId") REFERENCES "Race"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "RaceTrait" ADD CONSTRAINT "RaceTrait_traitId_fkey" FOREIGN KEY ("traitId") REFERENCES "Trait"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Trait" ADD CONSTRAINT "Trait_raceId_fkey" FOREIGN KEY ("raceId") REFERENCES "Race"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Class" ADD CONSTRAINT "Class_subclassId_fkey" FOREIGN KEY ("subclassId") REFERENCES "Class"("id") ON DELETE SET NULL ON UPDATE CASCADE;
@@ -291,12 +269,6 @@ ALTER TABLE "CharacterLanguage" ADD CONSTRAINT "CharacterLanguage_characterId_fk
 
 -- AddForeignKey
 ALTER TABLE "CharacterLanguage" ADD CONSTRAINT "CharacterLanguage_languageId_fkey" FOREIGN KEY ("languageId") REFERENCES "Language"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "_RaceTraitsThroughDirectRelation" ADD CONSTRAINT "_RaceTraitsThroughDirectRelation_A_fkey" FOREIGN KEY ("A") REFERENCES "Race"("id") ON DELETE CASCADE ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "_RaceTraitsThroughDirectRelation" ADD CONSTRAINT "_RaceTraitsThroughDirectRelation_B_fkey" FOREIGN KEY ("B") REFERENCES "Trait"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "_SavingThrows" ADD CONSTRAINT "_SavingThrows_A_fkey" FOREIGN KEY ("A") REFERENCES "Ability"("id") ON DELETE CASCADE ON UPDATE CASCADE;

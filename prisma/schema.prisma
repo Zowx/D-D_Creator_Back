@@ -65,8 +65,7 @@ model Race {
   subrace_of   Race?         @relation("Subrace", fields: [subraceOfId], references: [id])
   subraceOfId  BigInt?
 
-  Trait        Trait[]       @relation("RaceTraitsThroughDirectRelation")
-  traits       RaceTrait[]
+  Trait        Trait[]       @relation("RaceTraits")
 
   Character    Character[]
 }
@@ -76,16 +75,8 @@ model Trait {
   name        String
   description String
 
-  Race        Race[]     @relation("RaceTraitsThroughDirectRelation")
-  races       RaceTrait[]
-}
-
-model RaceTrait {
-  id       Int    @id @default(autoincrement())
-  race     Race   @relation(fields: [raceId], references: [id])
-  raceId   BigInt
-  trait    Trait  @relation(fields: [traitId], references: [id])
-  traitId  BigInt
+  Race        Race     @relation("RaceTraits", fields: [raceId], references: [id])
+  raceId      BigInt
 }
 
 model Class {
