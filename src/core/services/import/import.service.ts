@@ -41,11 +41,11 @@ export class ImportService {
         const skills = await this.skillsRepository.findAll();
         data.push(skills);
 
-        (await this.importConnector.getBackgrounds(abilities, languages, skills)).forEach(async (background) => {
-            await this.backgroundsRepository.create(background);
-        });
-        const backgrounds = await this.backgroundsRepository.findAll();
-        data.push(backgrounds);
+        // (await this.importConnector.getBackgrounds(abilities, languages, skills)).forEach(async (background) => {
+        //     await this.backgroundsRepository.create(background);
+        // });
+        // const backgrounds = await this.backgroundsRepository.findAll();
+        // data.push(backgrounds);
 
 
         

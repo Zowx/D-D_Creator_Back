@@ -312,7 +312,7 @@ export class BackgroundCandidateDbo {
             abilityChoice: this.abilityChoice,
             skillChoice: this.skillChoice,
             languagesChoice: this.languagesChoice,
-            ability: {
+            abilities: {
                 create: this.ability.map(a => a.toDb())
             },
             skills: {

@@ -16,7 +16,7 @@ export class SkillRepository {
 
     async findById(id: bigint) {
         return SkillDbo.fromDb(
-            this.database.skill.findUnique({
+            await this.database.skill.findUnique({
                 where: { id },
             }),
         ).toModel();

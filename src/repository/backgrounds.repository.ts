@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { DatabaseService } from '@repository/database.service';
 import { Background, BackgroundCandidate } from '@core/models/models';
-import { BackgroundDbo, BackgroundCandidateDbo } from '../repository/dbo/backgrounds.dbo';
+import { BackgroundDbo, BackgroundCandidateDbo } from '@repository/dbo/background.dbo';
 
 @Injectable()
 export class BackgroundsRepository {

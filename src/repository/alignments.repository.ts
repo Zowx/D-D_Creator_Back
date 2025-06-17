@@ -16,7 +16,7 @@ export class AlignmentsRepository {
 
     async findById(id: bigint) {
         return AlignmentDbo.fromDb(
-            this.database.alignment.findUnique({
+            await this.database.alignment.findUnique({
                 where: { id },
             }),
         ).toModel();

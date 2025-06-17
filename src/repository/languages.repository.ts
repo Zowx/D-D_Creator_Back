@@ -16,7 +16,7 @@ export class LanguagesRepository {
 
     async findById(id: bigint) {
         return LanguageDbo.fromDb(
-            this.database.language.findUnique({
+            await this.database.language.findUnique({
                 where: { id },
             }),
         ).toModel();

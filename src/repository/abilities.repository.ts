@@ -15,7 +15,7 @@ export class AbilitiesRepository {
 
     async findById(id: bigint) {
         return AbilityDbo.fromDb(
-            this.database.ability.findUnique({
+            await this.database.ability.findUnique({
                 where: { id },
             }),
         ).toModel();
