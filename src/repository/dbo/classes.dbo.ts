@@ -47,7 +47,7 @@ export class ClassDbo {
             dbData.name,
             dbData.savingThrows?.map((a: any) => a.id.id) ?? [],
             dbData.hitDice,
-            dbData.subclass.id,
+            dbData.subclass ? dbData.subclass.id : undefined,
         );
     }
 
