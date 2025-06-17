@@ -1,54 +1,41 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { randomBytes } from 'crypto';
 import { LanguageCandidate } from '@app/core/models/language.model';
 import { LanguagesRepository } from '@repository/repository';
-
 import { Language } from '@app/core/models/language.model';
+
 @Injectable()
 export class LanguagesService {
-  private languages: Language[] = [];
+  constructor(private readonly languagesRepository: LanguagesRepository) {}
 
-  private generateId(): bigint {
-    return BigInt('0x' + randomBytes(8).toString('hex'));
+  async findAll(): Promise<Language[]> {
+    return await this.languagesRepository.findAll();
   }
 
-  findAll(): Language[] {
-    return this.languages;
+  async findOne(id: bigint): Promise<Language> {
+    const language = await this.languagesRepository.findById(id);
+    if (!language) {
+      throw new NotFoundException(`Language with id ${id} not found`);
+    }
+    return language;
   }
 
-  findOne(id: bigint): Language {
-    const lang = this.languages.find(l => l.id === id);
-    if (!lang) throw new NotFoundException(`Language ${id} introuvable`);
-    return lang;
+  async create(candidate: LanguageCandidate): Promise<Language> {
+    return await this.languagesRepository.create(candidate);
   }
 
-  create(dto: LanguageCandidate): Language {
-    const newLang: Language = {
-      id: this.generateId(),
-      name: dto.name,
-      description: dto.description,
-      exotic: dto.exotic,
-      secret: dto.secret,
-    };
-    this.languages.push(newLang);
-    return newLang;
+  async update(dto: Language): Promise<Language> {
+    const existing = await this.languagesRepository.findById(dto.id);
+    if (!existing) {
+      throw new NotFoundException(`Language with id ${dto.id} not found`);
+    }
+    return await this.languagesRepository.update(dto);
   }
 
-  update(dto: Language): Language {
-    const existing = this.findOne(dto.id);
-    const updated: Language = {
-      ...existing,
-      ...(dto.name !== undefined && { name: dto.name }),
-      ...(dto.description !== undefined && { description: dto.description }),
-      ...(dto.exotic !== undefined && { exotic: dto.exotic }),
-      ...(dto.secret !== undefined && { secret: dto.secret }),
-    };
-    this.languages = this.languages.map(l => (l.id === dto.id ? updated : l));
-    return updated;
-  }
-
-  remove(id: bigint): void {
-    this.findOne(id);
-    this.languages = this.languages.filter(l => l.id !== id);
+  async remove(id: bigint): Promise<void> {
+    const existing = await this.languagesRepository.findById(id);
+    if (!existing) {
+      throw new NotFoundException(`Language with id ${id} not found`);
+    }
+    await this.languagesRepository.delete(id);
   }
 }

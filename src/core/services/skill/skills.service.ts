@@ -1,44 +1,41 @@
+import { SkillRepository } from '@repository/repository';
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { randomBytes } from 'crypto';
 import { SkillCandidate , Skill} from '@app/core/models/skill.model';
 
 
 @Injectable()
 export class SkillsService {
-  private skills: Skill[] = [];
+  constructor(private readonly skillRepository: SkillRepository) {}
 
-  private generateId(): bigint {
-    return BigInt('0x' + randomBytes(8).toString('hex'));
+  async findAll(): Promise<Skill[]> {
+    return await this.skillRepository.findAll();
   }
 
-  findAll(): Skill[] {
-    return this.skills;
+  async findOne(id: bigint): Promise<Skill> {
+    const skill = await this.skillRepository.findById(id);
+    if (!skill) {
+      throw new NotFoundException(`Skill with id ${id} not found`);
+    }
+    return skill;
   }
 
-  findOne(id: bigint): Skill {
-    const sk = this.skills.find(s => s.id === id);
-    if (!sk) throw new NotFoundException(`Skill ${id} introuvable`);
-    return sk;
+  async create(dto: SkillCandidate): Promise<Skill> {
+    return this.skillRepository.create(dto);
   }
 
-  create(dto: SkillCandidate): Skill {
-    const newSkill: Skill = {
-      id: this.generateId(),
-      name: dto.name,
-      description: dto.description,
-      abilityId: BigInt(dto.abilityId),
-    };
-    this.skills.push(newSkill);
-    return newSkill;
+  async update(dto: Skill): Promise<Skill> {
+    const existing = await this.skillRepository.findById(dto.id);
+    if (!existing) {
+      throw new NotFoundException(`Skill with id ${dto.id} not found`);
+    }
+    return this.skillRepository.update(dto);
   }
 
-  update(dto: Skill): Skill {
-    const existing = this.findOne(dto.id);
-    return dto;
-  }
-
-  remove(id: bigint): void {
-    this.findOne(id);
-    this.skills = this.skills.filter(s => s.id !== id);
+  async remove(id: bigint): Promise<void> {
+    const existing = await this.skillRepository.findById(id);
+    if (!existing) {
+      throw new NotFoundException(`Skill with id ${id} not found`);
+    }
+    await this.skillRepository.delete(id);
   }
 }

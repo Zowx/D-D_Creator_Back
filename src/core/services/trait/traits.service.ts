@@ -1,43 +1,41 @@
+import { TraitsRepository } from '@repository/traits.repository';
 import { TraitsCandidate, Traits } from '@app/core/models/traits.model';
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { randomBytes } from 'crypto';
 
 
 @Injectable()
 export class TraitsService {
-  private traits: Traits[] = [];
-
-  private generateId(): bigint {
-    return BigInt('0x' + randomBytes(8).toString('hex'));
+  constructor(private readonly traitsRepository: TraitsRepository) {}
+  
+  async findAll(): Promise<Traits[]> {
+    return await this.traitsRepository.findAll();
   }
 
-  findAll(): Traits[] {
-    return this.traits;
+  async findOne(id: bigint): Promise<Traits> {
+    const trait = await this.traitsRepository.findById(id);
+    if (!trait) {
+      throw new NotFoundException(`Trait with id ${id} not found`);
+    }
+    return trait;
   }
 
-  findOne(id: bigint): Traits {
-    const tr = this.traits.find(t => t.id === id);
-    if (!tr) throw new NotFoundException(`Trait ${id} introuvable`);
-    return tr;
+  async create(dto: TraitsCandidate): Promise<Traits> {
+    return this.traitsRepository.create(dto);
   }
 
-  create(dto: TraitsCandidate): Traits {
-    const newTrait: Traits = {
-      id: this.generateId(),
-      name: dto.name,
-      description: dto.description,
-    };
-    this.traits.push(newTrait);
-    return newTrait;
+  async update(dto: Traits): Promise<Traits> {
+    const existing = await this.traitsRepository.findById(dto.id);
+    if (!existing) {
+      throw new NotFoundException(`Trait with id ${dto.id} not found`);
+    }
+    return this.traitsRepository.update(dto);
   }
 
-  update(dto: Traits): Traits {
-    const existing = this.findOne(dto.id);
-    return dto;
-  }
-
-  remove(id: bigint): void {
-    this.findOne(id);
-    this.traits = this.traits.filter(t => t.id !== id);
+  async remove(id: bigint): Promise<void> {
+    const existing = await this.traitsRepository.findById(id);
+    if (!existing) {
+      throw new NotFoundException(`Trait with id ${id} not found`);
+    }
+    await this.traitsRepository.delete(id);
   }
 }
