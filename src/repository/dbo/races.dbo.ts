@@ -47,7 +47,7 @@ export class RaceDbo {
             id: this.id,
             name: this.name,
             description: this.description ?? '',
-            traitsId: this.traitsId ? { connect: this.traitsId.map(id => ({ id })) } : undefined,
+            Trait: this.traitsId ? { connect: this.traitsId.map(id => ({ id })) } : undefined,
             subrace_of: this.subrace_of ? { connect: { id: this.subrace_of } } : undefined,
         };
     }
