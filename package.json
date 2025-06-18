@@ -9,9 +9,8 @@
     "node": ">=20.0.0"
   },
   "scripts": {
-    "build": "prisma generate && nest build",
-    "build:railway": "pnpm install --no-frozen-lockfile && pnpm prisma generate && pnpm build",
-    "postinstall": "prisma generate",
+    "build": "npx prisma generate && nest build",
+    "postinstall": "npx prisma generate",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
     "start:dev": "nest start --watch",
