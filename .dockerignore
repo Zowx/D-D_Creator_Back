@@ -1,7 +1,20 @@
-# Ajout au .gitignore pour Docker
+node_modules
+dist
+coverage
+*.log
+.env.local
+.env.development
+test
+**/*.spec.ts
+**/*.test.ts
+.git
+.gitignore
+README.md
+docs
+.vscode
+
 # Fichiers Docker et déploiement
 .env.prod
-.env.local
 docker-compose.override.yml
 backups/
 logs/

@@ -1,8 +1,8 @@
-# Dockerfile simple pour D&D Creator Backend
-FROM node:20
+# Dockerfile pour D&D Creator Backend
+FROM node:20-alpine
 
 # Installation de pnpm
-RUN npm install -g pnpm
+RUN npm install -g pnpm@10.10.0
 
 # Set working directory
 WORKDIR /app
@@ -19,12 +19,6 @@ COPY . .
 
 # Generate Prisma client and build
 RUN pnpm prisma generate && pnpm build
-
-# Expose port
-EXPOSE 3000
-
-# Start the application
-CMD ["pnpm", "start:prod"]
 
 # Expose port
 EXPOSE 3000
