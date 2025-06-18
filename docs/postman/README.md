@@ -1,8 +1,3 @@
----
-noteId: '0f3382604c1a11f09a6891be80620cdd'
-tags: []
----
-
 # Postman Collections
 
 Import your Postman collections here to test the API.
