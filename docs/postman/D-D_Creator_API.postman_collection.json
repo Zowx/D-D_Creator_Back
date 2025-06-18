@@ -1,0 +1,348 @@
+{
+  "info": {
+    "_postman_id": "dnd-creator-api-collection-v2",
+    "name": "D&D Creator API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": "Comprehensive Postman collection for D&D Creator API. Includes authentication, character management, and game data endpoints. Uses {{base_url}} and {{jwt_token}} variables."
+  },
+  "variable": [
+    { "key": "base_url", "value": "http://localhost:3000" },
+    { "key": "jwt_token", "value": "" }
+  ],
+  "item": [
+    {
+      "name": "Auth",
+      "description": "Authentication endpoints (login, register, refresh, profile)",
+      "item": [
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"testuser\",\n  \"password\": \"testpass\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/auth/login",
+              "host": ["{{base_url}}"],
+              "path": ["auth", "login"]
+            }
+          },
+          "response": [
+            {
+              "name": "Success",
+              "originalRequest": {},
+              "status": "OK",
+              "code": 200,
+              "body": "{\n  \"access_token\": \"<jwt>\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Register",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"newuser\",\n  \"password\": \"newpass\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/auth/register",
+              "host": ["{{base_url}}"],
+              "path": ["auth", "register"]
+            }
+          },
+          "response": [
+            {
+              "name": "Created",
+              "originalRequest": {},
+              "status": "Created",
+              "code": 201,
+              "body": "{\n  \"id\": 1,\n  \"username\": \"newuser\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Refresh Token",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"refresh_token\": \"<refresh_token>\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/auth/refresh",
+              "host": ["{{base_url}}"],
+              "path": ["auth", "refresh"]
+            }
+          },
+          "response": [
+            {
+              "name": "Success",
+              "originalRequest": {},
+              "status": "OK",
+              "code": 200,
+              "body": "{\n  \"access_token\": \"<jwt>\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Profile",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{jwt_token}}" }
+            ],
+            "url": {
+              "raw": "{{base_url}}/auth/profile",
+              "host": ["{{base_url}}"],
+              "path": ["auth", "profile"]
+            }
+          },
+          "response": [
+            {
+              "name": "Success",
+              "originalRequest": {},
+              "status": "OK",
+              "code": 200,
+              "body": "{\n  \"id\": 1,\n  \"username\": \"testuser\"\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Characters",
+      "description": "Character CRUD endpoints. Requires Bearer token.",
+      "item": [
+        {
+          "name": "Get All Characters",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{jwt_token}}" }
+            ],
+            "url": {
+              "raw": "{{base_url}}/characters",
+              "host": ["{{base_url}}"],
+              "path": ["characters"]
+            }
+          }
+        },
+        {
+          "name": "Create Character",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{jwt_token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"My Character\",\n  \"level\": 1\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/characters",
+              "host": ["{{base_url}}"],
+              "path": ["characters"]
+            }
+          }
+        },
+        {
+          "name": "Get Character by ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{jwt_token}}" }
+            ],
+            "url": {
+              "raw": "{{base_url}}/characters/:id",
+              "host": ["{{base_url}}"],
+              "path": ["characters", ":id"]
+            }
+          }
+        },
+        {
+          "name": "Update Character",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{jwt_token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Updated Character\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/characters/:id",
+              "host": ["{{base_url}}"],
+              "path": ["characters", ":id"]
+            }
+          }
+        },
+        {
+          "name": "Delete Character",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{jwt_token}}" }
+            ],
+            "url": {
+              "raw": "{{base_url}}/characters/:id",
+              "host": ["{{base_url}}"],
+              "path": ["characters", ":id"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Game Data",
+      "description": "Endpoints for D&D game data (races, classes, backgrounds, etc.)",
+      "item": [
+        {
+          "name": "Races",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/races",
+              "host": ["{{base_url}}"],
+              "path": ["races"]
+            }
+          }
+        },
+        {
+          "name": "Classes",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/classes",
+              "host": ["{{base_url}}"],
+              "path": ["classes"]
+            }
+          }
+        },
+        {
+          "name": "Backgrounds",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/backgrounds",
+              "host": ["{{base_url}}"],
+              "path": ["backgrounds"]
+            }
+          }
+        },
+        {
+          "name": "Skills",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/skills",
+              "host": ["{{base_url}}"],
+              "path": ["skills"]
+            }
+          }
+        },
+        {
+          "name": "Languages",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/languages",
+              "host": ["{{base_url}}"],
+              "path": ["languages"]
+            }
+          }
+        },
+        {
+          "name": "Alignments",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/alignments",
+              "host": ["{{base_url}}"],
+              "path": ["alignments"]
+            }
+          }
+        },
+        {
+          "name": "Abilities",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/abilities",
+              "host": ["{{base_url}}"],
+              "path": ["abilities"]
+            }
+          }
+        },
+        {
+          "name": "Traits",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/traits",
+              "host": ["{{base_url}}"],
+              "path": ["traits"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Import",
+      "description": "Endpoints for importing data from external sources.",
+      "item": [
+        {
+          "name": "Import Character",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{jwt_token}}" }
+            ],
+            "body": { "mode": "raw", "raw": "{\n  \"externalId\": \"123\"\n}" },
+            "url": {
+              "raw": "{{base_url}}/import/character",
+              "host": ["{{base_url}}"],
+              "path": ["import", "character"]
+            }
+          }
+        },
+        {
+          "name": "Import Races",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{jwt_token}}" }
+            ],
+            "url": {
+              "raw": "{{base_url}}/import/races",
+              "host": ["{{base_url}}"],
+              "path": ["import", "races"]
+            }
+          }
+        },
+        {
+          "name": "Import Classes",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{jwt_token}}" }
+            ],
+            "url": {
+              "raw": "{{base_url}}/import/classes",
+              "host": ["{{base_url}}"],
+              "path": ["import", "classes"]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
