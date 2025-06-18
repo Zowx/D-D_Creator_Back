@@ -27,10 +27,8 @@ export class ClassesController {
     @Param('id', ParseIntPipe) id: string,
     @Body() dto: UpdateClassDto,
   ) {
-    const classData = dto.toModel?.(BigInt(id));
-    if (!classData) {
-      throw new Error('Invalid class data');
-    }
+    dto.toModel = CreateClassDto.prototype.toModel;
+    const classData = dto.toModel(BigInt(id));
     return this.svc.update(classData);
   }
 

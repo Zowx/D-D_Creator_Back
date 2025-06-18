@@ -15,7 +15,6 @@ export class ClassesService {
     if (!foundClass) {
       throw new NotFoundException(`Class ${id} introuvable`);
     }
-    console.log('ClassesService.findAll', foundClass);
     return foundClass;
   }
 

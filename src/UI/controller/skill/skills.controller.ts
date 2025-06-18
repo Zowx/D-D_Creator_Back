@@ -31,10 +31,8 @@ export class SkillsController {
     @Param('id', ParseIntPipe) id: string,
     @Body() dto: UpdateSkillDto,
   ) {
-    const skill = dto.toModel?.(BigInt(id));
-    if (!skill) {
-      throw new Error('Invalid skill data');
-    }
+    dto.toModel = CreateSkillDto.prototype.toModel;
+    const skill = dto.toModel(BigInt(id));
     return this.svc.update(skill);
   }
 

@@ -1,3 +1,4 @@
+import { Character } from '@core/models/character.model';
 export { AlignmentsModule } from './alignments.module';
 export { AbilitiesModule } from './abilities.module';
 export { BackgroundsModule } from './backgrounds.module';
@@ -10,3 +11,5 @@ export { AuthModule } from './auth.module';
 export { UsersModule } from './users.module';
 export { ExtApiModule } from './ext.api.module';
 export { DatabaseModule } from './database.module';
+export { CharactersModule } from './character.module';
+export { ImportModule } from './import.module';

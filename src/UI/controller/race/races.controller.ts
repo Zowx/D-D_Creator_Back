@@ -28,10 +28,8 @@ export class RacesController {
     @Param('id', ParseIntPipe) id: string,
     @Body() dto: UpdateRaceDto,
   ) {
-    const race = dto.toModel?.(BigInt(id));
-    if (!race) {
-      throw new Error('Invalid race data');
-    }
+    dto.toModel = CreateRaceDto.prototype.toModel;
+    const race = dto.toModel(BigInt(id));
     return this.svc.update(race);
   }
 

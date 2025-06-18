@@ -11,7 +11,6 @@ model User {
   id         BigInt     @id @default(autoincrement())
   username   String
   password   String
-  characters Character[]
 }
 
 model Character {
@@ -48,12 +47,11 @@ model Character {
   backstory     String
   treasure      String
   traits        String
-  skills        CharacterSkill[]
+  skills        Skill[]                 @relation("CharacterSkills")
   abilities     CharacterAbility[]
-  languages     CharacterLanguage[]
+  languages     Language[]              @relation("CharacterLanguage")
 
-  User         User?       @relation(fields: [Userid], references: [id])
-  Userid       BigInt?
+  user          String
 }
 
 model Race {
@@ -115,7 +113,7 @@ model Skill {
   abilityId      BigInt
   ability        Ability           @relation(fields: [abilityId], references: [id])
 
-  CharacterSkill    CharacterSkill[]
+  characters Character[] @relation("CharacterSkills")
   backgrounds    BackgroundSkillSkill[]
 }
 
@@ -185,17 +183,6 @@ model Alignment {
   Character   Character[]
 }
 
-model CharacterSkill {
-  id          BigInt     @id @default(autoincrement()) 
-  value       String
-
-  character   Character  @relation(fields: [characterId], references: [id])
-  characterId BigInt
-
-  skill       Skill     @relation(fields: [skillId], references: [id])
-  skillId     BigInt
-}
-
 model CharacterAbility {
   id          BigInt     @id @default(autoincrement()) 
 
@@ -204,6 +191,8 @@ model CharacterAbility {
 
   ability     Ability    @relation(fields: [abilityId], references: [id])
   abilityId   BigInt
+
+  value       Int
 }
 
 model Language {
@@ -213,16 +202,6 @@ model Language {
   exotic      Boolean
   secret      Boolean
 
-  characters  CharacterLanguage[]
+  characters  Character[]            @relation("CharacterLanguage")
   backgrounds BackgroundLanguage[]
-}
-
-model CharacterLanguage {
-  id          BigInt     @id @default(autoincrement())
-
-  character   Character  @relation(fields: [characterId], references: [id])
-  characterId BigInt
-
-  language    Language   @relation(fields: [languageId], references: [id])
-  languageId  BigInt
 }

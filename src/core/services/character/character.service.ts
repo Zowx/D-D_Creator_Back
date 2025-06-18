@@ -6,12 +6,13 @@ import { Character, CharacterCandidate } from '@app/core/models/character.model'
 export class CharactersService {
   constructor(private readonly characterRepo: CharactersRepository) {}
 
-  async create(dto: CharacterCandidate) {
-    return this.characterRepo.create(dto);
+  async create(candidate: CharacterCandidate) {
+    return await this.characterRepo.create(candidate);
   }
 
+
   async findAll() {
-    return this.characterRepo.findAll();
+    return await this.characterRepo.findAll();
   }
 
   async findOne(id: bigint) {
@@ -20,11 +21,11 @@ export class CharactersService {
     return character;
   }
 
-  async update(dto: Character) {
-    const character = await this.characterRepo.findById(dto.id);
-    if (!character) throw new NotFoundException(`Character with ID ${dto.id} not found`);
+  async update(candidate: Character) {
+    const character = await this.characterRepo.findById(candidate.id);
+    if (!character) throw new NotFoundException(`Character with ID ${candidate.id} not found`);
 
-    return this.characterRepo.update(dto);
+    return this.characterRepo.update(candidate);
   }
 
   async remove(id: bigint) {

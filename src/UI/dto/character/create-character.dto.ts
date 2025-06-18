@@ -5,13 +5,30 @@ import {
   IsOptional,
   IsString,
   Min,
+  Max,
+  ValidateNested,
 } from 'class-validator';
 import { Type } from 'class-transformer';
 import {
   Character,
+  CharacterAbility,
+  CharacterAbilityCandidate,
   CharacterCandidate
-} from '../../../core/models/character.model';
-import { CharacterAbilityCandidate } from '../../../core/models/character.model';
+} from '@core/models/character.model';
+
+export class AbilityInput implements CharacterAbilityCandidate {
+  @IsInt() @Type(() => Number)
+  abilityId: bigint;
+
+  @IsInt() @Min(0) @Max(20) value: number;
+
+  toCandidate(): CharacterAbilityCandidate {
+    return {
+      abilityId: BigInt(this.abilityId),
+      value: this.value,
+    };
+  }
+}
 
 export class CreateCharacterDto implements CharacterCandidate {
   @IsInt() @Type(() => Number) raceId: bigint;
@@ -59,81 +76,82 @@ export class CreateCharacterDto implements CharacterCandidate {
   languageIds: bigint[];
 
   @IsArray()
-  @IsInt({ each: true })
-  @Type(() => Number)
-  abilitieIds: bigint[];
+  @ValidateNested({ each: true })
+  @Type(() => AbilityInput)
+  abilities: AbilityInput[];
 
   ToModel(id: bigint): Character {
-     return {
-  id,
-  raceId: this.raceId,
-  classId: this.classId,
-  backgroundId: this.backgroundId,
-  alignmentId: this.alignmentId,
-  userId: this.userId,
-  xp: this.xp,
-  level: this.level,
-  name: this.name,
-  player: this.player,
-  AC: this.AC,
-  speed: this.speed,
-  hp: this.hp,
-  maxHp: this.maxHp,
-  tempHp: this.tempHp,
-  personality: this.personality,
-  ideals: this.ideals,
-  bonds: this.bonds,
-  flaws: this.flaws,
-  age: this.age,
-  height: this.height,
-  weight: this.weight,
-  eyes: this.eyes,
-  skin: this.skin,
-  hair: this.hair,
-  appearance: this.appearance,
-  allies: this.allies,
-  backstory: this.backstory,
-  treasure: this.treasure,
-  traits: this.traits,
-  skillIds: this.skillIds,
-  languageIds: this.languageIds,
-  abilitieIds: this.abilitieIds,
-};
-}
-ToCandidate(): CharacterCandidate {
-  return {
-    raceId: this.raceId,
-    classId: this.classId,
-    backgroundId: this.backgroundId,
-    alignmentId: this.alignmentId,
-    userId: this.userId,
-    xp: this.xp,
-    level: this.level,
-    name: this.name,
-    player: this.player,
-    AC: this.AC,
-    speed: this.speed,
-    hp: this.hp,
-    maxHp: this.maxHp,
-    tempHp: this.tempHp,
-    personality: this.personality,
-    ideals: this.ideals,
-    bonds: this.bonds,
-    flaws: this.flaws,
-    age: this.age,
-    height: this.height,
-    weight: this.weight,
-    eyes: this.eyes,
-    skin: this.skin,
-    hair: this.hair,
-    appearance: this.appearance,
-    allies: this.allies,
-    backstory: this.backstory,
-    treasure: this.treasure,
-    traits: this.traits,
-    skillIds: [...this.skillIds],
-    languageIds: [...this.languageIds],
-    abilitieIds: [...this.abilitieIds],
-  };
-}
+    return {
+      id,
+      raceId: this.raceId,
+      classId: this.classId,
+      backgroundId: this.backgroundId,
+      alignmentId: this.alignmentId,
+      userId: this.userId,
+      xp: this.xp,
+      level: this.level,
+      name: this.name,
+      player: this.player,
+      AC: this.AC,
+      speed: this.speed,
+      hp: this.hp,
+      maxHp: this.maxHp,
+      tempHp: this.tempHp,
+      personality: this.personality,
+      ideals: this.ideals,
+      bonds: this.bonds,
+      flaws: this.flaws,
+      age: this.age,
+      height: this.height,
+      weight: this.weight,
+      eyes: this.eyes,
+      skin: this.skin,
+      hair: this.hair,
+      appearance: this.appearance,
+      allies: this.allies,
+      backstory: this.backstory,
+      treasure: this.treasure,
+      traits: this.traits,
+      skillIds: this.skillIds,
+      languageIds: this.languageIds,
+      abilities: this.abilities.map(ability => ability.toCandidate()),
+    };
+  }
+
+  toCandidate(): CharacterCandidate {
+    return {
+      raceId: this.raceId,
+      classId: this.classId,
+      backgroundId: this.backgroundId,
+      alignmentId: this.alignmentId,
+      userId: this.userId,
+      xp: this.xp,
+      level: this.level,
+      name: this.name,
+      player: this.player,
+      AC: this.AC,
+      speed: this.speed,
+      hp: this.hp,
+      maxHp: this.maxHp,
+      tempHp: this.tempHp,
+      personality: this.personality,
+      ideals: this.ideals,
+      bonds: this.bonds,
+      flaws: this.flaws,
+      age: this.age,
+      height: this.height,
+      weight: this.weight,
+      eyes: this.eyes,
+      skin: this.skin,
+      hair: this.hair,
+      appearance: this.appearance,
+      allies: this.allies,
+      backstory: this.backstory,
+      treasure: this.treasure,
+      traits: this.traits,
+      skillIds: [...this.skillIds],
+      languageIds: [...this.languageIds],
+      abilities: this.abilities.map(ability => ability.toCandidate()),
+    };
+  }
 }

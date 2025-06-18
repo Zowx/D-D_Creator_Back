@@ -31,10 +31,8 @@ export class TraitsController {
     @Param('id', ParseIntPipe) id: string,
     @Body() dto: UpdateTraitDto,
   ) {
-    const trait = dto.toModel?.(BigInt(id));
-    if (!trait) {
-      throw new Error('Invalid trait data');
-    }
+    dto.toModel = CreateTraitDto.prototype.toModel;
+    const trait = dto.toModel(BigInt(id));
     return this.svc.update(trait);
   }
 

@@ -2,19 +2,21 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { BigIntInterceptor } from '@core/interceptor/bigint.interceptor';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
-  // Only show log, warn, and error (no debug/verbose)
   const app = await NestFactory.create(AppModule, {
     logger: ['log', 'warn', 'error'],
   });
-
-  // Enable CORS
+  app.useGlobalPipes(new ValidationPipe({
+    transform: true, // <<< Ajoute ceci
+    whitelist: true,
+    forbidNonWhitelisted: true,
+  }));
   app.enableCors({
     origin: true, // Allow all origins in development, configure for production
     credentials: true,
   });
-
   app.useGlobalInterceptors(new BigIntInterceptor());
 
   // Swagger configuration

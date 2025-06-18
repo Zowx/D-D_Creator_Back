@@ -31,7 +31,7 @@ export interface Character {
   treasure: string;
   traits: string;
 
-  abilitieIds: bigint[];
+  abilities: CharacterAbility[];
   skillIds: bigint[];
   languageIds: bigint[];
 }
@@ -68,7 +68,7 @@ export interface CharacterCandidate {
   treasure: string;
   traits: string;
 
-  abilitieIds: bigint[];
+  abilities: CharacterAbilityCandidate[];
   skillIds: bigint[];
   languageIds: bigint[];
 }
@@ -85,15 +85,12 @@ export interface CharacterSkillCandidate {
 }
 
 export interface CharacterAbility {
-  id: bigint;
-  value: string;
-  characterId: bigint;
+  value: number;
   abilityId: bigint;
 }
 
 export interface CharacterAbilityCandidate {
-  value: string;
-  characterId: bigint;
+  value: number;
   abilityId: bigint;
 }
 
