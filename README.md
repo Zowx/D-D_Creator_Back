@@ -1,98 +1,437 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# 🚀 D&D Creator - Backend API
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+<div align="center">
+  <img src="https://img.shields.io/badge/NestJS-E0234E?style=for-the-badge&logo=nestjs&logoColor=white" alt="NestJS" />
+  <img src="https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white" alt="PostgreSQL" />
+  <img src="https://img.shields.io/badge/Prisma-3982CE?style=for-the-badge&logo=Prisma&logoColor=white" alt="Prisma" />
+  <img src="https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white" alt="TypeScript" />
+  <img src="https://img.shields.io/badge/JWT-000000?style=for-the-badge&logo=JSON%20web%20tokens&logoColor=white" alt="JWT" />
+</div>
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+<div align="center">
+  <h3>RESTful API for D&D Character Management</h3>
+  <p>Robust backend service built with NestJS providing comprehensive D&D character creation and management functionality</p>
+</div>
 
-## Description
+---
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## 🏗️ Architecture
 
-## Project setup
+This backend follows a **clean architecture** pattern with clear separation of concerns:
 
-```bash
-$ npm install
+```
+src/
+├── core/
+│   ├── auth/           # Authentication logic and constants
+│   ├── guard/          # Security guards (JWT, roles)
+│   ├── interceptor/    # Response interceptors (BigInt handling)
+│   ├── models/         # Business domain models
+│   ├── services/       # Business logic services
+│   └── utils/          # Utility functions (cache, etc.)
+├── ext.api/            # External API integration
+│   ├── connector/      # Third-party API connectors
+│   └── dto/            # External API DTOs
+├── modules/            # NestJS modules organization
+├── repository/         # Data access layer
+│   ├── dbo/            # Database objects
+│   └── *.repository.ts # Repository implementations
+└── UI/                 # API layer
+    ├── controller/     # REST controllers
+    └── dto/            # API request/response DTOs
 ```
 
-## Compile and run the project
+---
+
+## 🛠️ Tech Stack
+
+- **Framework**: NestJS v11 - Progressive Node.js framework
+- **Database**: PostgreSQL - Robust relational database
+- **ORM**: Prisma v6.7 - Modern database toolkit
+- **Authentication**: JWT - Secure token-based authentication
+- **Validation**: Class Validator & Class Transformer
+- **Language**: TypeScript - Static typing for enhanced development
+- **Testing**: Jest - Comprehensive testing framework
+- **Deployment**: Railway - Cloud platform deployment
+
+---
+
+## 🌟 API Features
+
+### 🔐 Authentication & Authorization
+
+- JWT-based authentication
+- Secure password hashing
+- Role-based access control
+- Session management
+
+### 🎭 Character Management
+
+- Complete character CRUD operations
+- Character statistics calculation
+- Level progression tracking
+- Equipment and inventory management
+
+### 📊 Game Data Management
+
+- **Races**: All D&D 5e playable races with traits
+- **Classes**: Character classes with progression
+- **Backgrounds**: Character backgrounds with benefits
+- **Skills**: Comprehensive skill system
+- **Languages**: Language proficiency tracking
+- **Alignments**: Moral alignment system
+
+### 🔄 Data Validation
+
+- Request payload validation
+- Response data transformation
+- Error handling and logging
+- Input sanitization
+
+---
+
+## 🚀 Quick Start
+
+### Prerequisites
+
+- **Node.js** ≥ 20.0.0
+- **pnpm** ≥ 8.0.0
+- **PostgreSQL** ≥ 13
+
+### Installation
+
+1. **Install dependencies**
 
 ```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+pnpm install
 ```
 
-## Run tests
+2. **Environment configuration**
 
 ```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+cp .env.example .env
 ```
 
-## Deployment
+Configure your `.env` file:
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+```env
+DATABASE_URL="postgresql://username:password@localhost:5432/dd_creator"
+JWT_SECRET="your-super-secret-jwt-key"
+JWT_EXPIRES_IN="7d"
+PORT=3000
+```
 
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+3. **Database setup**
 
 ```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
+# Generate Prisma client
+npx prisma generate
+
+# Run migrations
+npx prisma migrate deploy
+
+# (Optional) Seed database with sample data
+npx prisma db seed
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+4. **Start development server**
 
-## Resources
+```bash
+pnpm run start:dev
+```
 
-Check out a few resources that may come in handy when working with NestJS:
+The API will be available at `http://localhost:3000`
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+---
 
-## Support
+## 📚 Available Scripts
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+### Development
 
-## Stay in touch
+```bash
+# Start in development mode with hot reload
+pnpm run start:dev
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+# Start in debug mode
+pnpm run start:debug
 
-## License
+# Build the application
+pnpm run build
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+# Start production server
+pnpm run start:prod
+```
+
+### Testing
+
+```bash
+# Run unit tests
+pnpm run test
+
+# Run tests in watch mode
+pnpm run test:watch
+
+# Run e2e tests
+pnpm run test:e2e
+
+# Generate test coverage report
+pnpm run test:cov
+```
+
+### Code Quality
+
+```bash
+# Run ESLint
+pnpm run lint
+
+# Format code with Prettier
+pnpm run format
+```
+
+### Database
+
+```bash
+# Open Prisma Studio (Database GUI)
+npx prisma studio
+
+# Create new migration
+npx prisma migrate dev --name <migration-name>
+
+# Reset database (⚠️ Development only!)
+npx prisma migrate reset
+
+# Deploy migrations to production
+npx prisma migrate deploy
+```
+
+---
+
+## 🔌 API Endpoints
+
+### Authentication
+
+```
+POST   /auth/login         # User login
+POST   /auth/register      # User registration
+POST   /auth/refresh       # Refresh JWT token
+GET    /auth/profile       # Get user profile
+```
+
+### Characters
+
+```
+GET    /characters         # Get user's characters
+POST   /characters         # Create new character
+GET    /characters/:id     # Get character by ID
+PUT    /characters/:id     # Update character
+DELETE /characters/:id     # Delete character
+```
+
+### Game Data
+
+```
+GET    /races              # Get all races
+GET    /classes            # Get all classes
+GET    /backgrounds        # Get all backgrounds
+GET    /skills             # Get all skills
+GET    /languages          # Get all languages
+GET    /alignments         # Get all alignments
+GET    /abilities          # Get all abilities
+GET    /traits             # Get all traits
+```
+
+### External API
+
+```
+POST   /import/character   # Import character from external source
+GET    /import/races       # Fetch races from D&D API
+GET    /import/classes     # Fetch classes from D&D API
+```
+
+---
+
+## 🗄️ Database Schema
+
+### Core Entities
+
+#### User
+
+```sql
+- id: BigInt (PK)
+- username: String
+- password: String (hashed)
+- characters: Character[]
+```
+
+#### Character
+
+```sql
+- id: BigInt (PK)
+- name: String
+- player: String
+- level: Int
+- xp: Int
+- hp, max_hp, temp_hp: Int
+- AC: Int
+- speed: Int
+- personality, ideals, bonds, flaws: String
+- age: Int
+- height, weight, eyes, skin, hair: String
+- appearance, allies, backstory, treasure: String
+- raceId: BigInt (FK)
+- classId: BigInt (FK)
+- backgroundId: BigInt (FK)
+- alignmentId: BigInt (FK)
+- userId: BigInt (FK)
+```
+
+#### Game Data Tables
+
+- **Race**: Playable races with traits and bonuses
+- **Class**: Character classes with features
+- **Background**: Character backgrounds with skills
+- **Skill**: Available skills and proficiencies
+- **Language**: Languages with regions
+- **Alignment**: Moral alignments
+- **Ability**: Core abilities (STR, DEX, CON, INT, WIS, CHA)
+- **Traits**: Racial and class traits
+
+---
+
+## 🔧 Development Guidelines
+
+### Code Structure
+
+- **Controllers**: Handle HTTP requests/responses
+- **Services**: Contain business logic
+- **Repositories**: Handle data access
+- **Models**: Define business entities
+- **DTOs**: Data transfer objects for API
+- **Guards**: Authentication and authorization
+- **Interceptors**: Request/response transformation
+
+### Best Practices
+
+- Use TypeScript strict mode
+- Implement proper error handling
+- Follow NestJS conventions
+- Write comprehensive tests
+- Use DTOs for validation
+- Implement proper logging
+- Document API endpoints
+
+### Code Quality Tools
+
+- **ESLint**: Code linting
+- **Prettier**: Code formatting
+- **Husky**: Git hooks
+- **Jest**: Testing framework
+
+---
+
+## 🚀 Deployment
+
+### Railway Deployment
+
+The application is configured for Railway deployment:
+
+```bash
+# Deploy to Railway
+railway up
+
+# View logs
+railway logs
+
+# Open in browser
+railway open
+```
+
+### Environment Variables
+
+Set these environment variables in your deployment platform:
+
+```
+DATABASE_URL=postgresql://...
+JWT_SECRET=your-secret-key
+JWT_EXPIRES_IN=7d
+PORT=3000
+```
+
+---
+
+## 🧪 Testing
+
+### Unit Tests
+
+```bash
+# Run all unit tests
+pnpm run test
+
+# Run specific test file
+pnpm run test -- auth.service.spec.ts
+
+# Run tests with coverage
+pnpm run test:cov
+```
+
+### E2E Tests
+
+```bash
+# Run end-to-end tests
+pnpm run test:e2e
+```
+
+### Test Structure
+
+```
+test/
+├── app.e2e-spec.ts     # Application E2E tests
+├── jest-e2e.json       # E2E Jest configuration
+└── mocks/              # Test mocks and fixtures
+```
+
+---
+
+## 📖 Documentation
+
+### API Documentation
+
+- **Swagger/OpenAPI**: Available at `/api/docs` when running
+- **Postman Collection**: Import from `docs/postman/`
+- **Database Schema**: View with `npx prisma studio`
+
+### Code Documentation
+
+- **JSDoc**: Inline code documentation
+- **Architecture**: See `docs/architecture.md`
+- **Deployment**: See `docs/deployment.md`
+
+---
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+### Development Workflow
+
+1. Create an issue for the feature/bug
+2. Write tests for your changes
+3. Implement the feature
+4. Ensure all tests pass
+5. Update documentation if needed
+
+---
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+---
+
+<div align="center">
+  <p>Built with ❤️ using NestJS</p>
+  <p>Part of the D&D Creator project</p>
+</div>
