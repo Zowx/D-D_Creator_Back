@@ -1,4 +1,63 @@
-import { Character, CharacterCandidate } from '@core/models/character.model';
+import { Character, CharacterAbility, CharacterAbilityCandidate, CharacterCandidate } from '@core/models/character.model';
+
+class CharacterAbilityDBO {
+  abilityId: bigint;
+  value: number;
+  
+  constructor(data?: Partial<CharacterAbilityDBO>) {
+    Object.assign(this, data);
+  }
+
+  toDb(): any {
+    return {
+      abilityId: this.abilityId,
+      value: this.value,
+    };
+  }
+
+  static fromDb(dbData: any): CharacterAbilityDBO {
+    return new CharacterAbilityDBO({
+      abilityId: dbData.abilityId,
+      value: dbData.value,
+    });
+  }
+
+  toModel(): CharacterAbility {
+    return {
+      abilityId: this.abilityId,
+      value: this.value,
+    };
+  }
+
+  static fromModel(model: CharacterAbility): CharacterAbilityDBO {
+    return new CharacterAbilityDBO({
+      abilityId: model.abilityId,
+      value: model.value,
+    });
+  }
+}
+
+class CharacterAbilityDBOCandidate {
+  abilityId: bigint;
+  value: number;
+
+  constructor(data?: Partial<CharacterAbilityDBOCandidate>) {
+    Object.assign(this, data);
+  }
+
+  toDb(): any {
+    return {
+      abilityId: this.abilityId,
+      value: this.value,
+    };
+  }
+  static fromModel(model: CharacterAbilityCandidate): CharacterAbilityDBOCandidate {
+    return new CharacterAbilityDBOCandidate({
+      abilityId: model.abilityId,
+      value: model.value,
+    });
+  }
+}
 
 export class CharacterDbo {
   id: bigint;
@@ -33,9 +92,9 @@ export class CharacterDbo {
   treasure: string;
   traits: string;
 
-  abilities: { abilityId: bigint }[];
-  skills: { skillId: bigint }[];
-  languages: { languageId: bigint }[];
+  abilities: CharacterAbilityDBO[];
+  skills: bigint[];
+  languages: bigint[];
 
   constructor(data?: Partial<CharacterDbo>) {
     Object.assign(this, data);
@@ -75,9 +134,9 @@ export class CharacterDbo {
       treasure: this.treasure,
       traits: this.traits,
 
-      abilitieIds: this.abilities?.map(a => a.abilityId) ?? [],
-      skillIds: this.skills?.map(s => s.skillId) ?? [],
-      languageIds: this.languages?.map(l => l.languageId) ?? [],
+      abilities: this.abilities ?? [],
+      skillIds: this.skills ?? [],
+      languageIds: this.languages ?? [],
     };
   }
 
@@ -115,9 +174,9 @@ export class CharacterDbo {
       treasure: dbData.treasure,
       traits: dbData.traits,
 
-      abilities: dbData.abilities ?? [],
-      skills: dbData.skills ?? [],
-      languages: dbData.languages ?? [],
+      abilities: dbData.abilities ? dbData.abilities.map(a => CharacterAbilityDBO.fromDb(a)) : [],
+      skills: dbData.skills ? dbData.skills.map(a => a.id) : [],
+      languages: dbData.languages ? dbData.languages.map(a => a.id) : [],
     });
   }
 }
@@ -154,7 +213,7 @@ export class CharacterCandidateDbo {
   treasure: string;
   traits: string;
 
-  abilitieIds: bigint[];
+  abilities: CharacterAbilityDBOCandidate[];
   skillIds: bigint[];
   languageIds: bigint[];
 
@@ -195,7 +254,7 @@ export class CharacterCandidateDbo {
       treasure: model.treasure,
       traits: model.traits,
 
-      abilitieIds: model.abilitieIds,
+      abilities: model.abilities.map(a => CharacterAbilityDBOCandidate.fromModel(a)),
       skillIds: model.skillIds,
       languageIds: model.languageIds,
     });
@@ -207,7 +266,7 @@ export class CharacterCandidateDbo {
       classId: this.classId,
       backgroundId: this.backgroundId,
       alignmentId: this.alignmentId,
-      userId: this.userId,
+      user: this.userId,
 
       xp: this.xp,
       level: this.level,
@@ -216,8 +275,8 @@ export class CharacterCandidateDbo {
       AC: this.AC,
       speed: this.speed,
       hp: this.hp,
-      maxHp: this.maxHp,
-      tempHp: this.tempHp,
+      max_hp: this.maxHp,
+      temp_hp: this.tempHp,
       personality: this.personality,
       ideals: this.ideals,
       bonds: this.bonds,
@@ -235,7 +294,7 @@ export class CharacterCandidateDbo {
       traits: this.traits,
 
       abilities: {
-        connect: this.abilitieIds.map(id => ({ id })),
+        create: this.abilities.map(a => a.toDb()),
       },
       skills: {
         connect: this.skillIds.map(id => ({ id })),

@@ -11,12 +11,11 @@ export class CharactersRepository {
   async findAll(): Promise<Character[]> {
     const characters = await this.database.character.findMany({
       include: {
-        abilities: { select: { abilityId: true } },
-        skills: { select: { skillId: true } },
-        languages: { select: { languageId: true } },
+        abilities: { select: { abilityId: true, value: true } },
+        skills: true,
+        languages: true,
       },
     });
-
     return characters.map((char) => CharacterDbo.fromDb(char).toModel());
   }
 
@@ -25,8 +24,8 @@ export class CharactersRepository {
       where: { id },
       include: {
         abilities: { select: { abilityId: true } },
-        skills: { select: { skillId: true } },
-        languages: { select: { languageId: true } },
+        skills: true,
+        languages: true,
       },
     });
 
@@ -36,13 +35,12 @@ export class CharactersRepository {
 
   async create(candidate: CharacterCandidate): Promise<Character> {
     const characterDbo = CharacterCandidateDbo.fromModel(candidate);
-
     const created = await this.database.character.create({
       data: characterDbo.toDb(),
       include: {
         abilities: { select: { abilityId: true } },
-        skills: { select: { skillId: true } },
-        languages: { select: { languageId: true } },
+        skills: true,
+        languages: true,
       },
     });
 
@@ -82,7 +80,7 @@ export class CharactersRepository {
       treasure: character.treasure,
       traits: character.traits,
 
-      abilitieIds: character.abilitieIds,
+      abilities: character.abilities,
       skillIds: character.skillIds,
       languageIds: character.languageIds,
     };
@@ -94,8 +92,8 @@ export class CharactersRepository {
       data,
       include: {
         abilities: { select: { abilityId: true } },
-        skills: { select: { skillId: true } },
-        languages: { select: { languageId: true } },
+        skills: true,
+        languages: true,
       },
     });
 

@@ -1,16 +1,15 @@
-import {Controller,Get,Post,Body,Param,Patch,Delete,ParseIntPipe,} from '@nestjs/common';
-import { CharactersService } from '../../../core/services/character/character.service';
+import { Controller, Get, Post, Body, Param, Patch, Delete } from '@nestjs/common';
+import { CharactersService } from '@core/services/character/character.service';
 import { CreateCharacterDto } from '@UI/dto/character/create-character.dto';
 import { UpdateCharacterDto } from '@UI/dto/character/update-character.dto';
-import { Character } from '@core/models/character.model';
 
 @Controller('characters')
 export class CharactersController {
-  constructor(private readonly svc: CharactersService) {}
+  constructor(private readonly svc: CharactersService) { }
 
   @Post()
   create(@Body() dto: CreateCharacterDto) {
-    return this.svc.create(dto);
+    return this.svc.create(dto.toCandidate());
   }
 
   @Get()

@@ -30,7 +30,6 @@ export class RacesRepository {
     }
 
     async create(race: RaceCandidate) {
-        console.log('Creating race', race);
         return await this.database.race.create({
             data: RaceCandidateDbo.fromModel(race).toDb(),
         });
