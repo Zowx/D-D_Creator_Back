@@ -1,0 +1,15 @@
+# Ajout au .gitignore pour Docker
+# Fichiers Docker et déploiement
+.env.prod
+.env.local
+docker-compose.override.yml
+backups/
+logs/
+ssl/
+
+# Volumes Docker
+postgres_data/
+redis_data/
+
+# Logs de déploiement
+deploy.log

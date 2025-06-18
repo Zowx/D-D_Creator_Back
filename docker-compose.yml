@@ -1,0 +1,49 @@
+services:
+  # Base de données PostgreSQL
+  postgres:
+    image: postgres:15-alpine
+    container_name: dd_creator_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: dd_creator
+      POSTGRES_USER: dd_user
+      POSTGRES_PASSWORD: dd_password
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - '5432:5432'
+    networks:
+      - dd_creator_network
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U dd_user -d dd_creator']
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Application NestJS
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: dd_creator_backend
+    restart: unless-stopped
+    environment:
+      NODE_ENV: development
+      DATABASE_URL: postgresql://dd_user:dd_password@postgres:5432/dd_creator
+      JWT_SECRET: ${JWT_SECRET:-your-super-secret-jwt-key}
+      PORT: 3000
+    ports:
+      - '3000:3000'
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - dd_creator_network
+
+volumes:
+  postgres_data:
+    driver: local
+
+networks:
+  dd_creator_network:
+    driver: bridge
