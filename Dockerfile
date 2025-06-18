@@ -1,8 +1,8 @@
 # Dockerfile pour D&D Creator Backend
-FROM node:20
+FROM node:20-alpine
 
-# Installation de pnpm avec timeout plus long
-RUN npm install -g pnpm@10.10.0 --registry https://registry.npmjs.org/
+# Install pnpm
+RUN corepack enable && corepack prepare pnpm@latest --activate
 
 # Set working directory
 WORKDIR /app
@@ -11,9 +11,8 @@ WORKDIR /app
 COPY package.json pnpm-lock.yaml ./
 COPY prisma ./prisma/
 
-# Install dependencies avec timeout étendu
-RUN pnpm config set network-timeout 300000 && \
-    pnpm install --frozen-lockfile --no-optional
+# Install dependencies
+RUN pnpm install --frozen-lockfile
 
 # Copy source code
 COPY . .
