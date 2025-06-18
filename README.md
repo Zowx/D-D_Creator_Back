@@ -57,13 +57,6 @@ src/
 
 ## 🌟 API Features
 
-### 🔐 Authentication & Authorization
-
-- JWT-based authentication
-- Secure password hashing
-- Role-based access control
-- Session management
-
 ### 🎭 Character Management
 
 - Complete character CRUD operations
@@ -207,15 +200,6 @@ npx prisma migrate deploy
 
 ## 🔌 API Endpoints
 
-### Authentication
-
-```
-POST   /auth/login         # User login
-POST   /auth/register      # User registration
-POST   /auth/refresh       # Refresh JWT token
-GET    /auth/profile       # Get user profile
-```
-
 ### Characters
 
 ```
@@ -252,15 +236,6 @@ GET    /import/classes     # Fetch classes from D&D API
 ## 🗄️ Database Schema
 
 ### Core Entities
-
-#### User
-
-```sql
-- id: BigInt (PK)
-- username: String
-- password: String (hashed)
-- characters: Character[]
-```
 
 #### Character
 
@@ -404,24 +379,6 @@ test/
 - **JSDoc**: Inline code documentation
 - **Architecture**: See `docs/architecture.md`
 - **Deployment**: See `docs/deployment.md`
-
----
-
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
-
-### Development Workflow
-
-1. Create an issue for the feature/bug
-2. Write tests for your changes
-3. Implement the feature
-4. Ensure all tests pass
-5. Update documentation if needed
 
 ---
 
