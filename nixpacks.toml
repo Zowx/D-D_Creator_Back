@@ -10,6 +10,7 @@ cmds = [
 [phases.build]
 cmds = [
   'pnpm prisma generate',
+  'pnpm prisma migrate deploy',
   'pnpm build'
 ]
 
