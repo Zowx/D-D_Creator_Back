@@ -39,9 +39,7 @@ export class BackgroundController {
     @Param('id') id: string,
     @Body() updateDto: UpdateBackgroundDto,
   ): Promise<Background> {
-    if (typeof updateDto.toModel !== 'function') {
-      throw new Error('updateDto.toModel is undefined');
-    }
+    updateDto.toModel = CreateBackgroundDto.prototype.toModel;
     const model = updateDto.toModel(BigInt(id));
     return this.backgroundService.update(model);
   }

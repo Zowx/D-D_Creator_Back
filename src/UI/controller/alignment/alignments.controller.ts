@@ -28,10 +28,8 @@ export class AlignmentsController {
     @Param('id', ParseIntPipe) id: string,
     @Body() dto: UpdateAlignmentDto,
   ) {
-    const alignment = dto.toModel?.(BigInt(id));
-    if (!alignment) {
-      throw new Error('Invalid alignment data');
-    }
+    dto.toModel = CreateAlignmentDto.prototype.toModel;
+    const alignment = dto.toModel(BigInt(id));
     return this.svc.update(alignment);
   }
 

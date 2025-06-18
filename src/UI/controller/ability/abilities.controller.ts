@@ -25,9 +25,7 @@ export class AbilitiesController {
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() dto: UpdateAbilityDto) {
-    if (typeof dto.toModel !== 'function') {
-      throw new Error('dto.toModel is not defined');
-    }
+    dto.toModel = CreateAbilityDto.prototype.toModel;
     const ability = dto.toModel(BigInt(id));
 
     return this.svc.update(ability);

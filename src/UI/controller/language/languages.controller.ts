@@ -29,10 +29,8 @@ export class LanguagesController {
     @Param('id') id: string,
     @Body() dto: UpdateLanguageDto,
   ) {
-    const language = dto.toModel?.(BigInt(id));
-    if (!language) {
-      throw new BadRequestException('Invalid language data');
-    }
+    dto.toModel = CreateLanguageDto.prototype.toModel;
+    const language = dto.toModel(BigInt(id));
     return this.svc.update(language);
   }
 
