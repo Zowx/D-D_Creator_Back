@@ -1,5 +1,5 @@
 # Dockerfile pour D&D Creator Backend
-FROM node:20-alpine
+FROM node:20
 
 # Installation de pnpm
 RUN npm install -g pnpm@10.10.0
