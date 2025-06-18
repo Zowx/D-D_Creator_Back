@@ -1,7 +1,6 @@
 {
   "build": {
-    "builder": "NIXPACKS",
-    "buildCommand": "pnpm run build:railway"
+    "builder": "NIXPACKS"
   },
   "deploy": {
     "startCommand": "pnpm start:prod",
