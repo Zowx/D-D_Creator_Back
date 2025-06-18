@@ -1,7 +1,6 @@
 import { Module } from "@nestjs/common";
 
-import { AbilitiesModule, AlignmentsModule, AuthModule, BackgroundsModule, ClassesModule, LanguagesModule, RacesModule, SkillsModule, TraitsModule, UsersModule, ExtApiModule, DatabaseModule } from "@app/modules/module";
-import { ImportModule } from "./modules/import.module";
+import { ImportModule, AbilitiesModule, AlignmentsModule, AuthModule, BackgroundsModule, ClassesModule, LanguagesModule, RacesModule, SkillsModule, TraitsModule, UsersModule, ExtApiModule, DatabaseModule, CharactersModule } from "@app/modules/module";
 
 @Module({
   imports: [
@@ -14,6 +13,7 @@ import { ImportModule } from "./modules/import.module";
     AlignmentsModule,
     BackgroundsModule,
     ClassesModule,
+    CharactersModule,
     LanguagesModule,
     SkillsModule,
     TraitsModule,
