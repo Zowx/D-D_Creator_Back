@@ -1,0 +1,20 @@
+# Ignore Docker files pour éviter les conflits avec nixpacks
+
+Dockerfile
+docker-compose.yml
+.dockerignore
+
+# Ignore files de développement
+
+.env.local
+.env.development
+node_modules
+dist
+coverage
+\*.log
+
+# Ignore test files
+
+test/
+**/\*.spec.ts
+**/\*.test.ts
