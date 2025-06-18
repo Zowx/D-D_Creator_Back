@@ -1,9 +1,5 @@
-[phases.s[phases.build]
-cmds = [
-  'pnpm prisma generate',
-  'pnpm prisma db push --accept-data-loss',
-  'pnpm build'
-]nixPkgs = ['nodejs_20', 'pnpm']
+[phases.setup]
+nixPkgs = ['nodejs_20', 'pnpm']
 
 [phases.install]
 cmds = [
@@ -14,7 +10,7 @@ cmds = [
 [phases.build]
 cmds = [
   'pnpm prisma generate',
-  'pnpm prisma migrate reset --force',
+  'pnpm prisma db push --accept-data-loss',
   'pnpm build'
 ]
 
